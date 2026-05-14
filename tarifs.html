@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0A0908" />
+  <title>Tarifs & Formules — MAISON 360 · Studio créatif premium</title>
+  <meta name="description" content="Découvrez les formules de MAISON 360 : à la séance, en abonnement Signature ou en résidence Maison. Acompte 30 %, paiement sécurisé Stripe." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0..100,0..1;1,9..144,300..600,0..100,0..1&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.42/dist/lenis.min.js" defer></script>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <style>
+    .configurator {
+      background: var(--anthracite);
+      border: 1px solid var(--hairline);
+      padding: clamp(32px, 4vw, 64px);
+      margin: 60px var(--gutter);
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 60px;
+    }
+    @media (max-width: 880px) { .configurator { grid-template-columns: 1fr; margin: 40px var(--gutter); } }
+    .conf-toggle { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+    .conf-chip {
+      padding: 14px 22px;
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: var(--t-12);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--sable);
+      cursor: pointer;
+      transition: all .3s;
+    }
+    .conf-chip:hover { border-color: var(--or-soft); color: var(--ivoire); }
+    .conf-chip.is-active { background: var(--or); color: var(--onyx); border-color: var(--or); }
+    .conf-block { margin-top: 32px; }
+    .conf-block h4 { font-family: var(--font-mono); font-size: var(--t-12); letter-spacing: 0.18em; text-transform: uppercase; color: var(--or); margin: 0 0 16px; }
+    .conf-slider { width: 100%; }
+    .conf-summary {
+      background: var(--onyx);
+      border: 1px solid var(--or);
+      padding: 36px;
+    }
+    .conf-summary h3 { font-family: var(--font-mono); font-size: var(--t-12); letter-spacing: 0.2em; text-transform: uppercase; color: var(--or); margin: 0 0 24px; }
+    .conf-line { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--hairline); font-size: var(--t-14); color: var(--sable); }
+    .conf-line strong { color: var(--ivoire); font-weight: 500; }
+    .conf-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 24px 0 12px;
+      font-family: var(--font-display);
+      font-weight: 300;
+    }
+    .conf-total span:first-child { font-size: var(--t-16); color: var(--sable); }
+    .conf-total span:last-child { font-size: var(--t-49); color: var(--or); }
+    .conf-deposit {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--sable);
+      margin: 0 0 24px;
+      line-height: 1.7;
+    }
+    .conf-num-input {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid var(--hairline);
+      padding: 6px;
+      width: fit-content;
+    }
+    .conf-num-input button { width: 36px; height: 36px; color: var(--or); font-size: 20px; transition: background .2s; }
+    .conf-num-input button:hover { background: rgba(201,169,97,0.1); }
+    .conf-num-input input { width: 60px; text-align: center; background: transparent; border: 0; color: var(--ivoire); font-family: var(--font-mono); font-size: var(--t-16); outline: none; }
+  </style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="nav" aria-label="Navigation principale">
+  <a href="index.html" class="nav__brand">MAISON <span>360</span></a>
+  <div class="nav__links">
+    <a class="nav__link" href="studio.html">Le Studio</a>
+    <a class="nav__link" href="tarifs.html">Tarifs</a>
+    <a class="nav__link" href="galerie.html">Galerie</a>
+    <a class="nav__link" href="index.html#contact">Contact</a>
+  </div>
+  <a class="nav__cta" data-magnetic href="reservation.html">Réserver →</a>
+  <button class="nav__burger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" aria-hidden="true">
+  <ul class="mobile-menu__list">
+    <li><a href="studio.html"><span>01</span>Le Studio</a></li>
+    <li><a href="tarifs.html"><span>02</span>Tarifs</a></li>
+    <li><a href="galerie.html"><span>03</span>Galerie</a></li>
+    <li><a href="reservation.html"><span>04</span>Réserver</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section class="tarif-hero">
+  <p class="eyebrow" style="justify-content:center;" data-reveal>Tarifs & formules</p>
+  <h1 class="display text-display-xl" style="margin: 32px auto; max-width: 16ch;" data-reveal-mask>
+    <span>Une <em>transparence</em><br/>totale.</span>
+  </h1>
+  <p class="lede" style="max-width: 50ch; margin: 0 auto;" data-reveal data-delay="200">
+    Trois formules, des options modulables, un acompte de 30 % à la réservation et plus rien à gérer ensuite. Le reste se passe en studio.
+  </p>
+</section>
+
+<!-- FORMULES DETAIL -->
+<section class="section container" style="padding-top: clamp(40px, 6vw, 80px);">
+  <div class="formulas">
+    <article class="formula" data-reveal>
+      <span class="formula__tier">Découverte</span>
+      <h3 class="formula__name">À la <em>séance</em></h3>
+      <div class="formula__price">
+        <strong>180</strong><span>€ / heure</span>
+      </div>
+      <ul class="formula__features">
+        <li>Réservation à l'heure (min. 2h)</li>
+        <li>Accès à un espace dédié</li>
+        <li>Régisseur en cabine</li>
+        <li>Rushs livrés sous J+72h</li>
+        <li>Stockage 15 jours</li>
+        <li>Catering basique inclus</li>
+      </ul>
+      <a href="reservation.html" class="btn btn--outline" style="width:100%;">Réserver</a>
+    </article>
+
+    <article class="formula formula--featured" data-reveal data-delay="100">
+      <span class="formula__tier">Signature</span>
+      <h3 class="formula__name">Abonnement <em>mensuel</em></h3>
+      <div class="formula__price">
+        <strong>1 290</strong><span>€ / mois</span>
+      </div>
+      <ul class="formula__features">
+        <li>10 heures incluses chaque mois</li>
+        <li>Accès illimité aux 3 espaces</li>
+        <li>Rushs J+24h inclus</li>
+        <li>Stockage 60 jours</li>
+        <li>-20 % sur toutes les options</li>
+        <li>Conciergerie dédiée</li>
+        <li>Engagement 3 mois</li>
+        <li>Reportable d'un mois sur l'autre</li>
+      </ul>
+      <a href="reservation.html" class="btn" style="width:100%;">Souscrire</a>
+    </article>
+
+    <article class="formula" data-reveal data-delay="200">
+      <span class="formula__tier">Maison</span>
+      <h3 class="formula__name">Résidence <em>annuelle</em></h3>
+      <div class="formula__price">
+        <strong>Sur</strong><span>devis</span>
+      </div>
+      <ul class="formula__features">
+        <li>Accès illimité & prioritaire</li>
+        <li>Équipe dédiée (DA · Régie · Post-prod)</li>
+        <li>Stockage rushs 180 jours</li>
+        <li>NDA & confidentialité totale</li>
+        <li>Privatisation possible (24/7)</li>
+        <li>Studio mobile inclus 4x/an</li>
+        <li>Engagement 12 mois</li>
+      </ul>
+      <a href="index.html#contact" class="btn btn--outline" style="width:100%;">Nous contacter</a>
+    </article>
+  </div>
+</section>
+
+<!-- CONFIGURATEUR -->
+<section style="padding-top: clamp(60px, 8vw, 120px);">
+  <div class="container">
+    <div class="section-num"><strong>02</strong> · 04 — Configurateur</div>
+    <p class="eyebrow" data-reveal>Estimez votre session</p>
+    <h2 class="display text-display-lg" style="margin-top: 24px; max-width: 18ch;" data-reveal-mask>
+      <span>Composez votre <em>devis</em> en temps réel.</span>
+    </h2>
+  </div>
+
+  <div class="configurator" id="configurator">
+    <div>
+      <div class="conf-block">
+        <h4>Discipline</h4>
+        <div class="conf-toggle" data-group="discipline">
+          <button class="conf-chip is-active" data-value="podcast" data-rate="180">Podcast — 180€/h</button>
+          <button class="conf-chip" data-value="photo" data-rate="240">Photo — 240€/h</button>
+          <button class="conf-chip" data-value="stylisme" data-rate="160">Stylisme — 160€/h</button>
+        </div>
+      </div>
+
+      <div class="conf-block">
+        <h4>Durée</h4>
+        <div class="conf-num-input">
+          <button data-action="dec">−</button>
+          <input type="number" id="hours" value="3" min="2" max="12" />
+          <button data-action="inc">+</button>
+          <span style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--sable);">heures (min. 2)</span>
+        </div>
+      </div>
+
+      <div class="conf-block">
+        <h4>Rushs</h4>
+        <div class="conf-toggle" data-group="rushs">
+          <button class="conf-chip is-active" data-value="72" data-price="0">J+72h · inclus</button>
+          <button class="conf-chip" data-value="48" data-price="80">J+48h · +80€</button>
+          <button class="conf-chip" data-value="24" data-price="180">J+24h · +180€</button>
+        </div>
+      </div>
+
+      <div class="conf-block">
+        <h4>Options</h4>
+        <div class="conf-toggle" data-group="options" data-multi="true">
+          <button class="conf-chip" data-value="reels" data-price="220">Reels ×3 · +220€</button>
+          <button class="conf-chip" data-value="miniatures" data-price="140">Miniatures ×5 · +140€</button>
+          <button class="conf-chip" data-value="montage" data-price="350">Montage podcast · +350€</button>
+          <button class="conf-chip" data-value="operator" data-price="180">Opérateur · +180€/h</button>
+          <button class="conf-chip" data-value="prompter" data-price="60">Téléprompteur · +60€/h</button>
+          <button class="conf-chip" data-value="hmc" data-price="280">HMC · +280€</button>
+          <button class="conf-chip" data-value="catering" data-price="150">Catering premium · +150€</button>
+        </div>
+      </div>
+    </div>
+
+    <aside class="conf-summary">
+      <h3>Votre devis</h3>
+      <div id="conf-lines"></div>
+      <div class="conf-total">
+        <span>Total</span>
+        <span id="conf-total">0 €</span>
+      </div>
+      <p class="conf-deposit">
+        <span style="color:var(--or);">Acompte 30 % aujourd'hui :</span> <strong id="conf-deposit" style="color:var(--ivoire);">0 €</strong><br/>
+        Solde prélevé automatiquement 48h avant la session.
+      </p>
+      <a href="reservation.html" class="btn" style="width:100%;" data-magnetic>Continuer la réservation →</a>
+    </aside>
+  </div>
+</section>
+
+<!-- COMPARATIF -->
+<section class="section">
+  <div class="container">
+    <div class="section-num"><strong>03</strong> · 04 — Comparatif</div>
+    <p class="eyebrow" data-reveal>Comparatif détaillé</p>
+    <h2 class="display text-display-lg" style="margin-top: 24px; max-width: 18ch;" data-reveal-mask>
+      <span>Tout, en un coup d'œil.</span>
+    </h2>
+  </div>
+
+  <div class="tarif-table">
+    <div class="tarif-row tarif-row--head">
+      <span>Caractéristique</span>
+      <span class="tarif-row__cell">Découverte</span>
+      <span class="tarif-row__cell">Signature</span>
+      <span class="tarif-row__cell">Maison</span>
+    </div>
+    <div class="tarif-row">
+      <span class="tarif-row__feature">Heures incluses</span>
+      <span class="tarif-row__cell">À la carte</span>
+      <span class="tarif-row__cell tarif-row__cell--featured">10 h / mois</span>
+      <span class="tarif-row__cell">Illimité</span>
+    </div>
+    <div class="tarif-row">
+      <span class="tarif-row__feature">Accès espaces</span>
+      <span class="tarif-row__cell">1 espace / session</span>
+      <span class="tarif-row__cell tarif-row__cell--featured">3 espaces</span>
+      <span class="tarif-row__cell">3 espaces · priorité</span>
+    </div>
+    <div class="tarif-row">
+      <span class="tarif-row__feature">Délai de livraison rushs</span>
+      <span class="tarif-row__cell">J+72h</span>
+      <span class="tarif-row__cell tarif-row__cell--featured">J+24h</span>
+      <span class="tarif-row__cell">J+12h</span>
+    </div>
+    <div class="tarif-row">
+      <span class="tarif-row__feature">Conservation rushs</span>
+      <span class="tarif-row__cell">15 jours</span>
+      <span class="tarif-row__cell tarif-row__cell--featured">60 jours</span>
+      <span class="tarif-row__cell">180 jours</span>
+    </div>
+    <div class="tarif-row">
+      <span class="tarif-row__feature">Remise sur options</span>
+      <span class="tarif-row__cell">—</span>
+      <span class="tarif-row__cell tarif-row__cell--featured">-20 %</span>
+      <span class="tarif-row__cell">-35 %</span>
+    </div>
+    <div class="tarif-row">
+      <span class="tarif-row__feature">Conciergerie</span>
+      <span class="tarif-row__cell">—</span>
+      <span class="tarif-row__cell tarif-row__cell--featured">✓</span>
+      <span class="tarif-row__cell">Dédiée 7j/7</span>
+    </div>
+    <div class="tarif-row">
+      <span class="tarif-row__feature">Privatisation</span>
+      <span class="tarif-row__cell">—</span>
+      <span class="tarif-row__cell">—</span>
+      <span class="tarif-row__cell tarif-row__cell--featured">Sur demande</span>
+    </div>
+    <div class="tarif-row">
+      <span class="tarif-row__feature">NDA & confidentialité</span>
+      <span class="tarif-row__cell">Standard</span>
+      <span class="tarif-row__cell tarif-row__cell--featured">Standard</span>
+      <span class="tarif-row__cell">Juridique sur mesure</span>
+    </div>
+    <div class="tarif-row">
+      <span class="tarif-row__feature">Engagement minimum</span>
+      <span class="tarif-row__cell">Aucun</span>
+      <span class="tarif-row__cell tarif-row__cell--featured">3 mois</span>
+      <span class="tarif-row__cell">12 mois</span>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container">
+    <div class="section-num"><strong>04</strong> · 04 — Questions</div>
+    <p class="eyebrow" style="justify-content:center;" data-reveal>Foire aux questions</p>
+    <h2 class="display text-display-lg text-center" style="margin: 24px auto 80px; max-width: 18ch;" data-reveal-mask>
+      <span>On vous <em>répond</em>.</span>
+    </h2>
+
+    <div class="faq">
+      <details class="faq-item" open>
+        <summary>Comment fonctionne la politique d'annulation ?</summary>
+        <div class="faq-item__answer">
+          <p><strong style="color:var(--or);">Plus de 72h avant la session :</strong> remboursement total automatique sur votre moyen de paiement initial.</p>
+          <p><strong style="color:var(--or);">Entre 48h et 72h :</strong> l'acompte de 30 % est conservé, le solde n'est pas prélevé.</p>
+          <p><strong style="color:var(--or);">Moins de 48h :</strong> la totalité de la session est prélevée. Vous gardez la possibilité de reporter à tout moment sous 90 jours, sans frais.</p>
+          <p><strong style="color:var(--or);">No-show :</strong> une caution de 150 € peut être prélevée. Les abonnés Signature et Maison en sont exonérés.</p>
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>Quand suis-je débité du solde ?</summary>
+        <div class="faq-item__answer">
+          À la réservation, vous réglez 30 % d'acompte par Stripe. Le solde est prélevé automatiquement sur le même moyen de paiement <strong>48 heures avant le début de la session</strong>. Un email de confirmation accompagne le débit. Si le prélèvement échoue, nous vous proposons une réessaye sous 24h avant annulation.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>Combien de temps les rushs sont-ils accessibles ?</summary>
+        <div class="faq-item__answer">
+          La durée de conservation dépend de votre formule : <strong>15 jours</strong> en Découverte, <strong>60 jours</strong> en Signature, <strong>180 jours</strong> en Maison. Trois jours avant l'expiration, un email automatique vous prévient. Vous pouvez télécharger les fichiers depuis votre espace client via des liens sécurisés à durée limitée.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>Puis-je venir avec mon propre matériel ?</summary>
+        <div class="faq-item__answer">
+          Évidemment. Notre régie est compatible avec la plupart des micros, caméras et boîtiers du marché. Pour les ressources spécifiques (objectif Leica, micro vintage, équipement RED…), nous vous demandons simplement de nous le signaler à la réservation pour préparer les adaptateurs nécessaires.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>Le studio est-il accessible 24h/24 ?</summary>
+        <div class="faq-item__answer">
+          La réservation en ligne est ouverte 24h/24, 7j/7. Le studio est accessible physiquement de 7h à 23h en formule Découverte et Signature. Les abonnés Maison disposent d'un accès 24h/24 via badge sécurisé.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>Qui est sur place pendant ma session ?</summary>
+        <div class="faq-item__answer">
+          Un régisseur MAISON 360 vous accueille et reste disponible en régie pendant toute la durée de votre session pour vous accompagner techniquement. Sur demande, nous pouvons mettre à disposition un opérateur dédié (lumière, caméra, prise de son) en option.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>Puis-je facturer en société ?</summary>
+        <div class="faq-item__answer">
+          Bien sûr. Lors de la réservation, indiquez les coordonnées de votre entreprise (raison sociale, SIRET, adresse de facturation, n° de TVA intracommunautaire). La facture PDF conforme est automatiquement émise et disponible dans votre espace client. Les factures abonnement Signature et Maison sont mensuelles.
+        </div>
+      </details>
+      <details class="faq-item">
+        <summary>Comment fonctionne la confidentialité ?</summary>
+        <div class="faq-item__answer">
+          Toutes les équipes MAISON 360 signent un NDA standard à l'embauche. Pour les projets sensibles (lancement de marque, projet artistique en pré-production, talents médiatiques), nous proposons un NDA juridique sur mesure avant la session. Les rushs sont stockés sur Cloudflare R2 chiffré, en France, et purgés automatiquement selon votre formule.
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-section__bg"></div>
+  <h2 class="display text-display-xl" data-reveal-mask>
+    <span>Prêt·e à <em>réserver</em> ?</span>
+  </h2>
+  <p class="body-lg" data-reveal data-delay="200">
+    Quatre étapes, quatre-vingt-dix secondes. Acompte sécurisé, calendrier en temps réel.
+  </p>
+  <a href="reservation.html" class="btn" data-magnetic data-reveal data-delay="300">Démarrer la réservation</a>
+</section>
+
+<footer class="footer">
+  <div class="footer__top">
+    <div class="footer__col">
+      <h3 class="footer__brand">MAISON <span>360</span></h3>
+      <p class="body" style="max-width: 32ch;">Studio créatif premium · Podcast, Photo, Stylisme.</p>
+      <div style="margin-top: 32px; font-family:var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sable); line-height: 2;">
+        Villabé (91)<br/>Juillet 2026
+      </div>
+    </div>
+    <div class="footer__col">
+      <h4>Studio</h4>
+      <ul>
+        <li><a href="studio.html#podcast">Espace podcast</a></li>
+        <li><a href="studio.html#photo">Plateau photo</a></li>
+        <li><a href="studio.html#stylisme">Atelier stylisme</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Réserver</h4>
+      <ul>
+        <li><a href="tarifs.html">Tarifs</a></li>
+        <li><a href="reservation.html">Réservation</a></li>
+        <li><a href="#">Espace client</a></li>
+      </ul>
+    </div>
+    <div class="footer__col newsletter">
+      <h4>Notre journal</h4>
+      <p class="body" style="margin-bottom: 24px;">Coulisses & invitations privées.</p>
+      <form onsubmit="event.preventDefault();this.querySelector('button').textContent='✓ Inscrit';">
+        <input type="email" placeholder="votre@email.com" required />
+        <button type="submit">S'abonner</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>© 2026 MAISON 360</span>
+    <div style="display:flex; gap:32px;">
+      <a href="#">Mentions légales</a>
+      <a href="#">CGV</a>
+      <a href="#">Confidentialité</a>
+    </div>
+    <span>Instagram · Vimeo · LinkedIn</span>
+  </div>
+</footer>
+
+<script src="assets/js/main.js" defer></script>
+<script>
+// Configurateur tarif
+(() => {
+  const conf = document.getElementById('configurator');
+  if (!conf) return;
+  const state = {
+    discipline: { value: 'podcast', rate: 180, label: 'Podcast' },
+    hours: 3,
+    rushs: { value: '72', price: 0, label: 'Rushs J+72h' },
+    options: {},
+  };
+  const labels = { podcast: 'Podcast', photo: 'Photo', stylisme: 'Stylisme' };
+
+  conf.querySelectorAll('[data-group]').forEach(group => {
+    const isMulti = group.dataset.multi === 'true';
+    const key = group.dataset.group;
+    group.querySelectorAll('.conf-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        if (!isMulti) {
+          group.querySelectorAll('.conf-chip').forEach(c => c.classList.remove('is-active'));
+          chip.classList.add('is-active');
+          if (key === 'discipline') {
+            state.discipline = { value: chip.dataset.value, rate: parseInt(chip.dataset.rate, 10), label: labels[chip.dataset.value] };
+          }
+          if (key === 'rushs') {
+            state.rushs = { value: chip.dataset.value, price: parseInt(chip.dataset.price, 10), label: `Rushs J+${chip.dataset.value}h` };
+          }
+        } else {
+          chip.classList.toggle('is-active');
+          const v = chip.dataset.value;
+          const price = parseInt(chip.dataset.price, 10);
+          if (chip.classList.contains('is-active')) state.options[v] = { label: chip.textContent.split('·')[0].trim(), price };
+          else delete state.options[v];
+        }
+        render();
+      });
+    });
+  });
+
+  // Hours input
+  const hoursInput = document.getElementById('hours');
+  conf.querySelectorAll('[data-action]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      let v = parseInt(hoursInput.value, 10);
+      if (btn.dataset.action === 'inc' && v < 12) v += 1;
+      if (btn.dataset.action === 'dec' && v > 2) v -= 1;
+      hoursInput.value = v;
+      state.hours = v;
+      render();
+    });
+  });
+  hoursInput.addEventListener('change', () => {
+    let v = parseInt(hoursInput.value, 10);
+    if (isNaN(v) || v < 2) v = 2;
+    if (v > 12) v = 12;
+    hoursInput.value = v;
+    state.hours = v;
+    render();
+  });
+
+  function render() {
+    const lines = [];
+    const sessionCost = state.discipline.rate * state.hours;
+    lines.push({ k: `${state.discipline.label} — ${state.hours}h × ${state.discipline.rate}€`, v: sessionCost });
+    if (state.rushs.price > 0) lines.push({ k: state.rushs.label, v: state.rushs.price });
+    Object.values(state.options).forEach(o => lines.push({ k: o.label, v: o.price }));
+    const total = lines.reduce((s, l) => s + l.v, 0);
+    const deposit = Math.round(total * 0.3);
+
+    document.getElementById('conf-lines').innerHTML = lines.map(l => `
+      <div class="conf-line"><span>${l.k}</span><strong>${l.v} €</strong></div>
+    `).join('');
+    document.getElementById('conf-total').textContent = total.toLocaleString('fr-FR') + ' €';
+    document.getElementById('conf-deposit').textContent = deposit.toLocaleString('fr-FR') + ' €';
+  }
+  render();
+})();
+</script>
+</body>
+</html>

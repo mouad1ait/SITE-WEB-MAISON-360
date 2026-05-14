@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0A0908" />
+
+  <title>MAISON 360 — Studio créatif premium · Podcast · Photo · Stylisme · Villabé (91)</title>
+  <meta name="description" content="MAISON 360 — Studio créatif d'exception réunissant podcast, photo et stylisme. Conçu pour les artistes, sportifs, entrepreneurs et créateurs exigeants. Ouverture juillet 2026 à Villabé (91)." />
+  <meta name="keywords" content="studio podcast, studio photo, studio stylisme, studio créatif premium, Villabé, Essonne, Île-de-France, location studio" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="MAISON 360 — Studio créatif premium" />
+  <meta property="og:description" content="Un studio. Trois disciplines. Une vision. Podcast, photo, stylisme. Ouverture juillet 2026." />
+  <meta property="og:image" content="/assets/img/og.jpg" />
+  <meta property="og:locale" content="fr_FR" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0..100,0..1;1,9..144,300..600,0..100,0..1&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Lenis + GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.42/dist/lenis.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "MAISON 360",
+    "image": "https://maison360.fr/assets/img/og.jpg",
+    "@id": "https://maison360.fr",
+    "url": "https://maison360.fr",
+    "telephone": "+33 1 00 00 00 00",
+    "priceRange": "€€€",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "À préciser",
+      "addressLocality": "Villabé",
+      "postalCode": "91100",
+      "addressCountry": "FR"
+    },
+    "openingDate": "2026-07-01",
+    "description": "Studio créatif premium réunissant podcast, photo et stylisme."
+  }
+  </script>
+</head>
+<body>
+
+<!-- Grain cinématographique -->
+<div class="grain" aria-hidden="true"></div>
+
+<!-- Loader -->
+<div class="loader" aria-hidden="true">
+  <div class="loader__inner">
+    <div class="loader__mark">
+      <span>M</span><span>A</span><span>I</span><span>S</span><span>O</span><span>N</span><span>&nbsp;</span><span>3</span><span>6</span><span>0</span>
+    </div>
+    <div class="loader__line"></div>
+    <div class="loader__meta">Ouverture · Juillet 2026 · Villabé</div>
+  </div>
+</div>
+
+<!-- Navigation -->
+<nav class="nav" aria-label="Navigation principale">
+  <a href="index.html" class="nav__brand">MAISON <span>360</span></a>
+  <div class="nav__links">
+    <a class="nav__link" href="studio.html">Le Studio</a>
+    <a class="nav__link" href="tarifs.html">Tarifs</a>
+    <a class="nav__link" href="galerie.html">Galerie</a>
+    <a class="nav__link" href="#contact">Contact</a>
+  </div>
+  <a class="nav__cta" data-magnetic href="reservation.html">Réserver →</a>
+  <button class="nav__burger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" aria-hidden="true">
+  <ul class="mobile-menu__list">
+    <li><a href="studio.html"><span>01</span>Le Studio</a></li>
+    <li><a href="tarifs.html"><span>02</span>Tarifs</a></li>
+    <li><a href="galerie.html"><span>03</span>Galerie</a></li>
+    <li><a href="reservation.html"><span>04</span>Réserver</a></li>
+    <li><a href="#contact"><span>05</span>Contact</a></li>
+  </ul>
+  <div class="mobile-menu__footer">
+    <span>Villabé · 91</span>
+    <span>Juillet 2026</span>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- HERO                                          -->
+<!-- ============================================ -->
+<header class="hero" id="hero">
+  <div class="hero__bg">
+    <canvas id="hero-canvas" class="hero__canvas" aria-hidden="true"></canvas>
+    <!-- Subtle radial gradient -->
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%, rgba(201,169,97,0.12) 0%, transparent 50%), radial-gradient(ellipse at 20% 80%, rgba(58,55,47,0.4) 0%, transparent 60%);"></div>
+  </div>
+
+  <div class="hero__pill">
+    <span class="pulse"></span>
+    Réservations ouvertes · Juillet 2026
+  </div>
+
+  <h1 class="display text-display-xl hero__title" data-reveal-mask>
+    <span>Le studio des<br/>créateurs <em>exigeants</em>.</span>
+  </h1>
+
+  <div class="hero__meta">
+    <p class="hero__sub" data-reveal data-delay="600">
+      Un lieu cinématographique à Villabé. Trois disciplines réunies sous un même toit. Une expérience pensée pour les œuvres rares.
+    </p>
+    <a href="#manifesto" class="hero__scroll" data-hover>
+      <span>Découvrir</span>
+      <span class="hero__scroll-line"></span>
+    </a>
+  </div>
+
+  <div style="position:absolute; bottom:48px; right:var(--gutter); display:flex; gap:32px; font-family:var(--font-mono); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--sable);">
+    <span>48.62°N</span>
+    <span>2.45°E</span>
+    <span>F/1.4</span>
+  </div>
+</header>
+
+<!-- ============================================ -->
+<!-- MARQUEE                                       -->
+<!-- ============================================ -->
+<section class="marquee" aria-hidden="true">
+  <div class="marquee__track">
+    <span class="marquee__item">Podcast</span>
+    <span class="marquee__item"><em>Photo</em></span>
+    <span class="marquee__item">Stylisme</span>
+    <span class="marquee__item">Podcast</span>
+    <span class="marquee__item"><em>Photo</em></span>
+    <span class="marquee__item">Stylisme</span>
+  </div>
+  <div class="marquee__track" aria-hidden="true">
+    <span class="marquee__item">Podcast</span>
+    <span class="marquee__item"><em>Photo</em></span>
+    <span class="marquee__item">Stylisme</span>
+    <span class="marquee__item">Podcast</span>
+    <span class="marquee__item"><em>Photo</em></span>
+    <span class="marquee__item">Stylisme</span>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- MANIFESTO                                     -->
+<!-- ============================================ -->
+<section class="section container" id="manifesto">
+  <div class="section-num"><strong>01</strong> · 06 — Manifesto</div>
+
+  <div class="manifesto">
+    <div class="manifesto__visual" data-reveal>
+      <!-- Image éditoriale (placeholder dégradé) -->
+      <div style="width:100%;height:100%;background:
+        linear-gradient(135deg, rgba(201,169,97,0.15) 0%, transparent 40%),
+        linear-gradient(45deg, var(--anthracite) 0%, var(--onyx) 100%);
+        position:relative;">
+        <svg viewBox="0 0 400 500" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.4;" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="200" cy="250" r="80" fill="none" stroke="#C9A961" stroke-width="1"/>
+          <circle cx="200" cy="250" r="120" fill="none" stroke="#C9A961" stroke-width="1" stroke-dasharray="2 4"/>
+          <line x1="200" y1="50" x2="200" y2="450" stroke="#C9A961" stroke-width="0.5" stroke-dasharray="1 6"/>
+          <line x1="50" y1="250" x2="350" y2="250" stroke="#C9A961" stroke-width="0.5" stroke-dasharray="1 6"/>
+        </svg>
+        <div style="position:absolute;bottom:24px;left:24px;color:var(--ivoire);font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;">
+          MAISON 360 · 2026
+        </div>
+      </div>
+    </div>
+
+    <div class="manifesto__text">
+      <p class="eyebrow" data-reveal>Notre manifesto</p>
+      <h2 class="display text-display-lg" data-reveal-mask>
+        <span>Un studio.<br/>Trois disciplines.<br/><em>Une vision.</em></span>
+      </h2>
+      <p class="body-lg" data-reveal data-delay="200">
+        MAISON 360 réunit dans un même lieu trois métiers de l'image et du son. Une chapelle dédiée au podcast, un plateau photo aux lumières contrôlées, un espace stylisme pensé comme une rédaction de mode.
+      </p>
+      <p class="body-lg" data-reveal data-delay="300">
+        Nous travaillons avec celles et ceux qui placent la barre très haut — artistes, sportifs de haut niveau, entrepreneurs et créateurs de contenu — pour produire des œuvres qui méritent d'exister.
+      </p>
+
+      <dl class="manifesto__list" data-reveal data-delay="400">
+        <div>
+          <dt>Direction artistique</dt>
+          <dd>Sur mesure</dd>
+        </div>
+        <div>
+          <dt>Équipement</dt>
+          <dd>Broadcast</dd>
+        </div>
+        <div>
+          <dt>Confidentialité</dt>
+          <dd>Absolue</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- LES 3 PÔLES                                   -->
+<!-- ============================================ -->
+<section class="section" style="padding-bottom: 0;">
+  <div class="container" style="margin-bottom: 80px;">
+    <div class="section-num"><strong>02</strong> · 06 — Disciplines</div>
+    <p class="eyebrow" data-reveal>Trois pôles</p>
+    <h2 class="display text-display-lg" style="max-width: 18ch; margin-top: 24px;" data-reveal-mask>
+      <span>Des espaces conçus pour <em>chaque langage</em>.</span>
+    </h2>
+  </div>
+
+  <div class="pillars">
+    <article class="pillar" data-hover>
+      <div class="pillar__bg">
+        <div style="width:100%;height:100%;background:
+          radial-gradient(circle at 30% 50%, rgba(201,169,97,0.25), transparent 60%),
+          linear-gradient(135deg, #1a1814 0%, #0a0908 100%);"></div>
+      </div>
+      <div class="pillar__num">01 — Podcast</div>
+      <h3 class="pillar__title">Le Cabinet du <em>son</em>.</h3>
+      <p class="pillar__desc">Une cabine acoustique traitée au cordeau, micros broadcast, table de mixage Rodecaster Duo. Quatre intervenants, captation vidéo 4K, télévision interactive.</p>
+      <ul class="pillar__list">
+        <li>Shure SM7B · ×4</li>
+        <li>Caméras Sony FX3 · ×3</li>
+        <li>Régie live · Atem Mini Extreme</li>
+        <li>Téléprompteur intégré</li>
+      </ul>
+      <a href="studio.html#podcast" class="pillar__cta">Découvrir l'espace</a>
+    </article>
+
+    <article class="pillar" data-hover>
+      <div class="pillar__bg">
+        <div style="width:100%;height:100%;background:
+          radial-gradient(circle at 70% 30%, rgba(201,169,97,0.2), transparent 60%),
+          linear-gradient(225deg, #1a1814 0%, #0a0908 100%);"></div>
+      </div>
+      <div class="pillar__num">02 — Photo</div>
+      <h3 class="pillar__title">Le Plateau <em>lumière</em>.</h3>
+      <p class="pillar__desc">120 m² au sol, fond infini, parc lumière Profoto, cyclorama, machinerie cinéma. Pensé pour la mode, le portrait, l'éditorial et la vidéo brand.</p>
+      <ul class="pillar__list">
+        <li>Fond cyclorama 8×5 m</li>
+        <li>Profoto B10 Plus · ×6</li>
+        <li>Optiques Sigma Art · Sony GM</li>
+        <li>Loge & maquillage HD</li>
+      </ul>
+      <a href="studio.html#photo" class="pillar__cta">Découvrir l'espace</a>
+    </article>
+
+    <article class="pillar" data-hover>
+      <div class="pillar__bg">
+        <div style="width:100%;height:100%;background:
+          radial-gradient(circle at 50% 80%, rgba(201,169,97,0.25), transparent 60%),
+          linear-gradient(315deg, #1a1814 0%, #0a0908 100%);"></div>
+      </div>
+      <div class="pillar__num">03 — Stylisme</div>
+      <h3 class="pillar__title">L'Atelier <em>matières</em>.</h3>
+      <p class="pillar__desc">Un espace stylisme façon rédaction de mode. Portants, vapeur, miroirs trois faces, mood boards. Réservé aux directions artistiques exigeantes.</p>
+      <ul class="pillar__list">
+        <li>Portants modulables · 40 m</li>
+        <li>Cabines essayage · ×3</li>
+        <li>Vapeur Jiffy professionnel</li>
+        <li>Catering & lounge</li>
+      </ul>
+      <a href="studio.html#stylisme" class="pillar__cta">Découvrir l'espace</a>
+    </article>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- FEATURED WORK                                 -->
+<!-- ============================================ -->
+<section class="section container">
+  <div class="section-num"><strong>03</strong> · 06 — Productions</div>
+
+  <div class="flex-between" style="margin-bottom: 40px;">
+    <div>
+      <p class="eyebrow" data-reveal>Travaux récents</p>
+      <h2 class="display text-display-lg" style="margin-top: 24px; max-width: 16ch;" data-reveal-mask>
+        <span>Une <em>archive</em> en construction.</span>
+      </h2>
+    </div>
+    <a href="galerie.html" class="btn btn--outline" data-magnetic>Voir la galerie complète</a>
+  </div>
+
+  <div class="work-grid">
+    <article class="work-card work-card--lg" data-hover>
+      <div style="width:100%;height:100%;background:
+        radial-gradient(circle at 30% 70%, rgba(201,169,97,0.4), transparent 50%),
+        linear-gradient(160deg, #2a2620 0%, #0a0908 70%);">
+        <svg viewBox="0 0 800 600" style="width:100%;height:100%;opacity:0.5;" xmlns="http://www.w3.org/2000/svg">
+          <rect x="100" y="100" width="600" height="400" fill="none" stroke="#C9A961" stroke-width="0.5"/>
+          <circle cx="400" cy="300" r="120" fill="none" stroke="#C9A961" stroke-width="0.5"/>
+        </svg>
+      </div>
+      <div class="work-card__meta">
+        <h3 class="work-card__title">Studio Session — Léo K., champion olympique</h3>
+        <span class="work-card__cat">Podcast · 2026</span>
+      </div>
+    </article>
+
+    <article class="work-card work-card--md" data-hover>
+      <div style="width:100%;height:100%;background:
+        radial-gradient(circle at 70% 30%, rgba(201,169,97,0.35), transparent 50%),
+        linear-gradient(45deg, #1a1814 0%, #0a0908 80%);">
+        <svg viewBox="0 0 400 500" style="width:100%;height:100%;opacity:0.4;" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="200" cy="200" r="80" fill="none" stroke="#C9A961" stroke-width="1"/>
+          <line x1="200" y1="280" x2="200" y2="450" stroke="#C9A961" stroke-width="0.5"/>
+        </svg>
+      </div>
+      <div class="work-card__meta">
+        <h3 class="work-card__title">Campagne capsule — Atelier H.</h3>
+        <span class="work-card__cat">Photo · 2026</span>
+      </div>
+    </article>
+
+    <article class="work-card work-card--sq" data-hover>
+      <div style="width:100%;height:100%;background:
+        radial-gradient(circle at 50% 50%, rgba(201,169,97,0.3), transparent 60%),
+        linear-gradient(220deg, #2a2620 0%, #0a0908 80%);"></div>
+      <div class="work-card__meta">
+        <h3 class="work-card__title">Direction artistique — Maison V.</h3>
+        <span class="work-card__cat">Stylisme · 2026</span>
+      </div>
+    </article>
+
+    <article class="work-card work-card--sq" data-hover>
+      <div style="width:100%;height:100%;background:
+        radial-gradient(circle at 20% 80%, rgba(201,169,97,0.3), transparent 60%),
+        linear-gradient(135deg, #1a1814 0%, #0a0908 80%);"></div>
+      <div class="work-card__meta">
+        <h3 class="work-card__title">Portrait Founder — Y.</h3>
+        <span class="work-card__cat">Photo · 2026</span>
+      </div>
+    </article>
+
+    <article class="work-card work-card--wd" data-hover>
+      <div style="width:100%;height:100%;background:
+        radial-gradient(circle at 50% 50%, rgba(201,169,97,0.2), transparent 70%),
+        linear-gradient(90deg, #1a1814 0%, #2a2620 50%, #0a0908 100%);">
+        <svg viewBox="0 0 1600 700" style="width:100%;height:100%;opacity:0.3;" xmlns="http://www.w3.org/2000/svg">
+          <line x1="0" y1="350" x2="1600" y2="350" stroke="#C9A961" stroke-width="0.5"/>
+          <circle cx="400" cy="350" r="60" fill="none" stroke="#C9A961" stroke-width="0.5"/>
+          <circle cx="800" cy="350" r="100" fill="none" stroke="#C9A961" stroke-width="0.5"/>
+          <circle cx="1200" cy="350" r="60" fill="none" stroke="#C9A961" stroke-width="0.5"/>
+        </svg>
+      </div>
+      <div class="work-card__meta">
+        <h3 class="work-card__title">Brand film — Marque française d'horlogerie</h3>
+        <span class="work-card__cat">Photo + Podcast · 2026</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- STATS                                         -->
+<!-- ============================================ -->
+<section class="section--tight">
+  <div class="stats">
+    <div class="stat">
+      <span class="stat__num"><span data-counter="380" data-suffix="m²">0</span></span>
+      <span class="stat__label">Surface totale</span>
+    </div>
+    <div class="stat">
+      <span class="stat__num"><span data-counter="3" data-suffix="">0</span></span>
+      <span class="stat__label">Studios indépendants</span>
+    </div>
+    <div class="stat">
+      <span class="stat__num"><span data-counter="24" data-suffix="/7">0</span></span>
+      <span class="stat__label">Accès & réservation</span>
+    </div>
+    <div class="stat">
+      <span class="stat__num"><span data-counter="48" data-suffix="h">0</span></span>
+      <span class="stat__label">Rushs livrés sous</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- FORMULES TEASER                               -->
+<!-- ============================================ -->
+<section class="section container">
+  <div class="section-num"><strong>04</strong> · 06 — Formules</div>
+
+  <div class="flex-between" style="margin-bottom: 40px;">
+    <div>
+      <p class="eyebrow" data-reveal>Tarifs & abonnements</p>
+      <h2 class="display text-display-lg" style="margin-top: 24px; max-width: 18ch;" data-reveal-mask>
+        <span>Trois formules. <em>Aucun compromis.</em></span>
+      </h2>
+    </div>
+    <a href="tarifs.html" class="btn btn--outline" data-magnetic>Voir le détail complet</a>
+  </div>
+
+  <div class="formulas">
+    <article class="formula" data-reveal>
+      <span class="formula__tier">Découverte</span>
+      <h3 class="formula__name">À la <em>séance</em></h3>
+      <div class="formula__price">
+        <strong>180</strong><span>€ / heure</span>
+      </div>
+      <ul class="formula__features">
+        <li>Réservation à l'heure (min. 2h)</li>
+        <li>Accès à un espace</li>
+        <li>Rushs J+72h inclus</li>
+        <li>Régisseur en cabine</li>
+        <li>Café & eau pétillante</li>
+      </ul>
+      <a href="reservation.html" class="btn btn--outline" style="width:100%;">Réserver une session</a>
+    </article>
+
+    <article class="formula formula--featured" data-reveal data-delay="100">
+      <span class="formula__tier">Signature</span>
+      <h3 class="formula__name">Abonnement <em>mensuel</em></h3>
+      <div class="formula__price">
+        <strong>1 290</strong><span>€ / mois</span>
+      </div>
+      <ul class="formula__features">
+        <li>10 heures incluses / mois</li>
+        <li>Accès aux 3 espaces</li>
+        <li>Rushs J+24h inclus</li>
+        <li>Tarif préférentiel options (-20%)</li>
+        <li>Conciergerie dédiée</li>
+        <li>Catering & lounge premium</li>
+      </ul>
+      <a href="reservation.html" class="btn" style="width:100%;">Souscrire</a>
+    </article>
+
+    <article class="formula" data-reveal data-delay="200">
+      <span class="formula__tier">Maison</span>
+      <h3 class="formula__name">Sur <em>mesure</em></h3>
+      <div class="formula__price">
+        <strong>Sur</strong><span>devis</span>
+      </div>
+      <ul class="formula__features">
+        <li>Résidence artistique annuelle</li>
+        <li>Accès illimité & priorité</li>
+        <li>Équipe dédiée (DA · Régie · Post)</li>
+        <li>Stockage rushs 6 mois</li>
+        <li>NDA & confidentialité totale</li>
+        <li>Privatisation possible</li>
+      </ul>
+      <a href="#contact" class="btn btn--outline" style="width:100%;">Nous contacter</a>
+    </article>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- TESTIMONIALS                                  -->
+<!-- ============================================ -->
+<section class="section container">
+  <div class="section-num"><strong>05</strong> · 06 — Témoignages</div>
+
+  <p class="eyebrow" data-reveal>Ils sont passés par MAISON 360</p>
+  <h2 class="display text-display-lg" style="margin-top: 24px; max-width: 18ch; margin-bottom: 80px;" data-reveal-mask>
+    <span>La parole à <em>celles et ceux</em> qui créent.</span>
+  </h2>
+
+  <div class="testimonials">
+    <article class="testimonial" data-reveal>
+      <p class="testimonial__quote">L'endroit le plus pro où j'ai jamais enregistré. Tout est anticipé, du son à la lumière, jusqu'au café. On vient pour créer, on repart avec un master.</p>
+      <div class="testimonial__author">
+        <div class="testimonial__avatar"></div>
+        <div>
+          <p class="testimonial__name">Adrien M.</p>
+          <p class="testimonial__role">Athlète · Athlétisme</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="testimonial" data-reveal data-delay="100">
+      <p class="testimonial__quote">Le seul studio d'Île-de-France qui combine ce niveau d'équipement et cette direction artistique. Mes shootings campagne s'y produisent désormais.</p>
+      <div class="testimonial__author">
+        <div class="testimonial__avatar"></div>
+        <div>
+          <p class="testimonial__name">Camille R.</p>
+          <p class="testimonial__role">Fondatrice · Marque de luxe</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="testimonial" data-reveal>
+      <p class="testimonial__quote">Mon agence ne travaille plus qu'avec MAISON 360 sur la région. L'équipe comprend l'enjeu d'une marque. Rare.</p>
+      <div class="testimonial__author">
+        <div class="testimonial__avatar"></div>
+        <div>
+          <p class="testimonial__name">Sofiane B.</p>
+          <p class="testimonial__role">Directeur · Agence créative</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="testimonial" data-reveal data-delay="100">
+      <p class="testimonial__quote">Une expérience qui rappelle les studios de Milan ou Londres. Avec en prime, une rigueur française très appréciable.</p>
+      <div class="testimonial__author">
+        <div class="testimonial__avatar"></div>
+        <div>
+          <p class="testimonial__name">Léa V.</p>
+          <p class="testimonial__role">Créatrice de contenu · 1.4M abonnés</p>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============================================ -->
+<!-- CTA FINAL                                     -->
+<!-- ============================================ -->
+<section class="cta-section">
+  <div class="cta-section__bg"></div>
+  <p class="eyebrow" style="justify-content:center;" data-reveal>Réservez maintenant</p>
+  <h2 class="display text-display-xl" data-reveal-mask>
+    <span>Votre prochaine<br/>œuvre <em>commence ici</em>.</span>
+  </h2>
+  <p class="body-lg" data-reveal data-delay="200">
+    Acompte de 30 % à la réservation. Solde prélevé automatiquement 48 heures avant la session. Aucune surprise, juste de la création.
+  </p>
+  <a href="reservation.html" class="btn" data-magnetic data-reveal data-delay="300">
+    Réserver une session
+  </a>
+</section>
+
+<!-- ============================================ -->
+<!-- FOOTER                                        -->
+<!-- ============================================ -->
+<footer class="footer" id="contact">
+  <div class="footer__top">
+    <div class="footer__col">
+      <h3 class="footer__brand">MAISON <span>360</span></h3>
+      <p class="body" style="max-width: 32ch;">Studio créatif premium · Podcast, Photo, Stylisme. Conçu pour celles et ceux qui placent la barre très haut.</p>
+      <div style="margin-top: 32px; font-family:var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sable); line-height: 2;">
+        Villabé (91) · Île-de-France<br/>
+        Ouverture juillet 2026
+      </div>
+    </div>
+
+    <div class="footer__col">
+      <h4>Studio</h4>
+      <ul>
+        <li><a href="studio.html#podcast">Espace podcast</a></li>
+        <li><a href="studio.html#photo">Plateau photo</a></li>
+        <li><a href="studio.html#stylisme">Atelier stylisme</a></li>
+        <li><a href="galerie.html">Galerie</a></li>
+        <li><a href="#">Blog</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col">
+      <h4>Réserver</h4>
+      <ul>
+        <li><a href="tarifs.html">Tarifs & formules</a></li>
+        <li><a href="reservation.html">Réservation</a></li>
+        <li><a href="#">Espace client</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Cartes cadeaux</a></li>
+      </ul>
+    </div>
+
+    <div class="footer__col newsletter">
+      <h4>Notre journal</h4>
+      <p class="body" style="margin-bottom: 24px;">Une lettre mensuelle, éditée par l'équipe. Coulisses, dernières productions et invitations privées.</p>
+      <form onsubmit="event.preventDefault(); this.querySelector('button').textContent = '✓ Inscrit'; this.querySelector('input').value='';">
+        <input type="email" placeholder="votre@email.com" required />
+        <button type="submit">S'abonner</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="footer__bottom">
+    <span>© 2026 MAISON 360 · Tous droits réservés</span>
+    <div style="display:flex; gap:32px;">
+      <a href="#">Mentions légales</a>
+      <a href="#">CGV</a>
+      <a href="#">Confidentialité</a>
+      <a href="#">Cookies</a>
+    </div>
+    <span>Instagram · Vimeo · LinkedIn</span>
+  </div>
+
+  <div class="footer__massive" aria-hidden="true">
+    MAISON <em>360</em>
+  </div>
+</footer>
+
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>
