@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0A0908" />
+  <title>Galerie — MAISON 360 · Productions, séances et campagnes</title>
+  <meta name="description" content="Une sélection éditoriale des productions réalisées à MAISON 360. Podcast, photo, stylisme, brand films." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.42/dist/lenis.min.js" defer></script>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <style>
+    .gallery-hero { padding: 180px var(--gutter) 60px; text-align: center; }
+    .gallery-section { padding: 40px var(--gutter) 120px; }
+    .gallery-grid { grid-auto-rows: 220px; }
+    @media (min-width: 880px) { .gallery-grid { grid-auto-rows: 280px; } }
+
+    .lightbox {
+      position: fixed; inset: 0;
+      background: rgba(10, 9, 8, 0.96);
+      backdrop-filter: blur(20px);
+      z-index: 900;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      opacity: 0;
+      transition: opacity .4s var(--ease-out-expo);
+    }
+    .lightbox.is-open { display: flex; opacity: 1; }
+    .lightbox__content { max-width: 1200px; width: 100%; }
+    .lightbox__visual {
+      width: 100%;
+      aspect-ratio: 16/10;
+      background: var(--anthracite);
+      margin-bottom: 32px;
+    }
+    .lightbox__meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      color: var(--ivoire);
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .lightbox__close {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      width: 48px;
+      height: 48px;
+      border: 1px solid var(--hairline-strong);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: var(--ivoire);
+      font-size: 20px;
+      transition: all .25s;
+    }
+    .lightbox__close:hover { background: var(--or); color: var(--onyx); border-color: var(--or); }
+
+    .gallery-item__overlay {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      right: 16px;
+      color: var(--ivoire);
+      transform: translateY(10px);
+      opacity: 0;
+      transition: all .5s var(--ease-out-expo);
+      z-index: 2;
+    }
+    .gallery-item:hover .gallery-item__overlay { transform: translateY(0); opacity: 1; }
+    .gallery-item::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 60%, rgba(10,9,8,0.9) 100%);
+      opacity: 0;
+      transition: opacity .4s;
+      z-index: 1;
+    }
+    .gallery-item:hover::before { opacity: 1; }
+    .gallery-item__title { font-family: var(--font-display); font-size: var(--t-21); margin: 0; font-weight: 300; line-height: 1.2; }
+    .gallery-item__cat { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--or); }
+
+    .grad-card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+  </style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<nav class="nav" aria-label="Navigation principale">
+  <a href="index.html" class="nav__brand">MAISON <span>360</span></a>
+  <div class="nav__links">
+    <a class="nav__link" href="studio.html">Le Studio</a>
+    <a class="nav__link" href="tarifs.html">Tarifs</a>
+    <a class="nav__link" href="galerie.html">Galerie</a>
+    <a class="nav__link" href="index.html#contact">Contact</a>
+  </div>
+  <a class="nav__cta" data-magnetic href="reservation.html">Réserver →</a>
+  <button class="nav__burger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" aria-hidden="true">
+  <ul class="mobile-menu__list">
+    <li><a href="studio.html"><span>01</span>Le Studio</a></li>
+    <li><a href="tarifs.html"><span>02</span>Tarifs</a></li>
+    <li><a href="galerie.html"><span>03</span>Galerie</a></li>
+    <li><a href="reservation.html"><span>04</span>Réserver</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section class="gallery-hero">
+  <p class="eyebrow" style="justify-content:center;" data-reveal>Galerie</p>
+  <h1 class="display text-display-xl" style="margin: 24px auto; max-width: 18ch;" data-reveal-mask>
+    <span>L'<em>archive</em> en mouvement.</span>
+  </h1>
+  <p class="lede" style="max-width: 52ch; margin: 0 auto;" data-reveal data-delay="200">
+    Une sélection des productions réalisées dans nos studios. Chaque image est un projet. Chaque projet, un parti pris.
+  </p>
+</section>
+
+<!-- FILTERS -->
+<div class="container">
+  <div class="gallery-filters" data-reveal>
+    <button class="gallery-filter is-active" data-filter="all">Tout</button>
+    <button class="gallery-filter" data-filter="podcast">Podcast</button>
+    <button class="gallery-filter" data-filter="photo">Photo</button>
+    <button class="gallery-filter" data-filter="stylisme">Stylisme</button>
+    <button class="gallery-filter" data-filter="brand">Brand Films</button>
+  </div>
+</div>
+
+<!-- GRID -->
+<section class="gallery-section">
+  <div class="gallery-grid">
+    <div class="gallery-item gallery-item--tall" data-cat="photo" onclick="openLightbox('Campagne capsule — Atelier H.', 'Photo · 2026', 'photo')">
+      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=85&auto=format&fit=crop" alt="Campagne capsule" loading="lazy" />
+      <div class="gallery-item__overlay">
+        <span class="gallery-item__cat">Photo · 2026</span>
+        <h3 class="gallery-item__title">Campagne capsule — Atelier H.</h3>
+      </div>
+    </div>
+
+    <div class="gallery-item gallery-item--reg" data-cat="podcast" onclick="openLightbox('Studio Session — Léo K.', 'Podcast · 2026', 'podcast')">
+      <img src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=600&q=85&auto=format&fit=crop" alt="Studio session" loading="lazy" />
+      <div class="gallery-item__overlay">
+        <span class="gallery-item__cat">Podcast · 2026</span>
+        <h3 class="gallery-item__title">Léo K. — Champion olympique</h3>
+      </div>
+    </div>
+
+    <div class="gallery-item gallery-item--reg" data-cat="stylisme" onclick="openLightbox('Direction artistique — Maison V.', 'Stylisme · 2026', 'stylisme')">
+      <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=85&auto=format&fit=crop" alt="Direction artistique stylisme" loading="lazy" />
+      <div class="gallery-item__overlay">
+        <span class="gallery-item__cat">Stylisme · 2026</span>
+        <h3 class="gallery-item__title">Direction artistique — Maison V.</h3>
+      </div>
+    </div>
+
+    <div class="gallery-item gallery-item--reg" data-cat="brand" onclick="openLightbox('Brand film horlogerie', 'Brand · 2026', 'brand')">
+      <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=600&q=85&auto=format&fit=crop" alt="Brand film horlogerie" loading="lazy" />
+      <div class="gallery-item__overlay">
+        <span class="gallery-item__cat">Brand · 2026</span>
+        <h3 class="gallery-item__title">Brand film — Horlogerie</h3>
+      </div>
+    </div>
+
+    <div class="gallery-item gallery-item--tall" data-cat="photo" onclick="openLightbox('Portrait Founder — Y.', 'Photo · 2026', 'photo')">
+      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=85&auto=format&fit=crop" alt="Portrait Founder" loading="lazy" />
+      <div class="gallery-item__overlay">
+        <span class="gallery-item__cat">Photo · 2026</span>
+        <h3 class="gallery-item__title">Portrait Founder — Y.</h3>
+      </div>
+    </div>
+
+    <div class="gallery-item gallery-item--reg" data-cat="podcast" onclick="openLightbox('Série entrepreneurs', 'Podcast · 2026', 'podcast')">
+      <img src="https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=600&q=85&auto=format&fit=crop" alt="Série entrepreneurs" loading="lazy" />
+      <div class="gallery-item__overlay">
+        <span class="gallery-item__cat">Podcast · 2026</span>
+        <h3 class="gallery-item__title">Série « Les entrepreneurs »</h3>
+      </div>
+    </div>
+
+    <div class="gallery-item gallery-item--reg" data-cat="stylisme" onclick="openLightbox('Look-book FW26', 'Stylisme · 2026', 'stylisme')">
+      <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=85&auto=format&fit=crop" alt="Look-book FW26" loading="lazy" />
+      <div class="gallery-item__overlay">
+        <span class="gallery-item__cat">Stylisme · 2026</span>
+        <h3 class="gallery-item__title">Look-book FW26</h3>
+      </div>
+    </div>
+
+    <div class="gallery-item gallery-item--reg" data-cat="photo" onclick="openLightbox('Nature morte produit', 'Photo · 2026', 'photo')">
+      <img src="https://images.unsplash.com/photo-1606293926249-ed22fbfb1b58?w=600&q=85&auto=format&fit=crop" alt="Nature morte produit" loading="lazy" />
+      <div class="gallery-item__overlay">
+        <span class="gallery-item__cat">Photo · 2026</span>
+        <h3 class="gallery-item__title">Nature morte — Produit</h3>
+      </div>
+    </div>
+
+    <div class="gallery-item gallery-item--reg" data-cat="brand" onclick="openLightbox('Lancement digital', 'Brand · 2026', 'brand')">
+      <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=85&auto=format&fit=crop" alt="Lancement marque" loading="lazy" />
+      <div class="gallery-item__overlay">
+        <span class="gallery-item__cat">Brand · 2026</span>
+        <h3 class="gallery-item__title">Lancement marque digital-native</h3>
+      </div>
+    </div>
+
+    <div class="gallery-item gallery-item--tall" data-cat="photo" onclick="openLightbox('Éditorial sport', 'Photo · 2026', 'photo')">
+      <img src="https://images.unsplash.com/photo-1483721310020-03333e577078?w=800&q=85&auto=format&fit=crop" alt="Éditorial sport" loading="lazy" />
+      <div class="gallery-item__overlay">
+        <span class="gallery-item__cat">Photo · 2026</span>
+        <h3 class="gallery-item__title">Éditorial sport</h3>
+      </div>
+    </div>
+
+    <div class="gallery-item gallery-item--reg" data-cat="podcast" onclick="openLightbox('Live recording artiste', 'Podcast · 2026', 'podcast')">
+      <img src="https://images.unsplash.com/photo-1581368135153-a506cf13b1e1?w=600&q=85&auto=format&fit=crop" alt="Live recording artiste" loading="lazy" />
+      <div class="gallery-item__overlay">
+        <span class="gallery-item__cat">Podcast · 2026</span>
+        <h3 class="gallery-item__title">Live recording — Artiste</h3>
+      </div>
+    </div>
+
+    <div class="gallery-item gallery-item--reg" data-cat="stylisme" onclick="openLightbox('Press kit collection', 'Stylisme · 2026', 'stylisme')">
+      <img src="https://images.unsplash.com/photo-1485518882345-15568b007407?w=600&q=85&auto=format&fit=crop" alt="Press kit collection" loading="lazy" />
+      <div class="gallery-item__overlay">
+        <span class="gallery-item__cat">Stylisme · 2026</span>
+        <h3 class="gallery-item__title">Press kit collection capsule</h3>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-section__bg"></div>
+  <p class="eyebrow" style="justify-content:center;" data-reveal>Et la vôtre ?</p>
+  <h2 class="display text-display-xl" data-reveal-mask>
+    <span>Votre projet a sa <em>place</em> ici.</span>
+  </h2>
+  <p class="body-lg" data-reveal data-delay="200">
+    Chaque création présentée ici a commencé par une simple réservation.
+  </p>
+  <a href="reservation.html" class="btn" data-magnetic data-reveal data-delay="300">Démarrer un projet</a>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="if(event.target.id==='lightbox')closeLightbox()">
+  <button class="lightbox__close" onclick="closeLightbox()">×</button>
+  <div class="lightbox__content">
+    <div class="lightbox__visual" id="lightboxVisual"></div>
+    <div class="lightbox__meta">
+      <div>
+        <p class="mono" style="color:var(--or); margin: 0 0 8px;" id="lightboxCat">—</p>
+        <h2 class="display" style="font-size: clamp(2rem, 4vw, 3.5rem); margin: 0; font-weight: 300;" id="lightboxTitle">—</h2>
+      </div>
+      <a href="reservation.html" class="btn">Réserver une session similaire</a>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer__top">
+    <div class="footer__col">
+      <h3 class="footer__brand">MAISON <span>360</span></h3>
+      <p class="body" style="max-width: 32ch;">Studio créatif premium · Podcast, Photo, Stylisme.</p>
+      <div style="margin-top: 32px; font-family:var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sable); line-height: 2;">
+        Villabé (91)<br/>Juillet 2026
+      </div>
+    </div>
+    <div class="footer__col">
+      <h4>Studio</h4>
+      <ul>
+        <li><a href="studio.html#podcast">Espace podcast</a></li>
+        <li><a href="studio.html#photo">Plateau photo</a></li>
+        <li><a href="studio.html#stylisme">Atelier stylisme</a></li>
+      </ul>
+    </div>
+    <div class="footer__col">
+      <h4>Réserver</h4>
+      <ul>
+        <li><a href="tarifs.html">Tarifs</a></li>
+        <li><a href="reservation.html">Réservation</a></li>
+        <li><a href="#">Espace client</a></li>
+      </ul>
+    </div>
+    <div class="footer__col newsletter">
+      <h4>Notre journal</h4>
+      <p class="body" style="margin-bottom: 24px;">Coulisses & invitations privées.</p>
+      <form onsubmit="event.preventDefault();this.querySelector('button').textContent='✓ Inscrit';">
+        <input type="email" placeholder="votre@email.com" required />
+        <button type="submit">S'abonner</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>© 2026 MAISON 360</span>
+    <div style="display:flex; gap:32px;">
+      <a href="#">Mentions légales</a>
+      <a href="#">CGV</a>
+      <a href="#">Confidentialité</a>
+    </div>
+    <span>Instagram · Vimeo · LinkedIn</span>
+  </div>
+</footer>
+
+<script src="assets/js/main.js" defer></script>
+<script>
+const lightbox = document.getElementById('lightbox');
+const lbVisual = document.getElementById('lightboxVisual');
+const lbTitle = document.getElementById('lightboxTitle');
+const lbCat = document.getElementById('lightboxCat');
+
+function openLightbox(title, cat, type) {
+  lbTitle.textContent = title;
+  lbCat.textContent = cat;
+  const images = {
+    podcast: 'https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=1600&q=85&auto=format&fit=crop',
+    photo: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1600&q=85&auto=format&fit=crop',
+    stylisme: 'https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1600&q=85&auto=format&fit=crop',
+    brand: 'https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1600&q=85&auto=format&fit=crop',
+  };
+  lbVisual.style.background = `linear-gradient(180deg, transparent 0%, rgba(10,9,8,0.5) 100%), url(${images[type] || images.photo}) center/cover no-repeat`;
+  lightbox.classList.add('is-open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  lightbox.classList.remove('is-open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+</html>

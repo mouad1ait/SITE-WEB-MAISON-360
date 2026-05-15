@@ -1,0 +1,1886 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0A0908" />
+  <title>Back-office — MAISON 360</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <style>
+    body { overflow-x: hidden; }
+    .admin {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      min-height: 100vh;
+      background: var(--onyx);
+    }
+    @media (max-width: 880px) {
+      .admin { grid-template-columns: 1fr; }
+    }
+
+    /* Sidebar */
+    .admin-side {
+      background: var(--anthracite);
+      border-right: 1px solid var(--hairline);
+      padding: 32px 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    @media (max-width: 880px) {
+      .admin-side {
+        position: fixed;
+        top: 0;
+        left: -260px;
+        width: 260px;
+        z-index: 950;
+        transition: left .4s var(--ease-out-expo);
+      }
+      .admin-side.is-open { left: 0; box-shadow: 30px 0 60px rgba(0,0,0,0.5); }
+    }
+    .admin-brand {
+      padding: 0 24px 32px;
+      border-bottom: 1px solid var(--hairline);
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      letter-spacing: 0.04em;
+    }
+    .admin-brand span { color: var(--or); }
+    .admin-brand .mini { display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--sable); margin-top: 6px; }
+
+    .admin-nav { padding: 24px 16px; flex: 1; }
+    .admin-nav__section {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sable);
+      padding: 16px 12px 8px;
+      opacity: 0.5;
+    }
+    .admin-nav__item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      color: var(--sable);
+      cursor: pointer;
+      transition: all .25s;
+      position: relative;
+    }
+    .admin-nav__item:hover { background: rgba(255,255,255,0.03); color: var(--ivoire); }
+    .admin-nav__item.is-active { background: rgba(201,169,97,0.08); color: var(--ivoire); }
+    .admin-nav__item.is-active::before {
+      content: '';
+      position: absolute;
+      left: -16px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 18px;
+      background: var(--or);
+    }
+    .admin-nav__icon {
+      width: 18px; height: 18px;
+      display: grid; place-items: center;
+      color: var(--or);
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+    .admin-nav__count {
+      margin-left: auto;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 2px 8px;
+      background: rgba(201,169,97,0.15);
+      color: var(--or);
+      border-radius: 10px;
+    }
+
+    .admin-user {
+      padding: 16px 24px;
+      border-top: 1px solid var(--hairline);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .admin-user__avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--cendre);
+      border: 1px solid var(--or);
+      display: grid; place-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--or);
+    }
+    .admin-user__name { font-size: 12px; color: var(--ivoire); font-weight: 500; }
+    .admin-user__role { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sable); }
+
+    /* Main */
+    .admin-main { padding: 24px 32px 60px; min-width: 0; }
+    @media (max-width: 880px) { .admin-main { padding: 16px 20px 60px; } }
+
+    .admin-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0 24px;
+      border-bottom: 1px solid var(--hairline);
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .admin-topbar__left { display: flex; align-items: center; gap: 16px; }
+    .admin-burger {
+      display: none;
+      width: 32px; height: 32px;
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .admin-burger span {
+      display: block;
+      width: 14px; height: 1.5px;
+      background: var(--ivoire);
+      position: relative;
+    }
+    .admin-burger span::before,
+    .admin-burger span::after {
+      content: ''; position: absolute; left: 0;
+      width: 14px; height: 1.5px;
+      background: var(--ivoire);
+    }
+    .admin-burger span::before { top: -5px; }
+    .admin-burger span::after { top: 5px; }
+    @media (max-width: 880px) { .admin-burger { display: flex; } }
+
+    .admin-search {
+      display: flex; align-items: center;
+      background: var(--anthracite);
+      border: 1px solid var(--hairline);
+      padding: 8px 14px;
+      border-radius: 999px;
+      width: 320px; max-width: 100%;
+    }
+    @media (max-width: 600px) { .admin-search { width: 100%; } }
+    .admin-search input {
+      border: 0;
+      background: transparent;
+      color: var(--ivoire);
+      flex: 1;
+      outline: none;
+      font-family: var(--font-sans);
+      font-size: 13px;
+    }
+    .admin-search input::placeholder { color: var(--sable); }
+    .admin-search .kbd {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--sable);
+      padding: 2px 6px;
+      border: 1px solid var(--hairline);
+      border-radius: 3px;
+    }
+
+    .admin-topbar__actions { display: flex; gap: 8px; }
+    .icon-btn {
+      width: 36px; height: 36px;
+      display: grid; place-items: center;
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      color: var(--ivoire);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      cursor: pointer;
+      transition: all .25s;
+      position: relative;
+    }
+    .icon-btn:hover { background: var(--anthracite); border-color: var(--or); }
+    .icon-btn .badge {
+      position: absolute;
+      top: -4px; right: -4px;
+      background: var(--or);
+      color: var(--onyx);
+      font-size: 9px;
+      font-family: var(--font-mono);
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      display: grid; place-items: center;
+    }
+
+    /* Tabs (pages) */
+    .admin-page { display: none; }
+    .admin-page.is-active { display: block; }
+
+    .admin-page__head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+    .admin-page__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 400;
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+    .admin-page__sub {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sable);
+      margin: 4px 0 0;
+    }
+
+    .admin-btn {
+      padding: 10px 18px;
+      background: var(--or);
+      color: var(--onyx);
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background .25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .admin-btn:hover { background: var(--ivoire); }
+    .admin-btn--ghost { background: transparent; color: var(--ivoire); border: 1px solid var(--hairline); }
+    .admin-btn--ghost:hover { background: var(--anthracite); border-color: var(--or); color: var(--or); }
+    .admin-btn--danger { background: #c8534a; color: var(--ivoire); }
+    .admin-btn--danger:hover { background: #d96258; }
+
+    /* KPI cards */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 1100px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; } }
+    .kpi {
+      padding: 20px;
+      background: var(--anthracite);
+      border: 1px solid var(--hairline);
+      border-radius: 6px;
+      position: relative;
+      overflow: hidden;
+    }
+    .kpi__label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sable);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .kpi__icon { color: var(--or); font-size: 12px; }
+    .kpi__value {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.2rem);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin: 12px 0 4px;
+      color: var(--ivoire);
+    }
+    .kpi__trend {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .kpi__trend.up { color: #57c97a; }
+    .kpi__trend.down { color: #c8534a; }
+    .kpi__spark {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 50%;
+      opacity: 0.3;
+    }
+
+    /* Grid layout for dashboard */
+    .admin-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+    }
+    @media (max-width: 1100px) { .admin-grid { grid-template-columns: 1fr; } }
+
+    .panel {
+      background: var(--anthracite);
+      border: 1px solid var(--hairline);
+      border-radius: 6px;
+      padding: 24px;
+    }
+    .panel__head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .panel__title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin: 0;
+      color: var(--ivoire);
+    }
+    .panel__action {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--or);
+      cursor: pointer;
+    }
+
+    /* Chart placeholder (SVG-based) */
+    .chart-area {
+      width: 100%; height: 220px;
+      position: relative;
+    }
+
+    /* Table */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .data-table th {
+      text-align: left;
+      padding: 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--sable);
+      border-bottom: 1px solid var(--hairline);
+      background: rgba(0,0,0,0.2);
+    }
+    .data-table td {
+      padding: 14px 12px;
+      border-bottom: 1px solid var(--hairline);
+      color: var(--ivoire);
+    }
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+    .badge-pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .badge-pill--confirmed { background: rgba(87,201,122,0.15); color: #57c97a; }
+    .badge-pill--held { background: rgba(201,169,97,0.15); color: var(--or); }
+    .badge-pill--cancelled { background: rgba(200,83,74,0.15); color: #c8534a; }
+    .badge-pill--completed { background: rgba(255,255,255,0.08); color: var(--sable); }
+    .badge-pill--paid { background: rgba(87,201,122,0.15); color: #57c97a; }
+    .badge-pill--pending { background: rgba(201,169,97,0.15); color: var(--or); }
+
+    .table-wrap { overflow-x: auto; }
+
+    /* Planning */
+    .planning-head {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .planning-toggle {
+      display: flex;
+      background: var(--anthracite);
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      padding: 3px;
+    }
+    .planning-toggle button {
+      padding: 6px 14px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--sable);
+      border-radius: 3px;
+    }
+    .planning-toggle button.is-active { background: var(--or); color: var(--onyx); }
+
+    .planning-grid {
+      display: grid;
+      grid-template-columns: 60px repeat(3, 1fr);
+      border: 1px solid var(--hairline);
+      border-radius: 6px;
+      overflow: hidden;
+      background: var(--anthracite);
+    }
+    @media (max-width: 700px) { .planning-grid { grid-template-columns: 50px repeat(3, minmax(120px, 1fr)); overflow-x: auto; } }
+    .planning-head-cell {
+      padding: 16px 12px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--or);
+      background: rgba(0,0,0,0.2);
+      border-bottom: 1px solid var(--hairline);
+      text-align: center;
+    }
+    .planning-time {
+      padding: 14px 8px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--sable);
+      border-right: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      text-align: center;
+    }
+    .planning-slot {
+      padding: 6px;
+      border-right: 1px solid var(--hairline);
+      border-bottom: 1px solid var(--hairline);
+      min-height: 60px;
+      position: relative;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .planning-slot:hover { background: rgba(255,255,255,0.02); }
+    .planning-slot:last-child { border-right: 0; }
+    .planning-event {
+      background: rgba(201,169,97,0.12);
+      border-left: 2px solid var(--or);
+      padding: 6px 8px;
+      border-radius: 3px;
+      font-size: 11px;
+      color: var(--ivoire);
+      cursor: grab;
+    }
+    .planning-event--confirmed { background: rgba(87,201,122,0.12); border-color: #57c97a; }
+    .planning-event--held { background: rgba(201,169,97,0.12); border-color: var(--or); }
+    .planning-event__time { font-family: var(--font-mono); font-size: 9px; color: var(--sable); letter-spacing: 0.1em; }
+    .planning-event__name { font-weight: 500; margin-top: 2px; }
+    .planning-blocked {
+      background: repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(255,255,255,0.04) 8px, rgba(255,255,255,0.04) 16px);
+      color: var(--sable);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      padding: 6px 8px;
+      text-align: center;
+    }
+
+    /* Two col layout */
+    .col-2 { display: grid; grid-template-columns: 1.5fr 1fr; gap: 16px; }
+    @media (max-width: 880px) { .col-2 { grid-template-columns: 1fr; } }
+
+    /* Client card */
+    .client-card { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--hairline); }
+    .client-card:last-child { border-bottom: 0; }
+    .client-card__avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--cendre);
+      display: grid; place-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--or);
+      flex-shrink: 0;
+    }
+    .client-card__name { font-size: 13px; color: var(--ivoire); margin: 0 0 2px; font-weight: 500; }
+    .client-card__meta { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--sable); }
+    .client-card__amt { margin-left: auto; font-family: var(--font-mono); font-size: 12px; color: var(--or); }
+
+    /* Activity feed */
+    .feed-item {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--hairline);
+      display: flex;
+      gap: 14px;
+    }
+    .feed-item:last-child { border-bottom: 0; }
+    .feed-icon {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(201,169,97,0.1);
+      color: var(--or);
+      display: grid; place-items: center;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+    .feed-body { flex: 1; font-size: 12px; line-height: 1.5; }
+    .feed-body strong { color: var(--ivoire); font-weight: 500; }
+    .feed-body { color: var(--sable); }
+    .feed-time { font-family: var(--font-mono); font-size: 10px; color: var(--sable); margin-top: 2px; opacity: 0.6; }
+
+    /* Filter row */
+    .filter-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .filter-pill {
+      padding: 8px 14px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--sable);
+      background: var(--anthracite);
+      border: 1px solid var(--hairline);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all .25s;
+    }
+    .filter-pill:hover { color: var(--ivoire); border-color: var(--or-soft); }
+    .filter-pill.is-active { background: var(--or); color: var(--onyx); border-color: var(--or); }
+
+    /* Upload zone */
+    .upload-zone {
+      border: 2px dashed var(--hairline-strong);
+      border-radius: 6px;
+      padding: 60px 24px;
+      text-align: center;
+      background: var(--anthracite);
+      cursor: pointer;
+      transition: all .3s;
+    }
+    .upload-zone:hover { border-color: var(--or); background: rgba(201,169,97,0.04); }
+    .upload-zone__icon {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      color: var(--or);
+      margin-bottom: 16px;
+    }
+
+    /* File list */
+    .file-row {
+      display: grid;
+      grid-template-columns: 32px 1fr 100px 90px 90px 80px;
+      gap: 16px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--hairline);
+      align-items: center;
+      font-size: 12px;
+    }
+    @media (max-width: 700px) { .file-row { grid-template-columns: 32px 1fr 80px; } .file-row > :nth-child(n+4) { display: none; } }
+    .file-row__ext {
+      width: 32px; height: 32px;
+      background: rgba(201,169,97,0.12);
+      color: var(--or);
+      border-radius: 4px;
+      display: grid; place-items: center;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      font-weight: 500;
+    }
+    .file-row__name { color: var(--ivoire); }
+    .file-row__sub { font-family: var(--font-mono); font-size: 10px; color: var(--sable); }
+
+    /* Settings */
+    .settings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 880px) { .settings-grid { grid-template-columns: 1fr; } }
+    .settings-row {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--hairline);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .settings-row__label { font-size: 13px; color: var(--ivoire); }
+    .settings-row__hint { font-family: var(--font-mono); font-size: 10px; color: var(--sable); margin-top: 4px; letter-spacing: 0.1em; }
+    .toggle {
+      width: 36px; height: 20px;
+      background: var(--cendre);
+      border-radius: 999px;
+      position: relative;
+      cursor: pointer;
+      transition: background .3s;
+    }
+    .toggle::after {
+      content: '';
+      position: absolute;
+      top: 2px; left: 2px;
+      width: 16px; height: 16px;
+      background: var(--ivoire);
+      border-radius: 50%;
+      transition: transform .3s;
+    }
+    .toggle.is-on { background: var(--or); }
+    .toggle.is-on::after { transform: translateX(16px); background: var(--onyx); }
+
+    .small-input {
+      padding: 10px 12px;
+      background: var(--anthracite);
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      color: var(--ivoire);
+      font-family: var(--font-sans);
+      font-size: 13px;
+      outline: none;
+      transition: border-color .25s;
+      width: 100%;
+    }
+    .small-input:focus { border-color: var(--or); }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 940;
+      display: none;
+    }
+    .overlay.is-shown { display: block; }
+    @media (min-width: 881px) { .overlay { display: none !important; } }
+  </style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+<div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
+<div class="admin">
+
+  <!-- Sidebar -->
+  <aside class="admin-side" id="sidebar">
+    <div class="admin-brand">
+      MAISON <span>360</span>
+      <span class="mini">Back-Office · v1.0</span>
+    </div>
+
+    <nav class="admin-nav">
+      <div class="admin-nav__section">Vue d'ensemble</div>
+      <div class="admin-nav__item is-active" data-page="dashboard">
+        <span class="admin-nav__icon">◇</span> Dashboard
+      </div>
+      <div class="admin-nav__item" data-page="planning">
+        <span class="admin-nav__icon">⌖</span> Planning
+        <span class="admin-nav__count">14</span>
+      </div>
+      <div class="admin-nav__item" data-page="reservations">
+        <span class="admin-nav__icon">▣</span> Réservations
+        <span class="admin-nav__count">42</span>
+      </div>
+
+      <div class="admin-nav__section">Relation client</div>
+      <div class="admin-nav__item" data-page="clients">
+        <span class="admin-nav__icon">○</span> Clients
+      </div>
+      <div class="admin-nav__item" data-page="abonnements">
+        <span class="admin-nav__icon">↻</span> Abonnements
+        <span class="admin-nav__count">18</span>
+      </div>
+      <div class="admin-nav__item" data-page="rushs">
+        <span class="admin-nav__icon">↓</span> Rush Library
+      </div>
+
+      <div class="admin-nav__section">Contenu</div>
+      <div class="admin-nav__item" data-page="cms">
+        <span class="admin-nav__icon">✎</span> CMS (Pages & Blog)
+      </div>
+      <div class="admin-nav__item" data-page="galerie-admin">
+        <span class="admin-nav__icon">▦</span> Galerie
+      </div>
+      <div class="admin-nav__item" data-page="tarifs-admin">
+        <span class="admin-nav__icon">€</span> Tarifs & Options
+      </div>
+
+      <div class="admin-nav__section">Analyse</div>
+      <div class="admin-nav__item" data-page="stats">
+        <span class="admin-nav__icon">↗</span> Statistiques
+      </div>
+      <div class="admin-nav__item" data-page="communication">
+        <span class="admin-nav__icon">✉</span> Communication
+      </div>
+
+      <div class="admin-nav__section">Système</div>
+      <div class="admin-nav__item" data-page="settings">
+        <span class="admin-nav__icon">⚙</span> Paramètres
+      </div>
+    </nav>
+
+    <div class="admin-user">
+      <div class="admin-user__avatar">MA</div>
+      <div>
+        <p class="admin-user__name" style="margin:0;">Mouad A.</p>
+        <p class="admin-user__role" style="margin:0;">Admin · Owner</p>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="admin-main">
+
+    <!-- Topbar -->
+    <div class="admin-topbar">
+      <div class="admin-topbar__left">
+        <div class="admin-burger" onclick="openSidebar()"><span></span></div>
+        <div class="admin-search">
+          <span style="color:var(--sable);margin-right:8px;font-family:var(--font-mono);font-size:12px;">⌕</span>
+          <input type="text" placeholder="Chercher une réservation, un client, une facture..." />
+          <span class="kbd">⌘K</span>
+        </div>
+      </div>
+      <div class="admin-topbar__actions">
+        <div class="icon-btn" title="Notifications">
+          ◔<span class="badge">3</span>
+        </div>
+        <div class="icon-btn" title="Aide">?</div>
+        <div class="icon-btn" title="Mode jour studio">☉</div>
+      </div>
+    </div>
+
+    <!-- ========================================= -->
+    <!-- DASHBOARD                                   -->
+    <!-- ========================================= -->
+    <section class="admin-page is-active" id="page-dashboard">
+      <div class="admin-page__head">
+        <div>
+          <p class="admin-page__sub">14 mai 2026 · Bienvenue</p>
+          <h1 class="admin-page__title">Vue d'ensemble</h1>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="admin-btn admin-btn--ghost">Exporter</button>
+          <button class="admin-btn">+ Nouvelle réservation</button>
+        </div>
+      </div>
+
+      <!-- KPI -->
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi__label"><span class="kpi__icon">€</span> Revenu du mois</div>
+          <div class="kpi__value">38 240 €</div>
+          <div class="kpi__trend up">↗ +18,2 % vs mois précédent</div>
+          <svg class="kpi__spark" viewBox="0 0 200 60" preserveAspectRatio="none">
+            <path d="M0,40 L20,35 L40,38 L60,28 L80,30 L100,22 L120,25 L140,18 L160,20 L180,12 L200,8" fill="none" stroke="#C9A961" stroke-width="1.5"/>
+            <path d="M0,40 L20,35 L40,38 L60,28 L80,30 L100,22 L120,25 L140,18 L160,20 L180,12 L200,8 L200,60 L0,60 Z" fill="url(#g1)" opacity="0.3"/>
+            <defs><linearGradient id="g1" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#C9A961"/><stop offset="1" stop-color="#C9A961" stop-opacity="0"/></linearGradient></defs>
+          </svg>
+        </div>
+        <div class="kpi">
+          <div class="kpi__label"><span class="kpi__icon">▣</span> Réservations</div>
+          <div class="kpi__value">142</div>
+          <div class="kpi__trend up">↗ +22 % vs mois précédent</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi__label"><span class="kpi__icon">⌖</span> Taux d'occupation</div>
+          <div class="kpi__value">73 %</div>
+          <div class="kpi__trend up">↗ +5,4 pts</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi__label"><span class="kpi__icon">↻</span> Abonnés actifs</div>
+          <div class="kpi__value">18</div>
+          <div class="kpi__trend up">↗ +3 ce mois</div>
+        </div>
+      </div>
+
+      <!-- 2-col layout -->
+      <div class="admin-grid">
+
+        <!-- Revenue chart -->
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Revenu — 30 derniers jours</h3>
+            <span class="panel__action">Mois · 30j · 7j</span>
+          </div>
+          <div class="chart-area">
+            <svg viewBox="0 0 600 220" preserveAspectRatio="none" style="width:100%;height:100%;">
+              <!-- Axes -->
+              <line x1="0" y1="200" x2="600" y2="200" stroke="rgba(244,239,230,0.1)" stroke-width="1"/>
+              <line x1="0" y1="150" x2="600" y2="150" stroke="rgba(244,239,230,0.05)" stroke-dasharray="2 4"/>
+              <line x1="0" y1="100" x2="600" y2="100" stroke="rgba(244,239,230,0.05)" stroke-dasharray="2 4"/>
+              <line x1="0" y1="50" x2="600" y2="50" stroke="rgba(244,239,230,0.05)" stroke-dasharray="2 4"/>
+              <!-- Bars -->
+              <g fill="#C9A961" opacity="0.85">
+                <rect x="5" y="160" width="15" height="40" rx="1"/>
+                <rect x="25" y="140" width="15" height="60" rx="1"/>
+                <rect x="45" y="120" width="15" height="80" rx="1"/>
+                <rect x="65" y="100" width="15" height="100" rx="1"/>
+                <rect x="85" y="130" width="15" height="70" rx="1"/>
+                <rect x="105" y="90" width="15" height="110" rx="1"/>
+                <rect x="125" y="60" width="15" height="140" rx="1"/>
+                <rect x="145" y="70" width="15" height="130" rx="1"/>
+                <rect x="165" y="110" width="15" height="90" rx="1"/>
+                <rect x="185" y="85" width="15" height="115" rx="1"/>
+                <rect x="205" y="50" width="15" height="150" rx="1"/>
+                <rect x="225" y="65" width="15" height="135" rx="1"/>
+                <rect x="245" y="40" width="15" height="160" rx="1"/>
+                <rect x="265" y="75" width="15" height="125" rx="1"/>
+                <rect x="285" y="55" width="15" height="145" rx="1"/>
+                <rect x="305" y="30" width="15" height="170" rx="1"/>
+                <rect x="325" y="50" width="15" height="150" rx="1"/>
+                <rect x="345" y="35" width="15" height="165" rx="1"/>
+                <rect x="365" y="60" width="15" height="140" rx="1"/>
+                <rect x="385" y="25" width="15" height="175" rx="1"/>
+                <rect x="405" y="45" width="15" height="155" rx="1"/>
+                <rect x="425" y="20" width="15" height="180" rx="1"/>
+                <rect x="445" y="50" width="15" height="150" rx="1"/>
+                <rect x="465" y="15" width="15" height="185" rx="1"/>
+                <rect x="485" y="35" width="15" height="165" rx="1"/>
+                <rect x="505" y="40" width="15" height="160" rx="1"/>
+                <rect x="525" y="25" width="15" height="175" rx="1"/>
+                <rect x="545" y="10" width="15" height="190" rx="1"/>
+                <rect x="565" y="20" width="15" height="180" rx="1"/>
+                <rect x="585" y="5" width="15" height="195" rx="1"/>
+              </g>
+              <!-- Today indicator -->
+              <line x1="585" y1="0" x2="585" y2="200" stroke="#F4EFE6" stroke-dasharray="3 3" stroke-width="0.5"/>
+            </svg>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-top:12px; font-family:var(--font-mono); font-size:10px; color:var(--sable); letter-spacing:0.1em;">
+            <span>14 AVR</span><span>21 AVR</span><span>28 AVR</span><span>5 MAI</span><span>12 MAI</span>
+          </div>
+        </div>
+
+        <!-- Right side -->
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <!-- Occupancy -->
+          <div class="panel">
+            <div class="panel__head">
+              <h3 class="panel__title">Occupation par espace</h3>
+            </div>
+            <div style="margin-bottom: 16px;">
+              <div style="display:flex; justify-content:space-between; font-size: 12px; margin-bottom: 6px;"><span>Podcast</span><span style="color:var(--or);">82 %</span></div>
+              <div style="height:6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+                <div style="width: 82%; height: 100%; background: var(--or);"></div>
+              </div>
+            </div>
+            <div style="margin-bottom: 16px;">
+              <div style="display:flex; justify-content:space-between; font-size: 12px; margin-bottom: 6px;"><span>Photo</span><span style="color:var(--or);">68 %</span></div>
+              <div style="height:6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+                <div style="width: 68%; height: 100%; background: var(--or);"></div>
+              </div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size: 12px; margin-bottom: 6px;"><span>Stylisme</span><span style="color:var(--or);">54 %</span></div>
+              <div style="height:6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;">
+                <div style="width: 54%; height: 100%; background: var(--or);"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top clients -->
+          <div class="panel">
+            <div class="panel__head">
+              <h3 class="panel__title">Top clients · ce mois</h3>
+              <span class="panel__action">Tout voir</span>
+            </div>
+            <div class="client-card">
+              <div class="client-card__avatar">CR</div>
+              <div>
+                <p class="client-card__name">Camille R.</p>
+                <p class="client-card__meta">Marque de luxe · Signature</p>
+              </div>
+              <span class="client-card__amt">4 850 €</span>
+            </div>
+            <div class="client-card">
+              <div class="client-card__avatar">SB</div>
+              <div>
+                <p class="client-card__name">Sofiane B.</p>
+                <p class="client-card__meta">Agence créative · Maison</p>
+              </div>
+              <span class="client-card__amt">3 200 €</span>
+            </div>
+            <div class="client-card">
+              <div class="client-card__avatar">AM</div>
+              <div>
+                <p class="client-card__name">Adrien M.</p>
+                <p class="client-card__meta">Athlète · À la séance</p>
+              </div>
+              <span class="client-card__amt">2 380 €</span>
+            </div>
+            <div class="client-card">
+              <div class="client-card__avatar">LV</div>
+              <div>
+                <p class="client-card__name">Léa V.</p>
+                <p class="client-card__meta">Créatrice · Signature</p>
+              </div>
+              <span class="client-card__amt">1 940 €</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom row -->
+      <div class="col-2" style="margin-top: 16px;">
+        <!-- Next bookings -->
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Prochaines sessions</h3>
+            <span class="panel__action">Voir le planning</span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Quand</th><th>Client</th><th>Espace</th><th>Total</th><th>Statut</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Aujourd'hui · 14:00</strong></td><td>Camille R.</td><td>Photo</td><td>1 240 €</td><td><span class="badge-pill badge-pill--confirmed">Confirmée</span></td></tr>
+                <tr><td><strong>Aujourd'hui · 18:00</strong></td><td>Léa V.</td><td>Podcast</td><td>720 €</td><td><span class="badge-pill badge-pill--confirmed">Confirmée</span></td></tr>
+                <tr><td>Demain · 09:30</td><td>Sofiane B.</td><td>Photo</td><td>2 480 €</td><td><span class="badge-pill badge-pill--confirmed">Confirmée</span></td></tr>
+                <tr><td>Demain · 15:00</td><td>Adrien M.</td><td>Podcast</td><td>540 €</td><td><span class="badge-pill badge-pill--held">Acompte ok</span></td></tr>
+                <tr><td>Vend. · 10:00</td><td>Inès K.</td><td>Stylisme</td><td>960 €</td><td><span class="badge-pill badge-pill--held">Acompte ok</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Activity feed -->
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Activité récente</h3>
+          </div>
+          <div class="feed-item">
+            <div class="feed-icon">€</div>
+            <div class="feed-body">
+              <strong>Camille R.</strong> a payé l'acompte de 372 € pour une session Photo.
+              <div class="feed-time">Il y a 12 min · Stripe pi_3R2k...</div>
+            </div>
+          </div>
+          <div class="feed-item">
+            <div class="feed-icon">↓</div>
+            <div class="feed-body">
+              <strong>14 rushs</strong> ont été uploadés pour la session Léo K. du 12/05.
+              <div class="feed-time">Il y a 1h · 2,4 Go</div>
+            </div>
+          </div>
+          <div class="feed-item">
+            <div class="feed-icon">✉</div>
+            <div class="feed-body">
+              Email <strong>booking-reminder-1d</strong> envoyé à 4 clients.
+              <div class="feed-time">Il y a 2h</div>
+            </div>
+          </div>
+          <div class="feed-item">
+            <div class="feed-icon">↻</div>
+            <div class="feed-body">
+              <strong>Sofiane B.</strong> a renouvelé son abonnement Maison.
+              <div class="feed-time">Hier 18:42</div>
+            </div>
+          </div>
+          <div class="feed-item">
+            <div class="feed-icon">!</div>
+            <div class="feed-body">
+              Échec de prélèvement solde pour <strong>session #1287</strong>. Retry programmé J+1.
+              <div class="feed-time">Hier 14:20</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- PLANNING                                    -->
+    <!-- ========================================= -->
+    <section class="admin-page" id="page-planning">
+      <div class="admin-page__head">
+        <div>
+          <p class="admin-page__sub">Planning · 3 espaces</p>
+          <h1 class="admin-page__title">Jeudi 14 mai 2026</h1>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <div class="planning-toggle">
+            <button>Jour</button>
+            <button class="is-active">Semaine</button>
+            <button>Mois</button>
+          </div>
+          <button class="admin-btn">+ Nouvelle session</button>
+        </div>
+      </div>
+
+      <div class="planning-head">
+        <div style="display:flex; gap: 8px; align-items: center;">
+          <button class="icon-btn">←</button>
+          <button class="icon-btn">→</button>
+          <span style="font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sable);">Semaine 20</span>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button class="filter-pill is-active">Tous</button>
+          <button class="filter-pill">Podcast</button>
+          <button class="filter-pill">Photo</button>
+          <button class="filter-pill">Stylisme</button>
+        </div>
+      </div>
+
+      <div class="planning-grid">
+        <div class="planning-time" style="background:rgba(0,0,0,0.2);"></div>
+        <div class="planning-head-cell">Podcast</div>
+        <div class="planning-head-cell">Photo</div>
+        <div class="planning-head-cell">Stylisme</div>
+
+        <div class="planning-time">09:00</div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot">
+          <div class="planning-event planning-event--confirmed">
+            <div class="planning-event__time">09:00 — 12:00 · Sofiane B.</div>
+            <div class="planning-event__name">Brand campaign · agence</div>
+          </div>
+        </div>
+        <div class="planning-slot"></div>
+
+        <div class="planning-time">10:00</div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot">
+          <div class="planning-event planning-event--held">
+            <div class="planning-event__time">10:00 — 13:00 · Inès K.</div>
+            <div class="planning-event__name">Look-book SS27</div>
+          </div>
+        </div>
+
+        <div class="planning-time">11:00</div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot"></div>
+
+        <div class="planning-time">12:00</div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot"></div>
+
+        <div class="planning-time">13:00</div>
+        <div class="planning-slot">
+          <div class="planning-blocked">— Maintenance —</div>
+        </div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot"></div>
+
+        <div class="planning-time">14:00</div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot">
+          <div class="planning-event planning-event--confirmed">
+            <div class="planning-event__time">14:00 — 18:00 · Camille R.</div>
+            <div class="planning-event__name">Editorial Vogue France</div>
+          </div>
+        </div>
+        <div class="planning-slot"></div>
+
+        <div class="planning-time">15:00</div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot"></div>
+
+        <div class="planning-time">16:00</div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot"></div>
+
+        <div class="planning-time">17:00</div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot"></div>
+
+        <div class="planning-time">18:00</div>
+        <div class="planning-slot">
+          <div class="planning-event planning-event--confirmed">
+            <div class="planning-event__time">18:00 — 20:00 · Léa V.</div>
+            <div class="planning-event__name">Podcast épisode #14</div>
+          </div>
+        </div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot"></div>
+
+        <div class="planning-time">19:00</div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot"></div>
+
+        <div class="planning-time">20:00</div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot"></div>
+        <div class="planning-slot"></div>
+      </div>
+
+      <p style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.15em; color: var(--sable); margin-top: 16px;">
+        Astuce — glissez-déposez une réservation pour la déplacer. Un email automatique sera envoyé au client.
+      </p>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- RÉSERVATIONS                                -->
+    <!-- ========================================= -->
+    <section class="admin-page" id="page-reservations">
+      <div class="admin-page__head">
+        <div>
+          <p class="admin-page__sub">142 réservations ce mois</p>
+          <h1 class="admin-page__title">Réservations</h1>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="admin-btn admin-btn--ghost">Exporter CSV</button>
+          <button class="admin-btn">+ Nouvelle</button>
+        </div>
+      </div>
+
+      <div class="filter-row">
+        <button class="filter-pill is-active">Toutes</button>
+        <button class="filter-pill">À venir</button>
+        <button class="filter-pill">Confirmées</button>
+        <button class="filter-pill">En attente</button>
+        <button class="filter-pill">Terminées</button>
+        <button class="filter-pill">Annulées</button>
+        <button class="filter-pill">No-show</button>
+      </div>
+
+      <div class="panel" style="padding: 0;">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th><th>Client</th><th>Espace</th><th>Date</th><th>Heures</th><th>Total</th><th>Acompte</th><th>Solde</th><th>Statut</th><th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><span style="font-family:var(--font-mono); color:var(--or); font-size: 11px;">#1429</span></td><td>Camille R.</td><td>Photo</td><td>14/05 · 14:00</td><td>4h</td><td>1 240 €</td><td><span class="badge-pill badge-pill--paid">372 €</span></td><td><span class="badge-pill badge-pill--pending">868 €</span></td><td><span class="badge-pill badge-pill--confirmed">Confirmée</span></td><td>···</td></tr>
+              <tr><td><span style="font-family:var(--font-mono); color:var(--or); font-size: 11px;">#1428</span></td><td>Léa V.</td><td>Podcast</td><td>14/05 · 18:00</td><td>2h</td><td>720 €</td><td><span class="badge-pill badge-pill--paid">216 €</span></td><td><span class="badge-pill badge-pill--pending">504 €</span></td><td><span class="badge-pill badge-pill--confirmed">Confirmée</span></td><td>···</td></tr>
+              <tr><td><span style="font-family:var(--font-mono); color:var(--or); font-size: 11px;">#1427</span></td><td>Sofiane B.</td><td>Photo</td><td>15/05 · 09:30</td><td>6h</td><td>2 480 €</td><td><span class="badge-pill badge-pill--paid">744 €</span></td><td><span class="badge-pill badge-pill--pending">1 736 €</span></td><td><span class="badge-pill badge-pill--confirmed">Confirmée</span></td><td>···</td></tr>
+              <tr><td><span style="font-family:var(--font-mono); color:var(--or); font-size: 11px;">#1426</span></td><td>Adrien M.</td><td>Podcast</td><td>15/05 · 15:00</td><td>3h</td><td>540 €</td><td><span class="badge-pill badge-pill--paid">162 €</span></td><td><span class="badge-pill badge-pill--pending">378 €</span></td><td><span class="badge-pill badge-pill--held">Acompte</span></td><td>···</td></tr>
+              <tr><td><span style="font-family:var(--font-mono); color:var(--or); font-size: 11px;">#1425</span></td><td>Inès K.</td><td>Stylisme</td><td>16/05 · 10:00</td><td>3h</td><td>960 €</td><td><span class="badge-pill badge-pill--paid">288 €</span></td><td><span class="badge-pill badge-pill--pending">672 €</span></td><td><span class="badge-pill badge-pill--held">Acompte</span></td><td>···</td></tr>
+              <tr><td><span style="font-family:var(--font-mono); color:var(--or); font-size: 11px;">#1424</span></td><td>Maison V.</td><td>Stylisme</td><td>12/05 · 11:00</td><td>4h</td><td>1 120 €</td><td><span class="badge-pill badge-pill--paid">336 €</span></td><td><span class="badge-pill badge-pill--paid">784 €</span></td><td><span class="badge-pill badge-pill--completed">Terminée</span></td><td>···</td></tr>
+              <tr><td><span style="font-family:var(--font-mono); color:var(--or); font-size: 11px;">#1423</span></td><td>Théo D.</td><td>Podcast</td><td>10/05 · 14:00</td><td>2h</td><td>460 €</td><td><span class="badge-pill badge-pill--paid">138 €</span></td><td><span class="badge-pill badge-pill--cancelled">—</span></td><td><span class="badge-pill badge-pill--cancelled">Annulée</span></td><td>···</td></tr>
+              <tr><td><span style="font-family:var(--font-mono); color:var(--or); font-size: 11px;">#1422</span></td><td>Studio M.</td><td>Photo</td><td>08/05 · 09:00</td><td>8h</td><td>2 560 €</td><td><span class="badge-pill badge-pill--paid">768 €</span></td><td><span class="badge-pill badge-pill--paid">1 792 €</span></td><td><span class="badge-pill badge-pill--completed">Terminée</span></td><td>···</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- CLIENTS                                     -->
+    <!-- ========================================= -->
+    <section class="admin-page" id="page-clients">
+      <div class="admin-page__head">
+        <div>
+          <p class="admin-page__sub">428 clients · 18 abonnés actifs</p>
+          <h1 class="admin-page__title">Clients</h1>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="admin-btn admin-btn--ghost">Exporter</button>
+          <button class="admin-btn">+ Ajouter</button>
+        </div>
+      </div>
+
+      <div class="filter-row">
+        <button class="filter-pill is-active">Tous</button>
+        <button class="filter-pill">VIP</button>
+        <button class="filter-pill">Abonnés Signature</button>
+        <button class="filter-pill">Résidents Maison</button>
+        <button class="filter-pill">Marques</button>
+        <button class="filter-pill">Athlètes</button>
+        <button class="filter-pill">Inactifs 60j+</button>
+      </div>
+
+      <div class="panel" style="padding: 0;">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th></th><th>Nom</th><th>Email</th><th>Société</th><th>Formule</th><th>LTV</th><th>Sessions</th><th>Dernière</th><th>Tag</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td><div class="client-card__avatar">CR</div></td><td><strong>Camille R.</strong></td><td>camille@atelier-h.com</td><td>Atelier H.</td><td>Signature</td><td>4 850 €</td><td>14</td><td>14/05/26</td><td><span class="badge-pill badge-pill--held">VIP</span></td></tr>
+              <tr><td><div class="client-card__avatar">SB</div></td><td><strong>Sofiane B.</strong></td><td>sofiane@bcoeur.fr</td><td>BCoeur Studio</td><td>Maison</td><td>12 200 €</td><td>28</td><td>13/05/26</td><td><span class="badge-pill badge-pill--paid">Maison</span></td></tr>
+              <tr><td><div class="client-card__avatar">AM</div></td><td><strong>Adrien M.</strong></td><td>adrien.m@gmail.com</td><td>—</td><td>Découverte</td><td>2 380 €</td><td>8</td><td>15/05/26</td><td><span class="badge-pill badge-pill--held">Athlète</span></td></tr>
+              <tr><td><div class="client-card__avatar">LV</div></td><td><strong>Léa V.</strong></td><td>lea@levcreative.com</td><td>LV Creative</td><td>Signature</td><td>1 940 €</td><td>6</td><td>14/05/26</td><td><span class="badge-pill badge-pill--confirmed">Créatrice</span></td></tr>
+              <tr><td><div class="client-card__avatar">IK</div></td><td><strong>Inès K.</strong></td><td>ines@maison-v.fr</td><td>Maison V.</td><td>Découverte</td><td>2 240 €</td><td>5</td><td>16/05/26</td><td><span class="badge-pill badge-pill--paid">Marque</span></td></tr>
+              <tr><td><div class="client-card__avatar">TD</div></td><td><strong>Théo D.</strong></td><td>theo.dpodcast@gmail.com</td><td>—</td><td>Découverte</td><td>460 €</td><td>1</td><td>10/05/26</td><td>—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- ABONNEMENTS                                 -->
+    <!-- ========================================= -->
+    <section class="admin-page" id="page-abonnements">
+      <div class="admin-page__head">
+        <div>
+          <p class="admin-page__sub">Stripe Subscriptions · synchronisé</p>
+          <h1 class="admin-page__title">Abonnements</h1>
+        </div>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi__label">Signature actifs</div>
+          <div class="kpi__value">14</div>
+          <div class="kpi__trend up">↗ +2 ce mois</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi__label">Maison actifs</div>
+          <div class="kpi__value">4</div>
+          <div class="kpi__trend up">↗ +1 ce mois</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi__label">MRR</div>
+          <div class="kpi__value">26 060 €</div>
+          <div class="kpi__trend up">↗ +18,2 %</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi__label">Churn 90j</div>
+          <div class="kpi__value">3,2 %</div>
+          <div class="kpi__trend down">↘ -1,1 pts</div>
+        </div>
+      </div>
+
+      <div class="panel" style="padding: 0;">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Client</th><th>Formule</th><th>MRR</th><th>Heures utilisées</th><th>Prochain renouv.</th><th>Statut</th><th></th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>Sofiane B.</strong></td><td>Maison</td><td>3 200 €</td><td>Illimité</td><td>15/06/26</td><td><span class="badge-pill badge-pill--paid">Actif</span></td><td>···</td></tr>
+              <tr><td><strong>Camille R.</strong></td><td>Signature</td><td>1 290 €</td><td>8 / 10 h</td><td>03/06/26</td><td><span class="badge-pill badge-pill--paid">Actif</span></td><td>···</td></tr>
+              <tr><td><strong>Léa V.</strong></td><td>Signature</td><td>1 290 €</td><td>3 / 10 h</td><td>22/06/26</td><td><span class="badge-pill badge-pill--paid">Actif</span></td><td>···</td></tr>
+              <tr><td><strong>Studio M.</strong></td><td>Signature</td><td>1 290 €</td><td>9 / 10 h</td><td>10/06/26</td><td><span class="badge-pill badge-pill--held">Heures faibles</span></td><td>···</td></tr>
+              <tr><td><strong>Maison V.</strong></td><td>Maison</td><td>3 200 €</td><td>Illimité</td><td>28/05/26</td><td><span class="badge-pill badge-pill--paid">Actif</span></td><td>···</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- RUSH LIBRARY                                -->
+    <!-- ========================================= -->
+    <section class="admin-page" id="page-rushs">
+      <div class="admin-page__head">
+        <div>
+          <p class="admin-page__sub">2,4 To stockés · Cloudflare R2</p>
+          <h1 class="admin-page__title">Rush Library</h1>
+        </div>
+        <button class="admin-btn">+ Upload</button>
+      </div>
+
+      <div class="col-2">
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Uploader pour une session</h3>
+          </div>
+          <div style="margin-bottom: 16px;">
+            <select class="small-input" style="cursor: pointer;">
+              <option>Sélectionner une session récente...</option>
+              <option>#1424 — Maison V. · 12/05/26 · Stylisme</option>
+              <option>#1422 — Studio M. · 08/05/26 · Photo</option>
+              <option>#1421 — Camille R. · 06/05/26 · Photo</option>
+            </select>
+          </div>
+          <div class="upload-zone">
+            <div class="upload-zone__icon">↑</div>
+            <p style="margin: 0; font-size: 14px; color: var(--ivoire);">Glissez vos fichiers ici</p>
+            <p style="margin: 8px 0 0; font-family: var(--font-mono); font-size: 11px; color: var(--sable); letter-spacing: 0.1em;">ou cliquez pour parcourir · MAX 5 Go par fichier</p>
+          </div>
+          <p style="margin-top: 16px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em; color: var(--sable); line-height: 1.7;">
+            Les rushs uploadés déclenchent automatiquement un email <strong style="color:var(--or);">rushs-ready</strong> avec un lien sécurisé. La durée d'expiration suit la formule du client (15j Découverte / 60j Signature / 180j Maison).
+          </p>
+        </div>
+
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Fichiers récents</h3>
+            <span class="panel__action">Tout voir</span>
+          </div>
+          <div class="file-row">
+            <div class="file-row__ext">MP4</div>
+            <div>
+              <p class="file-row__name">camille_r_editorial_master_4k.mp4</p>
+              <p class="file-row__sub">#1424 · 2,4 Go</p>
+            </div>
+            <p class="file-row__sub">il y a 1h</p>
+            <p class="file-row__sub">Expire J+60</p>
+            <p class="file-row__sub" style="color:var(--or);">12 dl</p>
+            <p class="file-row__sub">···</p>
+          </div>
+          <div class="file-row">
+            <div class="file-row__ext">WAV</div>
+            <div>
+              <p class="file-row__name">leo_k_podcast_master.wav</p>
+              <p class="file-row__sub">#1418 · 480 Mo</p>
+            </div>
+            <p class="file-row__sub">il y a 2h</p>
+            <p class="file-row__sub">Expire J+24</p>
+            <p class="file-row__sub" style="color:var(--or);">3 dl</p>
+            <p class="file-row__sub">···</p>
+          </div>
+          <div class="file-row">
+            <div class="file-row__ext">ZIP</div>
+            <div>
+              <p class="file-row__name">sofiane_b_brand_campaign.zip</p>
+              <p class="file-row__sub">#1412 · 18,2 Go</p>
+            </div>
+            <p class="file-row__sub">hier</p>
+            <p class="file-row__sub">Expire J+180</p>
+            <p class="file-row__sub" style="color:var(--or);">28 dl</p>
+            <p class="file-row__sub">···</p>
+          </div>
+          <div class="file-row">
+            <div class="file-row__ext">JPG</div>
+            <div>
+              <p class="file-row__name">portraits_lea_v_selects.zip</p>
+              <p class="file-row__sub">#1410 · 1,1 Go</p>
+            </div>
+            <p class="file-row__sub">2 jours</p>
+            <p class="file-row__sub" style="color:#c8534a;">Expire J+3</p>
+            <p class="file-row__sub" style="color:var(--or);">7 dl</p>
+            <p class="file-row__sub">···</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- CMS                                         -->
+    <!-- ========================================= -->
+    <section class="admin-page" id="page-cms">
+      <div class="admin-page__head">
+        <div>
+          <p class="admin-page__sub">Sanity Studio · synchronisé en temps réel</p>
+          <h1 class="admin-page__title">CMS — Pages & Blog</h1>
+        </div>
+        <button class="admin-btn">+ Nouvel article</button>
+      </div>
+
+      <div class="col-2">
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Pages</h3>
+          </div>
+          <div class="data-table" style="display:block;">
+            <table class="data-table">
+              <tbody>
+                <tr><td><strong>Accueil</strong><br/><span style="font-family:var(--font-mono); font-size:10px; color:var(--sable);">/</span></td><td>—</td><td><span class="badge-pill badge-pill--paid">Publié</span></td><td>Éditer</td></tr>
+                <tr><td><strong>Le Studio</strong><br/><span style="font-family:var(--font-mono); font-size:10px; color:var(--sable);">/studio</span></td><td>3 espaces</td><td><span class="badge-pill badge-pill--paid">Publié</span></td><td>Éditer</td></tr>
+                <tr><td><strong>Tarifs</strong><br/><span style="font-family:var(--font-mono); font-size:10px; color:var(--sable);">/tarifs</span></td><td>3 formules · 9 options</td><td><span class="badge-pill badge-pill--paid">Publié</span></td><td>Éditer</td></tr>
+                <tr><td><strong>Galerie</strong><br/><span style="font-family:var(--font-mono); font-size:10px; color:var(--sable);">/galerie</span></td><td>42 projets</td><td><span class="badge-pill badge-pill--paid">Publié</span></td><td>Éditer</td></tr>
+                <tr><td><strong>Contact</strong><br/><span style="font-family:var(--font-mono); font-size:10px; color:var(--sable);">/contact</span></td><td>—</td><td><span class="badge-pill badge-pill--paid">Publié</span></td><td>Éditer</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Articles récents</h3>
+            <span class="panel__action">Tout voir</span>
+          </div>
+          <div class="data-table">
+            <table class="data-table">
+              <tbody>
+                <tr><td><strong>Comment choisir un studio podcast en IDF</strong><br/><span style="font-family:var(--font-mono); font-size:10px; color:var(--sable);">Guides · 12 mai</span></td><td><span class="badge-pill badge-pill--paid">Publié</span></td><td>Éditer</td></tr>
+                <tr><td><strong>Studio photo avec cyclorama</strong><br/><span style="font-family:var(--font-mono); font-size:10px; color:var(--sable);">Guides · 08 mai</span></td><td><span class="badge-pill badge-pill--paid">Publié</span></td><td>Éditer</td></tr>
+                <tr><td><strong>Brief créatif réussi : la checklist</strong><br/><span style="font-family:var(--font-mono); font-size:10px; color:var(--sable);">Métiers · 03 mai</span></td><td><span class="badge-pill badge-pill--held">Brouillon</span></td><td>Éditer</td></tr>
+                <tr><td><strong>Lookbook de marque : 7 erreurs</strong><br/><span style="font-family:var(--font-mono); font-size:10px; color:var(--sable);">Guides · à venir</span></td><td><span class="badge-pill badge-pill--pending">Programmé</span></td><td>Éditer</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- GALERIE ADMIN                               -->
+    <!-- ========================================= -->
+    <section class="admin-page" id="page-galerie-admin">
+      <div class="admin-page__head">
+        <div>
+          <p class="admin-page__sub">42 projets · 4 catégories</p>
+          <h1 class="admin-page__title">Galerie</h1>
+        </div>
+        <button class="admin-btn">+ Nouveau projet</button>
+      </div>
+
+      <div class="filter-row">
+        <button class="filter-pill is-active">Tous</button>
+        <button class="filter-pill">Podcast</button>
+        <button class="filter-pill">Photo</button>
+        <button class="filter-pill">Stylisme</button>
+        <button class="filter-pill">Brand Films</button>
+        <button class="filter-pill">Brouillons</button>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px;">
+        <div style="aspect-ratio: 4/5; background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=400&q=85&auto=format&fit=crop') center/cover; border-radius: 6px; padding: 16px; display: flex; flex-direction: column; justify-content: flex-end; color: var(--ivoire); cursor: pointer;">
+          <p style="font-family:var(--font-mono); font-size:10px; letter-spacing:0.18em; color:var(--or); margin:0 0 4px;">PHOTO · 2026</p>
+          <h4 style="font-family:var(--font-display); font-size:14px; margin:0;">Campagne Atelier H.</h4>
+        </div>
+        <div style="aspect-ratio: 4/5; background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=400&q=85&auto=format&fit=crop') center/cover; border-radius: 6px; padding: 16px; display: flex; flex-direction: column; justify-content: flex-end; color: var(--ivoire); cursor: pointer;">
+          <p style="font-family:var(--font-mono); font-size:10px; letter-spacing:0.18em; color:var(--or); margin:0 0 4px;">PODCAST · 2026</p>
+          <h4 style="font-family:var(--font-display); font-size:14px; margin:0;">Léo K.</h4>
+        </div>
+        <div style="aspect-ratio: 4/5; background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=400&q=85&auto=format&fit=crop') center/cover; border-radius: 6px; padding: 16px; display: flex; flex-direction: column; justify-content: flex-end; color: var(--ivoire); cursor: pointer;">
+          <p style="font-family:var(--font-mono); font-size:10px; letter-spacing:0.18em; color:var(--or); margin:0 0 4px;">STYLISME · 2026</p>
+          <h4 style="font-family:var(--font-display); font-size:14px; margin:0;">Maison V.</h4>
+        </div>
+        <div style="aspect-ratio: 4/5; background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=400&q=85&auto=format&fit=crop') center/cover; border-radius: 6px; padding: 16px; display: flex; flex-direction: column; justify-content: flex-end; color: var(--ivoire); cursor: pointer;">
+          <p style="font-family:var(--font-mono); font-size:10px; letter-spacing:0.18em; color:var(--or); margin:0 0 4px;">BRAND · 2026</p>
+          <h4 style="font-family:var(--font-display); font-size:14px; margin:0;">Horlogerie</h4>
+        </div>
+        <div style="aspect-ratio: 4/5; background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=85&auto=format&fit=crop') center/cover; border-radius: 6px; padding: 16px; display: flex; flex-direction: column; justify-content: flex-end; color: var(--ivoire); cursor: pointer;">
+          <p style="font-family:var(--font-mono); font-size:10px; letter-spacing:0.18em; color:var(--or); margin:0 0 4px;">PHOTO · 2026</p>
+          <h4 style="font-family:var(--font-display); font-size:14px; margin:0;">Founder Y.</h4>
+        </div>
+        <div style="aspect-ratio: 4/5; background: var(--anthracite); border: 2px dashed var(--hairline-strong); border-radius: 6px; display: grid; place-items: center; color: var(--sable); cursor: pointer; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;">
+          + Ajouter
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- TARIFS ADMIN                                -->
+    <!-- ========================================= -->
+    <section class="admin-page" id="page-tarifs-admin">
+      <div class="admin-page__head">
+        <div>
+          <p class="admin-page__sub">Versionnage · dernière modification 12/05/26</p>
+          <h1 class="admin-page__title">Tarifs & Options</h1>
+        </div>
+        <button class="admin-btn">Publier les changements</button>
+      </div>
+
+      <div class="panel">
+        <div class="panel__head">
+          <h3 class="panel__title">Tarifs horaires par espace</h3>
+        </div>
+        <div class="settings-grid">
+          <div>
+            <label class="settings-row__label">Podcast (€/h)</label>
+            <input class="small-input" type="number" value="180" style="margin-top: 8px;" />
+            <p class="settings-row__hint" style="margin-top:8px;">Tarif minimum 2 h</p>
+          </div>
+          <div>
+            <label class="settings-row__label">Photo (€/h)</label>
+            <input class="small-input" type="number" value="240" style="margin-top: 8px;" />
+          </div>
+          <div>
+            <label class="settings-row__label">Stylisme (€/h)</label>
+            <input class="small-input" type="number" value="160" style="margin-top: 8px;" />
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top: 16px;">
+        <div class="panel__head">
+          <h3 class="panel__title">Options dynamiques</h3>
+          <span class="panel__action">+ Ajouter une option</span>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>Clé</th><th>Label</th><th>Prix</th><th>Catégorie</th><th>Actif</th><th></th></tr></thead>
+            <tbody>
+              <tr><td>rush_24h</td><td>Rushs J+24h</td><td>180 €</td><td>Livraison</td><td><div class="toggle is-on"></div></td><td>···</td></tr>
+              <tr><td>rush_48h</td><td>Rushs J+48h</td><td>80 €</td><td>Livraison</td><td><div class="toggle is-on"></div></td><td>···</td></tr>
+              <tr><td>reels_x3</td><td>Reels ×3</td><td>220 €</td><td>Production</td><td><div class="toggle is-on"></div></td><td>···</td></tr>
+              <tr><td>miniatures_x5</td><td>Miniatures ×5</td><td>140 €</td><td>Production</td><td><div class="toggle is-on"></div></td><td>···</td></tr>
+              <tr><td>montage</td><td>Montage podcast</td><td>350 €</td><td>Production</td><td><div class="toggle is-on"></div></td><td>···</td></tr>
+              <tr><td>operator</td><td>Opérateur (€/h)</td><td>180 €</td><td>Présence</td><td><div class="toggle is-on"></div></td><td>···</td></tr>
+              <tr><td>prompter</td><td>Téléprompteur</td><td>60 €</td><td>Présence</td><td><div class="toggle is-on"></div></td><td>···</td></tr>
+              <tr><td>hmc</td><td>HMC professionnel</td><td>280 €</td><td>Présence</td><td><div class="toggle is-on"></div></td><td>···</td></tr>
+              <tr><td>catering</td><td>Catering premium</td><td>150 €</td><td>Confort</td><td><div class="toggle is-on"></div></td><td>···</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- STATISTIQUES                                -->
+    <!-- ========================================= -->
+    <section class="admin-page" id="page-stats">
+      <div class="admin-page__head">
+        <div>
+          <p class="admin-page__sub">12 derniers mois</p>
+          <h1 class="admin-page__title">Statistiques</h1>
+        </div>
+        <button class="admin-btn admin-btn--ghost">Exporter PDF</button>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi__label">Revenu annuel</div>
+          <div class="kpi__value">412 800 €</div>
+          <div class="kpi__trend up">↗ +34 % YoY</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi__label">NPS moyen</div>
+          <div class="kpi__value">72</div>
+          <div class="kpi__trend up">↗ +4 pts</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi__label">Panier moyen</div>
+          <div class="kpi__value">1 240 €</div>
+          <div class="kpi__trend up">↗ +12 %</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi__label">Conversion funnel</div>
+          <div class="kpi__value">8,4 %</div>
+          <div class="kpi__trend up">↗ +1,8 pts</div>
+        </div>
+      </div>
+
+      <div class="col-2">
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Heatmap horaires les plus réservés</h3>
+          </div>
+          <div style="display: grid; grid-template-columns: 40px repeat(12, 1fr); gap: 2px; font-family: var(--font-mono); font-size: 9px;">
+            <div></div>
+            <div style="text-align:center;color:var(--sable);">L</div><div style="text-align:center;color:var(--sable);">M</div><div style="text-align:center;color:var(--sable);">M</div><div style="text-align:center;color:var(--sable);">J</div><div style="text-align:center;color:var(--sable);">V</div><div style="text-align:center;color:var(--sable);">S</div><div></div>
+            <div style="text-align:center;color:var(--sable);">L</div><div style="text-align:center;color:var(--sable);">M</div><div style="text-align:center;color:var(--sable);">M</div><div style="text-align:center;color:var(--sable);">J</div><div style="text-align:center;color:var(--sable);">V</div>
+
+            <!-- Sample heatmap rows -->
+            <div style="color:var(--sable);font-size:9px;">9h</div>
+            <div style="aspect-ratio:1/1;background:rgba(201,169,97,0.2);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.4);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.6);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.5);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.8);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.3);"></div>
+            <div></div>
+            <div style="aspect-ratio:1/1;background:rgba(201,169,97,0.3);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.5);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.7);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.6);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.9);"></div>
+
+            <div style="color:var(--sable);font-size:9px;">12h</div>
+            <div style="aspect-ratio:1/1;background:rgba(201,169,97,0.4);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.7);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.9);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.8);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,1);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.5);"></div>
+            <div></div>
+            <div style="aspect-ratio:1/1;background:rgba(201,169,97,0.4);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.6);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.8);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.7);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.95);"></div>
+
+            <div style="color:var(--sable);font-size:9px;">15h</div>
+            <div style="aspect-ratio:1/1;background:rgba(201,169,97,0.5);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.8);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,1);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.9);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,1);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.6);"></div>
+            <div></div>
+            <div style="aspect-ratio:1/1;background:rgba(201,169,97,0.5);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.7);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.9);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.8);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,1);"></div>
+
+            <div style="color:var(--sable);font-size:9px;">18h</div>
+            <div style="aspect-ratio:1/1;background:rgba(201,169,97,0.3);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.5);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.7);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.6);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.4);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.2);"></div>
+            <div></div>
+            <div style="aspect-ratio:1/1;background:rgba(201,169,97,0.3);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.5);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.7);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.6);"></div><div style="aspect-ratio:1/1;background:rgba(201,169,97,0.5);"></div>
+          </div>
+          <p style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;color:var(--sable);margin-top:16px;">Plus la teinte est dense, plus le créneau est demandé.</p>
+        </div>
+
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Top options · CA</h3>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size: 13px; margin-bottom: 6px;"><span>Rushs J+24h</span><span style="color:var(--or);">18 420 €</span></div>
+              <div style="height:6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;"><div style="width: 92%; height: 100%; background: var(--or);"></div></div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size: 13px; margin-bottom: 6px;"><span>Opérateur dédié</span><span style="color:var(--or);">12 800 €</span></div>
+              <div style="height:6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;"><div style="width: 64%; height: 100%; background: var(--or);"></div></div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size: 13px; margin-bottom: 6px;"><span>Reels ×3</span><span style="color:var(--or);">8 800 €</span></div>
+              <div style="height:6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;"><div style="width: 44%; height: 100%; background: var(--or);"></div></div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size: 13px; margin-bottom: 6px;"><span>HMC professionnel</span><span style="color:var(--or);">6 720 €</span></div>
+              <div style="height:6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;"><div style="width: 34%; height: 100%; background: var(--or);"></div></div>
+            </div>
+            <div>
+              <div style="display:flex; justify-content:space-between; font-size: 13px; margin-bottom: 6px;"><span>Catering premium</span><span style="color:var(--or);">3 900 €</span></div>
+              <div style="height:6px; background: rgba(255,255,255,0.05); border-radius: 3px; overflow: hidden;"><div style="width: 20%; height: 100%; background: var(--or);"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- COMMUNICATION                               -->
+    <!-- ========================================= -->
+    <section class="admin-page" id="page-communication">
+      <div class="admin-page__head">
+        <div>
+          <p class="admin-page__sub">Resend + Twilio · délivrabilité 99,2 %</p>
+          <h1 class="admin-page__title">Communication</h1>
+        </div>
+        <button class="admin-btn">+ Nouvelle campagne</button>
+      </div>
+
+      <div class="col-2">
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Templates transactionnels</h3>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <tbody>
+                <tr><td><strong>booking-confirmation</strong></td><td>Réservation créée</td><td><span class="badge-pill badge-pill--paid">Actif</span></td><td>Tester</td></tr>
+                <tr><td><strong>balance-charged</strong></td><td>Solde prélevé J-2</td><td><span class="badge-pill badge-pill--paid">Actif</span></td><td>Tester</td></tr>
+                <tr><td><strong>booking-reminder-1d</strong></td><td>Rappel J-1 (+ SMS)</td><td><span class="badge-pill badge-pill--paid">Actif</span></td><td>Tester</td></tr>
+                <tr><td><strong>rushs-ready</strong></td><td>Rushs disponibles</td><td><span class="badge-pill badge-pill--paid">Actif</span></td><td>Tester</td></tr>
+                <tr><td><strong>nps-survey</strong></td><td>Sondage J+3</td><td><span class="badge-pill badge-pill--paid">Actif</span></td><td>Tester</td></tr>
+                <tr><td><strong>comeback-offer</strong></td><td>Inactif 60 jours</td><td><span class="badge-pill badge-pill--paid">Actif</span></td><td>Tester</td></tr>
+                <tr><td><strong>subscription-renewal</strong></td><td>Renouvellement J-7</td><td><span class="badge-pill badge-pill--paid">Actif</span></td><td>Tester</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Newsletter</h3>
+            <span class="panel__action">412 abonnés</span>
+          </div>
+          <div class="settings-row">
+            <div>
+              <p class="settings-row__label">Mai 2026 · Coulisses du studio</p>
+              <p class="settings-row__hint">Envoyé le 06/05 · 412 ouvertures 38 %</p>
+            </div>
+            <span class="badge-pill badge-pill--completed">Envoyée</span>
+          </div>
+          <div class="settings-row">
+            <div>
+              <p class="settings-row__label">Juin 2026 · Lancement officiel</p>
+              <p class="settings-row__hint">Programmé pour le 01/06 · 08:00</p>
+            </div>
+            <span class="badge-pill badge-pill--pending">Programmé</span>
+          </div>
+          <div class="settings-row">
+            <div>
+              <p class="settings-row__label">Avril 2026 · Direction artistique</p>
+              <p class="settings-row__hint">Envoyé le 02/04 · 398 ouvertures 42 %</p>
+            </div>
+            <span class="badge-pill badge-pill--completed">Envoyée</span>
+          </div>
+          <button class="admin-btn" style="margin-top: 24px;">+ Rédiger une newsletter</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================= -->
+    <!-- PARAMÈTRES                                  -->
+    <!-- ========================================= -->
+    <section class="admin-page" id="page-settings">
+      <div class="admin-page__head">
+        <div>
+          <p class="admin-page__sub">Configuration générale</p>
+          <h1 class="admin-page__title">Paramètres</h1>
+        </div>
+        <button class="admin-btn">Sauvegarder</button>
+      </div>
+
+      <div class="col-2">
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Société</h3>
+          </div>
+          <div class="settings-row">
+            <div>
+              <p class="settings-row__label">Raison sociale</p>
+              <p class="settings-row__hint">Affichée sur les factures</p>
+            </div>
+            <input class="small-input" value="MAISON 360 SAS" style="width: 200px;" />
+          </div>
+          <div class="settings-row">
+            <div>
+              <p class="settings-row__label">SIRET</p>
+            </div>
+            <input class="small-input" value="900 000 000 00010" style="width: 200px;" />
+          </div>
+          <div class="settings-row">
+            <div>
+              <p class="settings-row__label">TVA intra</p>
+            </div>
+            <input class="small-input" value="FR12 900000000" style="width: 200px;" />
+          </div>
+          <div class="settings-row">
+            <div>
+              <p class="settings-row__label">Adresse</p>
+            </div>
+            <input class="small-input" value="Villabé (91), France" style="width: 200px;" />
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Politique d'annulation</h3>
+          </div>
+          <div class="settings-row">
+            <div>
+              <p class="settings-row__label">Acompte</p>
+              <p class="settings-row__hint">% du total prélevé à la réservation</p>
+            </div>
+            <input class="small-input" value="30" type="number" style="width: 80px;" />
+          </div>
+          <div class="settings-row">
+            <div>
+              <p class="settings-row__label">Délai prélèvement solde</p>
+              <p class="settings-row__hint">Heures avant la session</p>
+            </div>
+            <input class="small-input" value="48" type="number" style="width: 80px;" />
+          </div>
+          <div class="settings-row">
+            <div>
+              <p class="settings-row__label">Caution no-show</p>
+              <p class="settings-row__hint">€ prélevés en cas d'absence non justifiée</p>
+            </div>
+            <input class="small-input" value="150" type="number" style="width: 80px;" />
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Intégrations</h3>
+          </div>
+          <div class="settings-row">
+            <div>
+              <p class="settings-row__label">Stripe</p>
+              <p class="settings-row__hint">Paiements & abonnements</p>
+            </div>
+            <span class="badge-pill badge-pill--paid">Connecté</span>
+          </div>
+          <div class="settings-row">
+            <div>
+              <p class="settings-row__label">Resend</p>
+              <p class="settings-row__hint">Email transactionnel</p>
+            </div>
+            <span class="badge-pill badge-pill--paid">Connecté</span>
+          </div>
+          <div class="settings-row">
+            <div>
+              <p class="settings-row__label">Cloudflare R2</p>
+              <p class="settings-row__hint">Stockage rushs (2,4 To utilisés / 10 To)</p>
+            </div>
+            <span class="badge-pill badge-pill--paid">Connecté</span>
+          </div>
+          <div class="settings-row">
+            <div>
+              <p class="settings-row__label">Twilio</p>
+              <p class="settings-row__hint">SMS rappels J-1</p>
+            </div>
+            <span class="badge-pill badge-pill--paid">Connecté</span>
+          </div>
+          <div class="settings-row">
+            <div>
+              <p class="settings-row__label">Sanity CMS</p>
+              <p class="settings-row__hint">Contenu éditorial</p>
+            </div>
+            <span class="badge-pill badge-pill--paid">Connecté</span>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel__head">
+            <h3 class="panel__title">Équipe admin</h3>
+            <span class="panel__action">+ Inviter</span>
+          </div>
+          <div class="client-card">
+            <div class="client-card__avatar">MA</div>
+            <div>
+              <p class="client-card__name">Mouad A.</p>
+              <p class="client-card__meta">mouadaitayach@gmail.com · Owner</p>
+            </div>
+            <span class="badge-pill badge-pill--paid">Admin</span>
+          </div>
+          <div class="client-card">
+            <div class="client-card__avatar">JD</div>
+            <div>
+              <p class="client-card__name">Julien D.</p>
+              <p class="client-card__meta">julien@maison360.fr · Régisseur</p>
+            </div>
+            <span class="badge-pill badge-pill--held">Manager</span>
+          </div>
+          <div class="client-card">
+            <div class="client-card__avatar">EM</div>
+            <div>
+              <p class="client-card__name">Emma M.</p>
+              <p class="client-card__meta">emma@maison360.fr · Conciergerie</p>
+            </div>
+            <span class="badge-pill badge-pill--completed">Staff</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+// Navigation
+document.querySelectorAll('.admin-nav__item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.admin-nav__item').forEach(i => i.classList.remove('is-active'));
+    document.querySelectorAll('.admin-page').forEach(p => p.classList.remove('is-active'));
+    item.classList.add('is-active');
+    const page = item.dataset.page;
+    document.getElementById('page-' + page).classList.add('is-active');
+    closeSidebar();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+// Toggle switches
+document.querySelectorAll('.toggle').forEach(t => {
+  t.addEventListener('click', () => t.classList.toggle('is-on'));
+});
+
+// Filter pills
+document.querySelectorAll('.filter-row').forEach(row => {
+  row.querySelectorAll('.filter-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      row.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('is-active'));
+      pill.classList.add('is-active');
+    });
+  });
+});
+
+// Planning toggle
+document.querySelectorAll('.planning-toggle').forEach(t => {
+  t.querySelectorAll('button').forEach(b => {
+    b.addEventListener('click', () => {
+      t.querySelectorAll('button').forEach(x => x.classList.remove('is-active'));
+      b.classList.add('is-active');
+    });
+  });
+});
+
+// Sidebar mobile
+function openSidebar() {
+  document.getElementById('sidebar').classList.add('is-open');
+  document.getElementById('overlay').classList.add('is-shown');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('is-open');
+  document.getElementById('overlay').classList.remove('is-shown');
+}
+
+// Cmd+K focus search
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+    e.preventDefault();
+    document.querySelector('.admin-search input').focus();
+  }
+});
+</script>
+</body>
+</html>

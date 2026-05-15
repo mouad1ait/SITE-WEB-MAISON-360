@@ -16,10 +16,10 @@
   <meta property="og:image" content="/assets/img/og.jpg" />
   <meta property="og:locale" content="fr_FR" />
 
-  <!-- Fonts -->
+  <!-- Fonts — inspirées de podmax.fr : grotesk moderne -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..600,0..100,0..1;1,9..144,300..600,0..100,0..1&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <!-- Lenis + GSAP -->
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.42/dist/lenis.min.js" defer></script>
@@ -94,38 +94,100 @@
 </div>
 
 <!-- ============================================ -->
-<!-- HERO                                          -->
+<!-- HERO — Video wall style podmax                -->
 <!-- ============================================ -->
-<header class="hero" id="hero">
-  <div class="hero__bg">
-    <canvas id="hero-canvas" class="hero__canvas" aria-hidden="true"></canvas>
-    <!-- Subtle radial gradient -->
-    <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%, rgba(201,169,97,0.12) 0%, transparent 50%), radial-gradient(ellipse at 20% 80%, rgba(58,55,47,0.4) 0%, transparent 60%);"></div>
+<header class="hero hero--wall" id="hero">
+  <!-- Mur de vidéos et images en arrière-plan -->
+  <div class="hero-wall" aria-hidden="true">
+    <div class="hero-wall__tile">
+      <video autoplay muted loop playsinline preload="metadata">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-spinning-podcast-microphone-with-led-lights-44614-large.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="hero-wall__tile">
+      <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=600&q=85&auto=format&fit=crop" alt="" loading="eager" />
+    </div>
+    <div class="hero-wall__tile">
+      <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=600&q=85&auto=format&fit=crop" alt="" loading="eager" />
+    </div>
+    <div class="hero-wall__tile">
+      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=85&auto=format&fit=crop" alt="" loading="eager" />
+    </div>
+    <div class="hero-wall__tile">
+      <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=85&auto=format&fit=crop" alt="" loading="eager" />
+    </div>
+    <div class="hero-wall__tile">
+      <video autoplay muted loop playsinline preload="metadata">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-cinematic-shot-of-a-photographer-shooting-44640-large.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="hero-wall__tile">
+      <img src="https://images.unsplash.com/photo-1539571696857-5a6c40fe8a7e?w=600&q=85&auto=format&fit=crop" alt="" loading="eager" />
+    </div>
+    <div class="hero-wall__tile">
+      <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=600&q=85&auto=format&fit=crop" alt="" loading="eager" />
+    </div>
   </div>
 
-  <div class="hero__pill">
-    <span class="pulse"></span>
-    Réservations ouvertes · Juillet 2026
+  <!-- Overlay vignette + dégradé -->
+  <div class="hero-wall__overlay" aria-hidden="true"></div>
+
+  <!-- Icônes sociales flottantes -->
+  <div class="hero-social hero-social--tl" aria-hidden="true" style="background:linear-gradient(135deg,#000 0%,#000 100%);">
+    <svg viewBox="0 0 24 24" fill="#fff" width="20" height="20"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.1z"/></svg>
+  </div>
+  <div class="hero-social hero-social--ml" aria-hidden="true" style="background:linear-gradient(135deg,#fff 0%,#fff 100%);">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="#FF0050" d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.1z"/></svg>
+  </div>
+  <div class="hero-social hero-social--tr" aria-hidden="true" style="background:linear-gradient(135deg,#833AB4 0%,#FD1D1D 50%,#FCAF45 100%);">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" width="20" height="20"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#fff"/></svg>
+  </div>
+  <div class="hero-social hero-social--br" aria-hidden="true" style="background:#FF0000;">
+    <svg viewBox="0 0 24 24" fill="#fff" width="22" height="22"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
   </div>
 
-  <h1 class="display text-display-xl hero__title" data-reveal-mask>
-    <span>Le studio des<br/>créateurs <em>exigeants</em>.</span>
-  </h1>
+  <!-- Contenu central -->
+  <div class="hero-wall__content">
+    <div class="hero-proof">
+      <div class="hero-proof__avatars">
+        <span style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=80&auto=format&fit=crop');"></span>
+        <span style="background-image:url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=80&auto=format&fit=crop');"></span>
+        <span style="background-image:url('https://images.unsplash.com/photo-1539571696857-5a6c40fe8a7e?w=80&q=80&auto=format&fit=crop');"></span>
+        <span style="background-image:url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=80&auto=format&fit=crop');"></span>
+      </div>
+      <span class="hero-proof__text">+ 200 créateurs <em>déjà inscrits</em></span>
+    </div>
 
-  <div class="hero__meta">
-    <p class="hero__sub" data-reveal data-delay="600">
-      Un lieu cinématographique à Villabé. Trois disciplines réunies sous un même toit. Une expérience pensée pour les œuvres rares.
+    <h1 class="display hero-wall__title" data-reveal-mask>
+      <span>Prêt à tourner vos <em>shorts</em> dans des décors d'<em>exception</em> ?</span>
+    </h1>
+
+    <p class="hero-wall__sub" data-reveal data-delay="300">
+      Enregistrez en 4K dans des studios professionnels à Villabé, dès <strong>180 €</strong>.
     </p>
-    <a href="#manifesto" class="hero__scroll" data-hover>
-      <span>Découvrir</span>
-      <span class="hero__scroll-line"></span>
+
+    <a href="reservation.html" class="btn hero-wall__cta" data-magnetic data-reveal data-delay="500">
+      Réserver mon tournage
     </a>
+
+    <div class="hero-wall__features" data-reveal data-delay="700">
+      <span>✓ Opérateurs sur place</span>
+      <span>✓ Micros Shure SM7B</span>
+      <span>✓ Caméras Sony 4K</span>
+      <span>✓ Livraison sous 24h</span>
+    </div>
   </div>
 
-  <div style="position:absolute; bottom:48px; right:var(--gutter); display:flex; gap:32px; font-family:var(--font-mono); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--sable);">
-    <span>48.62°N</span>
-    <span>2.45°E</span>
-    <span>F/1.4</span>
+  <!-- Bandeau logos clients en bas -->
+  <div class="hero-logos" aria-hidden="true">
+    <span>SALESFORCE</span>
+    <span>SONY</span>
+    <span>SPOTIFY</span>
+    <span>GROUPE PREMIUM</span>
+    <span>PRIME ACADEMY</span>
+    <span>TF1</span>
+    <span>QILEO</span>
+    <span>MINDEO</span>
   </div>
 </header>
 
@@ -159,20 +221,11 @@
 
   <div class="manifesto">
     <div class="manifesto__visual" data-reveal>
-      <!-- Image éditoriale (placeholder dégradé) -->
-      <div style="width:100%;height:100%;background:
-        linear-gradient(135deg, rgba(201,169,97,0.15) 0%, transparent 40%),
-        linear-gradient(45deg, var(--anthracite) 0%, var(--onyx) 100%);
-        position:relative;">
-        <svg viewBox="0 0 400 500" style="position:absolute;inset:0;width:100%;height:100%;opacity:0.4;" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="200" cy="250" r="80" fill="none" stroke="#C9A961" stroke-width="1"/>
-          <circle cx="200" cy="250" r="120" fill="none" stroke="#C9A961" stroke-width="1" stroke-dasharray="2 4"/>
-          <line x1="200" y1="50" x2="200" y2="450" stroke="#C9A961" stroke-width="0.5" stroke-dasharray="1 6"/>
-          <line x1="50" y1="250" x2="350" y2="250" stroke="#C9A961" stroke-width="0.5" stroke-dasharray="1 6"/>
-        </svg>
-        <div style="position:absolute;bottom:24px;left:24px;color:var(--ivoire);font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;">
-          MAISON 360 · 2026
-        </div>
+      <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=900&q=85&auto=format&fit=crop"
+           alt="Studio créatif MAISON 360" loading="lazy"
+           style="width:100%; height:100%; object-fit:cover; filter:saturate(0.85) contrast(1.05);" />
+      <div style="position:absolute;bottom:24px;left:24px;color:var(--ivoire);font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;z-index:2;mix-blend-mode:difference;">
+        MAISON 360 · 2026
       </div>
     </div>
 
@@ -213,7 +266,7 @@
   <div class="container" style="margin-bottom: 80px;">
     <div class="section-num"><strong>02</strong> · 06 — Disciplines</div>
     <p class="eyebrow" data-reveal>Trois pôles</p>
-    <h2 class="display text-display-lg" style="max-width: 18ch; margin-top: 24px;" data-reveal-mask>
+    <h2 class="display text-display-lg" style="max-width: 20ch; margin-top: 18px;" data-reveal-mask>
       <span>Des espaces conçus pour <em>chaque langage</em>.</span>
     </h2>
   </div>
@@ -221,9 +274,8 @@
   <div class="pillars">
     <article class="pillar" data-hover>
       <div class="pillar__bg">
-        <div style="width:100%;height:100%;background:
-          radial-gradient(circle at 30% 50%, rgba(201,169,97,0.25), transparent 60%),
-          linear-gradient(135deg, #1a1814 0%, #0a0908 100%);"></div>
+        <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=1200&q=85&auto=format&fit=crop"
+             alt="Studio Podcast" loading="lazy" />
       </div>
       <div class="pillar__num">01 — Podcast</div>
       <h3 class="pillar__title">Le Cabinet du <em>son</em>.</h3>
@@ -239,9 +291,8 @@
 
     <article class="pillar" data-hover>
       <div class="pillar__bg">
-        <div style="width:100%;height:100%;background:
-          radial-gradient(circle at 70% 30%, rgba(201,169,97,0.2), transparent 60%),
-          linear-gradient(225deg, #1a1814 0%, #0a0908 100%);"></div>
+        <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=1200&q=85&auto=format&fit=crop"
+             alt="Plateau Photo" loading="lazy" />
       </div>
       <div class="pillar__num">02 — Photo</div>
       <h3 class="pillar__title">Le Plateau <em>lumière</em>.</h3>
@@ -257,9 +308,8 @@
 
     <article class="pillar" data-hover>
       <div class="pillar__bg">
-        <div style="width:100%;height:100%;background:
-          radial-gradient(circle at 50% 80%, rgba(201,169,97,0.25), transparent 60%),
-          linear-gradient(315deg, #1a1814 0%, #0a0908 100%);"></div>
+        <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1200&q=85&auto=format&fit=crop"
+             alt="Atelier Stylisme" loading="lazy" />
       </div>
       <div class="pillar__num">03 — Stylisme</div>
       <h3 class="pillar__title">L'Atelier <em>matières</em>.</h3>
@@ -284,7 +334,7 @@
   <div class="flex-between" style="margin-bottom: 40px;">
     <div>
       <p class="eyebrow" data-reveal>Travaux récents</p>
-      <h2 class="display text-display-lg" style="margin-top: 24px; max-width: 16ch;" data-reveal-mask>
+      <h2 class="display text-display-lg" style="margin-top: 18px; max-width: 18ch;" data-reveal-mask>
         <span>Une <em>archive</em> en construction.</span>
       </h2>
     </div>
@@ -293,14 +343,8 @@
 
   <div class="work-grid">
     <article class="work-card work-card--lg" data-hover>
-      <div style="width:100%;height:100%;background:
-        radial-gradient(circle at 30% 70%, rgba(201,169,97,0.4), transparent 50%),
-        linear-gradient(160deg, #2a2620 0%, #0a0908 70%);">
-        <svg viewBox="0 0 800 600" style="width:100%;height:100%;opacity:0.5;" xmlns="http://www.w3.org/2000/svg">
-          <rect x="100" y="100" width="600" height="400" fill="none" stroke="#C9A961" stroke-width="0.5"/>
-          <circle cx="400" cy="300" r="120" fill="none" stroke="#C9A961" stroke-width="0.5"/>
-        </svg>
-      </div>
+      <img src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=1400&q=85&auto=format&fit=crop"
+           alt="Studio session podcast" loading="lazy" />
       <div class="work-card__meta">
         <h3 class="work-card__title">Studio Session — Léo K., champion olympique</h3>
         <span class="work-card__cat">Podcast · 2026</span>
@@ -308,14 +352,8 @@
     </article>
 
     <article class="work-card work-card--md" data-hover>
-      <div style="width:100%;height:100%;background:
-        radial-gradient(circle at 70% 30%, rgba(201,169,97,0.35), transparent 50%),
-        linear-gradient(45deg, #1a1814 0%, #0a0908 80%);">
-        <svg viewBox="0 0 400 500" style="width:100%;height:100%;opacity:0.4;" xmlns="http://www.w3.org/2000/svg">
-          <circle cx="200" cy="200" r="80" fill="none" stroke="#C9A961" stroke-width="1"/>
-          <line x1="200" y1="280" x2="200" y2="450" stroke="#C9A961" stroke-width="0.5"/>
-        </svg>
-      </div>
+      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900&q=85&auto=format&fit=crop"
+           alt="Campagne mode" loading="lazy" />
       <div class="work-card__meta">
         <h3 class="work-card__title">Campagne capsule — Atelier H.</h3>
         <span class="work-card__cat">Photo · 2026</span>
@@ -323,9 +361,8 @@
     </article>
 
     <article class="work-card work-card--sq" data-hover>
-      <div style="width:100%;height:100%;background:
-        radial-gradient(circle at 50% 50%, rgba(201,169,97,0.3), transparent 60%),
-        linear-gradient(220deg, #2a2620 0%, #0a0908 80%);"></div>
+      <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=900&q=85&auto=format&fit=crop"
+           alt="Direction artistique stylisme" loading="lazy" />
       <div class="work-card__meta">
         <h3 class="work-card__title">Direction artistique — Maison V.</h3>
         <span class="work-card__cat">Stylisme · 2026</span>
@@ -333,9 +370,8 @@
     </article>
 
     <article class="work-card work-card--sq" data-hover>
-      <div style="width:100%;height:100%;background:
-        radial-gradient(circle at 20% 80%, rgba(201,169,97,0.3), transparent 60%),
-        linear-gradient(135deg, #1a1814 0%, #0a0908 80%);"></div>
+      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=85&auto=format&fit=crop"
+           alt="Portrait Founder" loading="lazy" />
       <div class="work-card__meta">
         <h3 class="work-card__title">Portrait Founder — Y.</h3>
         <span class="work-card__cat">Photo · 2026</span>
@@ -343,16 +379,8 @@
     </article>
 
     <article class="work-card work-card--wd" data-hover>
-      <div style="width:100%;height:100%;background:
-        radial-gradient(circle at 50% 50%, rgba(201,169,97,0.2), transparent 70%),
-        linear-gradient(90deg, #1a1814 0%, #2a2620 50%, #0a0908 100%);">
-        <svg viewBox="0 0 1600 700" style="width:100%;height:100%;opacity:0.3;" xmlns="http://www.w3.org/2000/svg">
-          <line x1="0" y1="350" x2="1600" y2="350" stroke="#C9A961" stroke-width="0.5"/>
-          <circle cx="400" cy="350" r="60" fill="none" stroke="#C9A961" stroke-width="0.5"/>
-          <circle cx="800" cy="350" r="100" fill="none" stroke="#C9A961" stroke-width="0.5"/>
-          <circle cx="1200" cy="350" r="60" fill="none" stroke="#C9A961" stroke-width="0.5"/>
-        </svg>
-      </div>
+      <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1800&q=85&auto=format&fit=crop"
+           alt="Brand film horlogerie" loading="lazy" />
       <div class="work-card__meta">
         <h3 class="work-card__title">Brand film — Marque française d'horlogerie</h3>
         <span class="work-card__cat">Photo + Podcast · 2026</span>
@@ -394,7 +422,7 @@
   <div class="flex-between" style="margin-bottom: 40px;">
     <div>
       <p class="eyebrow" data-reveal>Tarifs & abonnements</p>
-      <h2 class="display text-display-lg" style="margin-top: 24px; max-width: 18ch;" data-reveal-mask>
+      <h2 class="display text-display-lg" style="margin-top: 18px; max-width: 20ch;" data-reveal-mask>
         <span>Trois formules. <em>Aucun compromis.</em></span>
       </h2>
     </div>
@@ -461,7 +489,7 @@
   <div class="section-num"><strong>05</strong> · 06 — Témoignages</div>
 
   <p class="eyebrow" data-reveal>Ils sont passés par MAISON 360</p>
-  <h2 class="display text-display-lg" style="margin-top: 24px; max-width: 18ch; margin-bottom: 80px;" data-reveal-mask>
+  <h2 class="display text-display-lg" style="margin-top: 18px; max-width: 22ch; margin-bottom: 56px;" data-reveal-mask>
     <span>La parole à <em>celles et ceux</em> qui créent.</span>
   </h2>
 
@@ -469,7 +497,7 @@
     <article class="testimonial" data-reveal>
       <p class="testimonial__quote">L'endroit le plus pro où j'ai jamais enregistré. Tout est anticipé, du son à la lumière, jusqu'au café. On vient pour créer, on repart avec un master.</p>
       <div class="testimonial__author">
-        <div class="testimonial__avatar"></div>
+        <div class="testimonial__avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80&auto=format&fit=crop" alt="" loading="lazy" /></div>
         <div>
           <p class="testimonial__name">Adrien M.</p>
           <p class="testimonial__role">Athlète · Athlétisme</p>
@@ -480,7 +508,7 @@
     <article class="testimonial" data-reveal data-delay="100">
       <p class="testimonial__quote">Le seul studio d'Île-de-France qui combine ce niveau d'équipement et cette direction artistique. Mes shootings campagne s'y produisent désormais.</p>
       <div class="testimonial__author">
-        <div class="testimonial__avatar"></div>
+        <div class="testimonial__avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80&auto=format&fit=crop" alt="" loading="lazy" /></div>
         <div>
           <p class="testimonial__name">Camille R.</p>
           <p class="testimonial__role">Fondatrice · Marque de luxe</p>
@@ -491,7 +519,7 @@
     <article class="testimonial" data-reveal>
       <p class="testimonial__quote">Mon agence ne travaille plus qu'avec MAISON 360 sur la région. L'équipe comprend l'enjeu d'une marque. Rare.</p>
       <div class="testimonial__author">
-        <div class="testimonial__avatar"></div>
+        <div class="testimonial__avatar"><img src="https://images.unsplash.com/photo-1539571696857-5a6c40fe8a7e?w=120&q=80&auto=format&fit=crop" alt="" loading="lazy" /></div>
         <div>
           <p class="testimonial__name">Sofiane B.</p>
           <p class="testimonial__role">Directeur · Agence créative</p>
@@ -502,7 +530,7 @@
     <article class="testimonial" data-reveal data-delay="100">
       <p class="testimonial__quote">Une expérience qui rappelle les studios de Milan ou Londres. Avec en prime, une rigueur française très appréciable.</p>
       <div class="testimonial__author">
-        <div class="testimonial__avatar"></div>
+        <div class="testimonial__avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&q=80&auto=format&fit=crop" alt="" loading="lazy" /></div>
         <div>
           <p class="testimonial__name">Léa V.</p>
           <p class="testimonial__role">Créatrice de contenu · 1.4M abonnés</p>
@@ -561,7 +589,7 @@
         <li><a href="reservation.html">Réservation</a></li>
         <li><a href="#">Espace client</a></li>
         <li><a href="#">FAQ</a></li>
-        <li><a href="#">Cartes cadeaux</a></li>
+        <li><a href="admin.html" style="color:var(--or);">Back-office (admin)</a></li>
       </ul>
     </div>
 
