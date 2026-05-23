@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#080604" />
+  <title>Blog — MAISON 360 · Coulisses, Technique &amp; Branding</title>
+  <meta name="description" content="Le journal de MAISON 360 : coulisses du studio, ressources techniques et stratégies de personal branding pour créateurs et marques." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.42/dist/lenis.min.js" defer></script>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <style>
+    /* ── Hero blog ── */
+    .blog-hero {
+      min-height: 52vh;
+      background: var(--bg-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 130px var(--gutter) 64px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .blog-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 60% at 50% 110%, rgba(201,168,76,0.22) 0%, transparent 65%),
+        radial-gradient(ellipse 30% 30% at 20% 10%, rgba(212,175,55,0.07) 0%, transparent 60%);
+    }
+    .blog-hero > * { position: relative; z-index: 1; }
+    .blog-hero__kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--violet-2);
+      margin-bottom: 24px;
+    }
+    .blog-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text-on-dark);
+      max-width: 20ch;
+      margin: 0 auto 24px;
+    }
+    .blog-hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--violet-1) 0%, var(--violet-3) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .blog-hero p {
+      font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+      color: var(--text-on-dark-2);
+      max-width: 50ch;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* ── Filters ── */
+    .blog-filters {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .blog-filter-btn {
+      padding: 10px 20px;
+      border-radius: 100px;
+      border: 1px solid var(--border-light);
+      background: transparent;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all .25s;
+    }
+    .blog-filter-btn:hover,
+    .blog-filter-btn.is-active {
+      background: var(--violet-1);
+      border-color: var(--violet-1);
+      color: #fff;
+    }
+
+    /* ── Featured article ── */
+    .article-featured {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--bg-dark);
+      margin-bottom: 64px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.12);
+      text-decoration: none;
+      color: inherit;
+      transition: transform .4s var(--ease-out), box-shadow .4s;
+    }
+    .article-featured:hover { transform: translateY(-4px); box-shadow: 0 48px 100px rgba(0,0,0,0.18); }
+    .article-featured__visual {
+      position: relative;
+      min-height: 420px;
+      overflow: hidden;
+    }
+    .article-featured__visual img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .6s var(--ease-out);
+    }
+    .article-featured:hover .article-featured__visual img { transform: scale(1.04); }
+    .article-featured__badge {
+      position: absolute;
+      top: 24px; left: 24px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--bg-dark);
+      background: var(--violet-1);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-weight: 600;
+    }
+    .article-featured__body {
+      padding: 52px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
+    }
+    .article-featured__cat {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--violet-1);
+    }
+    .article-featured__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 2.2vw, 2rem);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.025em;
+      color: var(--text-on-dark);
+      margin: 0;
+    }
+    .article-featured__excerpt {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-on-dark-2);
+      margin: 0;
+    }
+    .article-featured__meta {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 12px;
+      color: rgba(245,237,216,0.5);
+      font-family: var(--font-mono);
+      letter-spacing: 0.05em;
+    }
+    .article-featured__meta::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 1px;
+      background: var(--violet-1);
+    }
+    .article-featured__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--violet-1);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: gap .25s;
+    }
+    .article-featured:hover .article-featured__cta { gap: 14px; }
+    @media (max-width: 768px) {
+      .article-featured { grid-template-columns: 1fr; }
+      .article-featured__visual { min-height: 280px; }
+      .article-featured__body { padding: 36px 28px; }
+    }
+
+    /* ── Articles grid ── */
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    @media (max-width: 1024px) { .articles-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .articles-grid { grid-template-columns: 1fr; } }
+
+    .article-card {
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      transition: transform .35s var(--ease-out), box-shadow .35s, border-color .35s;
+    }
+    .article-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.1);
+      border-color: rgba(201,168,76,0.3);
+    }
+    .article-card__visual {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+    }
+    .article-card__visual img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .55s var(--ease-out);
+    }
+    .article-card:hover .article-card__visual img { transform: scale(1.06); }
+    .article-card__badge {
+      position: absolute;
+      top: 16px; left: 16px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+      font-weight: 600;
+    }
+    .article-card__badge--coulisses { background: rgba(201,168,76,0.15); color: var(--violet-1); border: 1px solid rgba(201,168,76,0.3); }
+    .article-card__badge--technique { background: rgba(16,14,8,0.75); color: var(--text-on-dark); border: 1px solid rgba(255,255,255,0.1); }
+    .article-card__badge--branding { background: rgba(245,230,184,0.9); color: var(--text-primary); border: 1px solid rgba(201,168,76,0.2); }
+
+    .article-card__body {
+      padding: 28px 28px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex: 1;
+    }
+    .article-card__cat {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--violet-1);
+    }
+    .article-card__title {
+      font-family: var(--font-display);
+      font-size: clamp(1rem, 1.3vw, 1.1rem);
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.015em;
+      color: var(--text-primary);
+      margin: 0;
+    }
+    .article-card__excerpt {
+      font-size: 0.875rem;
+      line-height: 1.65;
+      color: var(--text-muted);
+      margin: 0;
+      flex: 1;
+    }
+    .article-card__footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-light);
+      margin-top: auto;
+    }
+    .article-card__date {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+    .article-card__read {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--violet-1);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap .2s;
+    }
+    .article-card:hover .article-card__read { gap: 10px; }
+
+    /* ── Load more ── */
+    .load-more-wrap {
+      display: flex;
+      justify-content: center;
+      padding-top: 56px;
+    }
+
+    /* ── Topics section (dark) ── */
+    .topics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    @media (max-width: 768px) { .topics-grid { grid-template-columns: 1fr; } }
+    .topic-card {
+      padding: 48px 40px;
+      background: var(--bg-dark-3);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: background .3s;
+      cursor: pointer;
+    }
+    .topic-card:hover { background: var(--bg-dark-2); }
+    .topic-card__icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: var(--violet-soft);
+      border: 1px solid rgba(201,168,76,0.2);
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .topic-card__num {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--violet-1);
+    }
+    .topic-card__title {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-on-dark);
+      margin: 0;
+    }
+    .topic-card__desc {
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: var(--text-on-dark-2);
+      opacity: 0.75;
+    }
+    .topic-card__count {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(201,168,76,0.6);
+      letter-spacing: 0.1em;
+      margin-top: auto;
+    }
+
+    /* ── Newsletter CTA ── */
+    .newsletter-cta {
+      background: var(--bg-dark);
+      position: relative;
+      overflow: hidden;
+    }
+    .newsletter-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 100%, rgba(201,168,76,0.18) 0%, transparent 70%);
+    }
+    .newsletter-cta__inner {
+      position: relative;
+      z-index: 1;
+      max-width: 580px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .newsletter-cta__kicker {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--violet-1);
+      margin-bottom: 24px;
+      display: block;
+    }
+    .newsletter-cta h2 {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--text-on-dark);
+      margin: 0 0 16px;
+    }
+    .newsletter-cta h2 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--violet-1) 0%, var(--violet-3) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .newsletter-cta p {
+      color: var(--text-on-dark-2);
+      opacity: 0.75;
+      font-size: 1rem;
+      line-height: 1.6;
+      margin: 0 0 36px;
+    }
+    .newsletter-form {
+      display: flex;
+      gap: 12px;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+    .newsletter-form input {
+      flex: 1;
+      padding: 14px 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 100px;
+      color: var(--text-on-dark);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      outline: none;
+      transition: border-color .25s;
+    }
+    .newsletter-form input::placeholder { color: rgba(245,237,216,0.35); }
+    .newsletter-form input:focus { border-color: var(--violet-1); }
+    .newsletter-form button {
+      white-space: nowrap;
+      padding: 14px 28px;
+      background: var(--violet-1);
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      font-family: var(--font-sans);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: background .25s, transform .2s;
+    }
+    .newsletter-form button:hover { background: var(--violet-2); transform: translateY(-1px); }
+    .newsletter-cta__note {
+      margin-top: 16px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: rgba(245,237,216,0.35);
+    }
+    @media (max-width: 540px) {
+      .newsletter-form { flex-direction: column; }
+      .newsletter-form input,
+      .newsletter-form button { width: 100%; border-radius: 12px; }
+    }
+
+    /* ── Pagination ── */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 56px;
+    }
+    .pagination__btn {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--border-light);
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: all .2s;
+    }
+    .pagination__btn:hover,
+    .pagination__btn.is-active { background: var(--violet-1); border-color: var(--violet-1); color: #fff; }
+    .pagination__sep {
+      color: var(--text-muted);
+      font-size: 13px;
+      padding: 0 4px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ── NAVIGATION ── -->
+<nav class="nav" id="nav" aria-label="Navigation principale">
+  <a href="index.html" class="nav__brand">
+    <span class="nav__brand-mark"></span>
+    MAISON <span style="color:var(--violet-1);">360</span>
+  </a>
+  <div class="nav__links">
+    <a class="nav__link" href="studio.html">Le Studio</a>
+    <a class="nav__link" href="tarifs.html">Tarifs</a>
+    <a class="nav__link" href="galerie.html">Galerie</a>
+    <a class="nav__link" href="blog.html" style="color:var(--violet-1);">Blog</a>
+    <a class="nav__link" href="index.html#contact">Contact</a>
+  </div>
+  <div class="nav__cta">
+    <a class="btn btn--outline" href="tarifs.html">Voir les tarifs</a>
+    <a class="btn btn--primary" href="reservation.html">Réserver →</a>
+  </div>
+  <button class="nav__burger" aria-label="Menu"><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <ul class="mobile-menu__list">
+    <li><a href="studio.html">Le Studio</a></li>
+    <li><a href="tarifs.html">Tarifs</a></li>
+    <li><a href="galerie.html">Galerie</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
+  </ul>
+  <div class="mobile-menu__cta">
+    <a class="btn btn--primary" href="reservation.html">Réserver →</a>
+  </div>
+</div>
+
+<!-- ── HERO ── -->
+<section class="blog-hero" aria-label="Journal MAISON 360">
+  <p class="blog-hero__kicker">Le journal</p>
+  <h1>Coulisses, technique<br /><em>&amp; branding</em></h1>
+  <p>Plongez dans l'univers créatif de MAISON 360 : ressources, conseils d'experts et histoires de productions qui font la différence.</p>
+</section>
+
+<!-- ── FILTERS + ARTICLES ── -->
+<section class="section" style="background: var(--bg-soft);">
+  <div class="container">
+
+    <!-- Filters -->
+    <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:48px;">
+      <div class="blog-filters" id="blogFilters">
+        <button class="blog-filter-btn is-active" data-filter="all">Tous les articles</button>
+        <button class="blog-filter-btn" data-filter="coulisses">Coulisses</button>
+        <button class="blog-filter-btn" data-filter="technique">Technique</button>
+        <button class="blog-filter-btn" data-filter="branding">Branding</button>
+      </div>
+      <span id="article-count" style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-muted);">9 articles</span>
+    </div>
+
+    <!-- Featured article -->
+    <a href="#" class="article-featured" data-cat="coulisses" data-reveal>
+      <div class="article-featured__visual">
+        <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=900&q=85&auto=format&fit=crop" alt="Studio MAISON 360 — coulisses" loading="lazy" />
+        <span class="article-featured__badge">À la une</span>
+      </div>
+      <div class="article-featured__body">
+        <div class="article-featured__cat">Coulisses</div>
+        <h2 class="article-featured__title">La naissance d'un studio : de l'idée à l'ouverture en juillet 2026</h2>
+        <p class="article-featured__excerpt">Deux ans de conception, 380 m² transformés, trois disciplines réunies sous un même toit à Villabé. Retour sur les choix d'architecture acoustique, les équipements selectionnés et la philosophie qui guide chaque détail de MAISON 360.</p>
+        <div class="article-featured__meta">Mai 2026 &middot; 12 min de lecture</div>
+        <span class="article-featured__cta">Lire l'article →</span>
+      </div>
+    </a>
+
+    <!-- Articles grid -->
+    <div class="articles-grid" id="articlesGrid">
+
+      <!-- Coulisses 1 -->
+      <a href="#" class="article-card" data-cat="coulisses" data-reveal data-delay="0">
+        <div class="article-card__visual">
+          <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=700&q=85&auto=format&fit=crop" alt="Podcast studio" loading="lazy" />
+          <span class="article-card__badge article-card__badge--coulisses">Coulisses</span>
+        </div>
+        <div class="article-card__body">
+          <div class="article-card__cat">Coulisses</div>
+          <h3 class="article-card__title">Acoustique parfaite : comment nous avons conçu la salle podcast</h3>
+          <p class="article-card__excerpt">Panneaux Vicoustic, isolation phonique renforcée, placement des microphones… Les choix techniques qui garantissent un son broadcast sans compromis.</p>
+          <div class="article-card__footer">
+            <span class="article-card__date">Avr. 2026</span>
+            <span class="article-card__read">Lire →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Technique 1 -->
+      <a href="#" class="article-card" data-cat="technique" data-reveal data-delay="80">
+        <div class="article-card__visual">
+          <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=700&q=85&auto=format&fit=crop" alt="Lumière studio photo" loading="lazy" />
+          <span class="article-card__badge article-card__badge--technique">Technique</span>
+        </div>
+        <div class="article-card__body">
+          <div class="article-card__cat">Technique</div>
+          <h3 class="article-card__title">Guide lumière : Profoto vs Godox — ce qui change vraiment</h3>
+          <p class="article-card__excerpt">Rendu des teintes, vitesse de recyclage, compatibilité TTL. Notre comparatif honnête après 6 mois de shoots en studio avec les deux gammes.</p>
+          <div class="article-card__footer">
+            <span class="article-card__date">Avr. 2026</span>
+            <span class="article-card__read">Lire →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Branding 1 -->
+      <a href="#" class="article-card" data-cat="branding" data-reveal data-delay="160">
+        <div class="article-card__visual">
+          <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=700&q=85&auto=format&fit=crop" alt="Personal branding" loading="lazy" />
+          <span class="article-card__badge article-card__badge--branding">Branding</span>
+        </div>
+        <div class="article-card__body">
+          <div class="article-card__cat">Branding</div>
+          <h3 class="article-card__title">Personal branding en 2026 : pourquoi votre photo de profil ne suffit plus</h3>
+          <p class="article-card__excerpt">Vidéo courte, cohérence visuelle, preuve sociale. Le playbook des créateurs qui construisent une audience solide sans budget marketing astronomique.</p>
+          <div class="article-card__footer">
+            <span class="article-card__date">Mars 2026</span>
+            <span class="article-card__read">Lire →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Technique 2 -->
+      <a href="#" class="article-card" data-cat="technique" data-reveal data-delay="0">
+        <div class="article-card__visual">
+          <img src="https://images.unsplash.com/photo-1478737270197-497ead4e5b5f?w=700&q=85&auto=format&fit=crop" alt="Microphone podcast" loading="lazy" />
+          <span class="article-card__badge article-card__badge--technique">Technique</span>
+        </div>
+        <div class="article-card__body">
+          <div class="article-card__cat">Technique</div>
+          <h3 class="article-card__title">Choisir son microphone podcast : XLR vs USB, notre verdict sans jargon</h3>
+          <p class="article-card__excerpt">Shure SM7B, Rode NT1, Sennheiser MKH 416. Pour chaque profil de créateur, la solution qui offre le meilleur rapport qualité/investissement.</p>
+          <div class="article-card__footer">
+            <span class="article-card__date">Mars 2026</span>
+            <span class="article-card__read">Lire →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Coulisses 2 -->
+      <a href="#" class="article-card" data-cat="coulisses" data-reveal data-delay="80">
+        <div class="article-card__visual">
+          <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=700&q=85&auto=format&fit=crop" alt="Stylisme studio" loading="lazy" />
+          <span class="article-card__badge article-card__badge--coulisses">Coulisses</span>
+        </div>
+        <div class="article-card__body">
+          <div class="article-card__cat">Coulisses</div>
+          <h3 class="article-card__title">La salle stylisme : un espace conçu pour la direction artistique totale</h3>
+          <p class="article-card__excerpt">Rails de vêtements rétractables, fond infinity, tables de vapeur professionnelles. La genèse d'un espace unique entre studio photo et atelier mode.</p>
+          <div class="article-card__footer">
+            <span class="article-card__date">Fév. 2026</span>
+            <span class="article-card__read">Lire →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Branding 2 -->
+      <a href="#" class="article-card" data-cat="branding" data-reveal data-delay="160">
+        <div class="article-card__visual">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=700&q=85&auto=format&fit=crop" alt="Stratégie contenu" loading="lazy" />
+          <span class="article-card__badge article-card__badge--branding">Branding</span>
+        </div>
+        <div class="article-card__body">
+          <div class="article-card__cat">Branding</div>
+          <h3 class="article-card__title">Stratégie de contenu B2B : convertir une session photo en 3 mois de posts</h3>
+          <p class="article-card__excerpt">Une journée en studio, 200 photos, 15 vidéos courtes, 6 interviews. Découvrez comment nos clients maximisent chaque session pour alimenter LinkedIn, Instagram et YouTube.</p>
+          <div class="article-card__footer">
+            <span class="article-card__date">Fév. 2026</span>
+            <span class="article-card__read">Lire →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Coulisses 3 -->
+      <a href="#" class="article-card" data-cat="coulisses" data-reveal data-delay="0">
+        <div class="article-card__visual">
+          <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=700&q=85&auto=format&fit=crop" alt="Équipements studio" loading="lazy" />
+          <span class="article-card__badge article-card__badge--coulisses">Coulisses</span>
+        </div>
+        <div class="article-card__body">
+          <div class="article-card__cat">Coulisses</div>
+          <h3 class="article-card__title">Les 12 équipements qui définissent le standard MAISON 360</h3>
+          <p class="article-card__excerpt">Sony FX3, Atomos Shogun, Atem Mini Pro, Canon EOS R5C… La liste complète du matériel et les raisons de chaque choix face aux alternatives.</p>
+          <div class="article-card__footer">
+            <span class="article-card__date">Jan. 2026</span>
+            <span class="article-card__read">Lire →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Technique 3 -->
+      <a href="#" class="article-card" data-cat="technique" data-reveal data-delay="80">
+        <div class="article-card__visual">
+          <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=700&q=85&auto=format&fit=crop" alt="Post-production" loading="lazy" />
+          <span class="article-card__badge article-card__badge--technique">Technique</span>
+        </div>
+        <div class="article-card__body">
+          <div class="article-card__cat">Technique</div>
+          <h3 class="article-card__title">Post-production vidéo : notre workflow de livraison J+48h expliqué</h3>
+          <p class="article-card__excerpt">DaVinci Resolve, étalonnage LUT maison, mixage audio multitrack, export adaptatif selon plateforme. Les coulisses du pipeline qui garantit vos rushs en 48h.</p>
+          <div class="article-card__footer">
+            <span class="article-card__date">Jan. 2026</span>
+            <span class="article-card__read">Lire →</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Branding 3 -->
+      <a href="#" class="article-card" data-cat="branding" data-reveal data-delay="160">
+        <div class="article-card__visual">
+          <img src="https://images.unsplash.com/photo-1493612276216-ee3925520721?w=700&q=85&auto=format&fit=crop" alt="Identité visuelle" loading="lazy" />
+          <span class="article-card__badge article-card__badge--branding">Branding</span>
+        </div>
+        <div class="article-card__body">
+          <div class="article-card__cat">Branding</div>
+          <h3 class="article-card__title">Identité visuelle pour fondateurs : les 5 actifs à créer en priorité</h3>
+          <p class="article-card__excerpt">Portrait officiel, headshots lifestyle, vidéo de présentation, photo d'équipe, contenu coulisses. Le kit minimum pour une présence en ligne mémorable.</p>
+          <div class="article-card__footer">
+            <span class="article-card__date">Déc. 2025</span>
+            <span class="article-card__read">Lire →</span>
+          </div>
+        </div>
+      </a>
+
+    </div><!-- /articles-grid -->
+
+    <!-- Pagination -->
+    <div class="pagination">
+      <button class="pagination__btn is-active">1</button>
+      <button class="pagination__btn">2</button>
+      <button class="pagination__btn">3</button>
+      <span class="pagination__sep">…</span>
+      <button class="pagination__btn">8</button>
+      <button class="pagination__btn" aria-label="Suivant" style="font-size:18px;">›</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── TOPICS (dark) ── -->
+<section class="section section--dark" style="padding: 80px 0;">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:56px;">
+      <p style="font-family:var(--font-mono); font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:var(--violet-1); margin-bottom:16px;">Nos rubriques</p>
+      <h2 style="font-family:var(--font-display); font-size:clamp(1.8rem,3vw,2.6rem); font-weight:800; letter-spacing:-0.03em; color:var(--text-on-dark); margin:0;">Tout ce que vous<br />avez besoin de savoir</h2>
+    </div>
+    <div class="topics-grid" data-reveal>
+      <div class="topic-card">
+        <div class="topic-card__icon">🎙</div>
+        <div class="topic-card__num">01 · Coulisses</div>
+        <h3 class="topic-card__title">Dans les coulisses du studio</h3>
+        <p class="topic-card__desc">Architecture, équipements, choix créatifs. Découvrez comment MAISON 360 a été pensé de A à Z pour vous offrir une expérience de production inégalée.</p>
+        <span class="topic-card__count">5 articles</span>
+      </div>
+      <div class="topic-card">
+        <div class="topic-card__icon">⚡</div>
+        <div class="topic-card__num">02 · Technique</div>
+        <h3 class="topic-card__title">Ressources techniques</h3>
+        <p class="topic-card__desc">Guides pratiques, comparatifs matériel, workflows de production. Tout ce qu'il faut savoir pour optimiser chaque session et produire au meilleur niveau.</p>
+        <span class="topic-card__count">4 articles</span>
+      </div>
+      <div class="topic-card">
+        <div class="topic-card__icon">✦</div>
+        <div class="topic-card__num">03 · Branding</div>
+        <h3 class="topic-card__title">Stratégie &amp; personal branding</h3>
+        <p class="topic-card__desc">Playbooks éditoriaux, études de cas clients, conseils d'experts. Comment transformer une journée en studio en des mois de contenu à fort impact.</p>
+        <span class="topic-card__count">3 articles</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── NEWSLETTER CTA ── -->
+<section class="section newsletter-cta">
+  <div class="container">
+    <div class="newsletter-cta__inner" data-reveal>
+      <span class="newsletter-cta__kicker">Journal MAISON 360</span>
+      <h2>Rejoignez les <em>créateurs</em><br />qui évoluent vite</h2>
+      <p>Chaque mois, les coulisses du studio, une ressource technique et une stratégie branding. Aucun spam. Désabonnement en un clic.</p>
+      <form class="newsletter-form" onsubmit="event.preventDefault(); this.querySelector('button').textContent = '✓ Vous êtes inscrit·e !';">
+        <input type="email" placeholder="votre@email.com" required autocomplete="email" />
+        <button type="submit">S'abonner →</button>
+      </form>
+      <p class="newsletter-cta__note">+240 abonnés · 0 spam · désabonnement en 1 clic</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer class="footer" id="contact">
+  <div class="footer__inner">
+    <div>
+      <div class="footer__brand">
+        <span class="nav__brand-mark"></span>
+        MAISON <span style="color:var(--violet-1);">360</span>
+      </div>
+      <p class="body" style="max-width:28ch; opacity:0.65;">Studio créatif premium — Podcast, Photo, Stylisme.</p>
+      <p style="margin-top:16px; font-family:var(--font-mono); font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--violet-1); opacity:0.65;">Villabé (91) · Juillet 2026</p>
+    </div>
+    <div>
+      <h4>Studio</h4>
+      <ul>
+        <li><a href="studio.html">Le Studio</a></li>
+        <li><a href="tarifs.html">Tarifs</a></li>
+        <li><a href="galerie.html">Galerie</a></li>
+        <li><a href="reservation.html">Réserver</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Légal</h4>
+      <ul>
+        <li><a href="#">Mentions légales</a></li>
+        <li><a href="#">CGV</a></li>
+        <li><a href="#">Confidentialité</a></li>
+      </ul>
+    </div>
+    <div class="newsletter">
+      <h4>Notre journal</h4>
+      <p class="body" style="margin-bottom:20px; opacity:0.65;">Coulisses, productions et invitations privées.</p>
+      <form onsubmit="event.preventDefault();this.querySelector('button').textContent='✓ Inscrit';">
+        <input type="email" placeholder="votre@email.com" required />
+        <button type="submit">S'abonner</button>
+      </form>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <span>© 2026 MAISON 360 · Tous droits réservés</span>
+    <div style="display:flex; gap:28px;"><a href="#">Mentions légales</a><a href="#">CGV</a><a href="#">Confidentialité</a></div>
+    <span>Instagram · Vimeo · LinkedIn</span>
+  </div>
+</footer>
+
+<script src="assets/js/main.js" defer></script>
+<script>
+/* Nav scroll */
+var nav = document.getElementById('nav');
+window.addEventListener('scroll', function () {
+  if (nav) nav.classList.toggle('is-scrolled', window.scrollY > 60);
+}, { passive: true });
+
+/* Mobile menu */
+document.querySelector('.nav__burger').addEventListener('click', function () {
+  var m = document.getElementById('mobileMenu');
+  m.classList.toggle('is-open');
+  m.setAttribute('aria-hidden', String(!m.classList.contains('is-open')));
+});
+
+/* Reveal on scroll */
+document.querySelectorAll('[data-reveal]').forEach(function (el) {
+  new IntersectionObserver(function (entries) {
+    if (entries[0].isIntersecting) {
+      setTimeout(function () { el.classList.add('is-visible'); }, Number(el.dataset.delay || 0));
+    }
+  }, { threshold: 0.1 }).observe(el);
+});
+
+/* Blog filters */
+var allCards = Array.from(document.querySelectorAll('.article-card'));
+var featuredCard = document.querySelector('.article-featured');
+var countLabel = document.getElementById('article-count');
+
+document.getElementById('blogFilters').addEventListener('click', function (e) {
+  var btn = e.target.closest('.blog-filter-btn');
+  if (!btn) return;
+  document.querySelectorAll('.blog-filter-btn').forEach(function (b) { b.classList.remove('is-active'); });
+  btn.classList.add('is-active');
+  var f = btn.dataset.filter;
+
+  // Show/hide featured
+  if (featuredCard) {
+    var featCat = featuredCard.dataset.cat;
+    featuredCard.style.display = (f === 'all' || featCat === f) ? '' : 'none';
+  }
+
+  // Show/hide cards
+  var visible = 0;
+  allCards.forEach(function (card) {
+    var show = f === 'all' || card.dataset.cat === f;
+    card.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+
+  // Featured counts as 1 if visible
+  var featVisible = (f === 'all' || (featuredCard && featuredCard.dataset.cat === f)) ? 1 : 0;
+  var total = visible + featVisible;
+  countLabel.textContent = total + ' article' + (total > 1 ? 's' : '');
+});
+</script>
+</body>
+</html>

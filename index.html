@@ -7,19 +7,18 @@
 
   <title>MAISON 360 — Studio créatif premium · Podcast · Photo · Stylisme · Villabé (91)</title>
   <meta name="description" content="MAISON 360 — Studio créatif d'exception réunissant podcast, photo et stylisme. Conçu pour les artistes, sportifs, entrepreneurs et créateurs exigeants. Ouverture juillet 2026 à Villabé (91)." />
-  <meta name="keywords" content="studio podcast, studio photo, studio stylisme, studio créatif premium, Villabé, Essonne, Île-de-France, location studio" />
+  <meta name="keywords" content="studio podcast, studio photo, studio stylisme, studio créatif premium, Villabé, Essonne, Île-de-France" />
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="MAISON 360 — Studio créatif premium" />
   <meta property="og:description" content="Un studio. Trois disciplines. Une vision. Podcast, photo, stylisme. Ouverture juillet 2026." />
-  <meta property="og:image" content="/assets/img/og.jpg" />
   <meta property="og:locale" content="fr_FR" />
 
-  <!-- Fonts — inspirées de podmax.fr : grotesk moderne -->
+  <!-- Fonts — Manrope (même style que podmax.fr) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
   <!-- Lenis + GSAP -->
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.42/dist/lenis.min.js" defer></script>
@@ -33,14 +32,11 @@
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "MAISON 360",
-    "image": "https://maison360.fr/assets/img/og.jpg",
-    "@id": "https://maison360.fr",
     "url": "https://maison360.fr",
     "telephone": "+33 1 00 00 00 00",
     "priceRange": "€€€",
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "À préciser",
       "addressLocality": "Villabé",
       "postalCode": "91100",
       "addressCountry": "FR"
@@ -56,7 +52,7 @@
 <div class="grain" aria-hidden="true"></div>
 
 <!-- Loader -->
-<div class="loader" aria-hidden="true">
+<div class="loader" id="loader" aria-hidden="true">
   <div class="loader__inner">
     <div class="loader__mark">
       <span>M</span><span>A</span><span>I</span><span>S</span><span>O</span><span>N</span><span>&nbsp;</span><span>3</span><span>6</span><span>0</span>
@@ -66,38 +62,47 @@
   </div>
 </div>
 
-<!-- Navigation -->
+<!-- ============================================================ -->
+<!-- NAVIGATION — pilule sombre style podmax                      -->
+<!-- ============================================================ -->
 <nav class="nav" aria-label="Navigation principale">
-  <a href="index.html" class="nav__brand">MAISON <span>360</span></a>
+  <a href="index.html" class="nav__brand">
+    <span class="nav__brand-mark"></span>
+    MAISON <span style="color:var(--violet-1);">360</span>
+  </a>
+
   <div class="nav__links">
     <a class="nav__link" href="studio.html">Le Studio</a>
     <a class="nav__link" href="tarifs.html">Tarifs</a>
     <a class="nav__link" href="galerie.html">Galerie</a>
     <a class="nav__link" href="#contact">Contact</a>
   </div>
-  <a class="nav__cta" data-magnetic href="reservation.html">Réserver →</a>
-  <button class="nav__burger" aria-label="Menu"><span></span><span></span><span></span></button>
+
+  <div class="nav__cta">
+    <a class="btn btn--outline" href="galerie.html">Voir la galerie</a>
+    <a class="btn btn--primary" data-magnetic href="reservation.html">Réserver →</a>
+  </div>
+
+  <button class="nav__burger" aria-label="Menu"><span></span></button>
 </nav>
 
-<div class="mobile-menu" aria-hidden="true">
+<!-- Menu mobile -->
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
   <ul class="mobile-menu__list">
-    <li><a href="studio.html"><span>01</span>Le Studio</a></li>
-    <li><a href="tarifs.html"><span>02</span>Tarifs</a></li>
-    <li><a href="galerie.html"><span>03</span>Galerie</a></li>
-    <li><a href="reservation.html"><span>04</span>Réserver</a></li>
-    <li><a href="#contact"><span>05</span>Contact</a></li>
+    <li><a href="studio.html">Le Studio</a></li>
+    <li><a href="tarifs.html">Tarifs</a></li>
+    <li><a href="galerie.html">Galerie</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
-  <div class="mobile-menu__footer">
-    <span>Villabé · 91</span>
-    <span>Juillet 2026</span>
-  </div>
+  <a href="reservation.html" class="mobile-menu__cta">Réserver mon tournage →</a>
 </div>
 
-<!-- ============================================ -->
-<!-- HERO — Video wall style podmax                -->
-<!-- ============================================ -->
-<header class="hero hero--wall" id="hero">
-  <!-- Mur de vidéos et images en arrière-plan -->
+<!-- ============================================================ -->
+<!-- HERO — mur de vidéos style podmax                            -->
+<!-- ============================================================ -->
+<header class="hero" id="hero">
+
+  <!-- Mur de tuiles vidéo / photo -->
   <div class="hero-wall" aria-hidden="true">
     <div class="hero-wall__tile">
       <video autoplay muted loop playsinline preload="metadata">
@@ -129,57 +134,70 @@
     </div>
   </div>
 
-  <!-- Overlay vignette + dégradé -->
+  <!-- Overlay dégradé -->
   <div class="hero-wall__overlay" aria-hidden="true"></div>
 
   <!-- Icônes sociales flottantes -->
-  <div class="hero-social hero-social--tl" aria-hidden="true" style="background:linear-gradient(135deg,#000 0%,#000 100%);">
-    <svg viewBox="0 0 24 24" fill="#fff" width="20" height="20"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.1z"/></svg>
+  <div class="hero__social hero__social--tl" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="#fff" width="22" height="22"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.1z"/></svg>
   </div>
-  <div class="hero-social hero-social--ml" aria-hidden="true" style="background:linear-gradient(135deg,#fff 0%,#fff 100%);">
-    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="#FF0050" d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.1z"/></svg>
+  <div class="hero__social hero__social--ml" aria-hidden="true" style="background:#fff;">
+    <svg viewBox="0 0 24 24" width="24" height="24"><path fill="#FF0050" d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.1z"/></svg>
   </div>
-  <div class="hero-social hero-social--tr" aria-hidden="true" style="background:linear-gradient(135deg,#833AB4 0%,#FD1D1D 50%,#FCAF45 100%);">
-    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" width="20" height="20"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#fff"/></svg>
+  <div class="hero__social hero__social--tr" aria-hidden="true" style="background:linear-gradient(135deg,#833AB4 0%,#FD1D1D 50%,#FCAF45 100%);">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" width="22" height="22"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#fff"/></svg>
   </div>
-  <div class="hero-social hero-social--br" aria-hidden="true" style="background:#FF0000;">
+  <div class="hero__social hero__social--br" aria-hidden="true" style="background:#FF0000;">
     <svg viewBox="0 0 24 24" fill="#fff" width="22" height="22"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
   </div>
 
   <!-- Contenu central -->
-  <div class="hero-wall__content">
-    <div class="hero-proof">
-      <div class="hero-proof__avatars">
+  <div class="hero__inner">
+    <!-- Proof social -->
+    <div class="hero__proof">
+      <div class="hero__proof-avatars">
         <span style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=80&auto=format&fit=crop');"></span>
         <span style="background-image:url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&q=80&auto=format&fit=crop');"></span>
         <span style="background-image:url('https://images.unsplash.com/photo-1539571696857-5a6c40fe8a7e?w=80&q=80&auto=format&fit=crop');"></span>
         <span style="background-image:url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&q=80&auto=format&fit=crop');"></span>
       </div>
-      <span class="hero-proof__text">+ 200 créateurs <em>déjà inscrits</em></span>
+      <span class="hero__proof-text"><strong>+ 200 créateurs</strong> ont déjà rejoint la liste</span>
     </div>
 
-    <h1 class="display hero-wall__title" data-reveal-mask>
-      <span>Prêt à tourner vos <em>shorts</em> dans des décors d'<em>exception</em> ?</span>
+    <h1 class="hero__title">
+      Prêt à tourner vos <span class="mark mark--dark">contenus<span class="corner-bl"></span><span class="corner-br"></span></span> dans des décors d'exception&nbsp;?
     </h1>
 
-    <p class="hero-wall__sub" data-reveal data-delay="300">
-      Enregistrez en 4K dans des studios professionnels à Villabé, dès <strong>180 €</strong>.
+    <p class="hero__sub">
+      Enregistrez en 4K dans des studios professionnels à Villabé (91), dès <strong>180&nbsp;€</strong>.
     </p>
 
-    <a href="reservation.html" class="btn hero-wall__cta" data-magnetic data-reveal data-delay="500">
+    <a href="reservation.html" class="btn btn--primary" data-magnetic>
       Réserver mon tournage
     </a>
 
-    <div class="hero-wall__features" data-reveal data-delay="700">
-      <span>✓ Opérateurs sur place</span>
-      <span>✓ Micros Shure SM7B</span>
-      <span>✓ Caméras Sony 4K</span>
-      <span>✓ Livraison sous 24h</span>
+    <div class="hero__features">
+      <div class="hero__feature">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Opérateurs sur place
+      </div>
+      <div class="hero__feature">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Micros Shure SM7B
+      </div>
+      <div class="hero__feature">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Caméras Sony 4K
+      </div>
+      <div class="hero__feature">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Rushs sous 48h
+      </div>
     </div>
   </div>
 
-  <!-- Bandeau logos clients en bas -->
-  <div class="hero-logos" aria-hidden="true">
+  <!-- Bandeau logos clients -->
+  <div class="hero__logos" aria-label="Références clients">
     <span>SALESFORCE</span>
     <span>SONY</span>
     <span>SPOTIFY</span>
@@ -189,436 +207,664 @@
     <span>QILEO</span>
     <span>MINDEO</span>
   </div>
+
 </header>
 
-<!-- ============================================ -->
-<!-- MARQUEE                                       -->
-<!-- ============================================ -->
+<!-- ============================================================ -->
+<!-- MARQUEE                                                       -->
+<!-- ============================================================ -->
 <section class="marquee" aria-hidden="true">
   <div class="marquee__track">
     <span class="marquee__item">Podcast</span>
-    <span class="marquee__item"><em>Photo</em></span>
+    <span class="marquee__item marquee__item--accent">Photo</span>
     <span class="marquee__item">Stylisme</span>
     <span class="marquee__item">Podcast</span>
-    <span class="marquee__item"><em>Photo</em></span>
+    <span class="marquee__item marquee__item--accent">Photo</span>
+    <span class="marquee__item">Stylisme</span>
+    <span class="marquee__item">Podcast</span>
+    <span class="marquee__item marquee__item--accent">Photo</span>
+    <span class="marquee__item">Stylisme</span>
+    <span class="marquee__item">Podcast</span>
+    <span class="marquee__item marquee__item--accent">Photo</span>
     <span class="marquee__item">Stylisme</span>
   </div>
   <div class="marquee__track" aria-hidden="true">
     <span class="marquee__item">Podcast</span>
-    <span class="marquee__item"><em>Photo</em></span>
+    <span class="marquee__item marquee__item--accent">Photo</span>
     <span class="marquee__item">Stylisme</span>
     <span class="marquee__item">Podcast</span>
-    <span class="marquee__item"><em>Photo</em></span>
+    <span class="marquee__item marquee__item--accent">Photo</span>
+    <span class="marquee__item">Stylisme</span>
+    <span class="marquee__item">Podcast</span>
+    <span class="marquee__item marquee__item--accent">Photo</span>
+    <span class="marquee__item">Stylisme</span>
+    <span class="marquee__item">Podcast</span>
+    <span class="marquee__item marquee__item--accent">Photo</span>
     <span class="marquee__item">Stylisme</span>
   </div>
 </section>
 
-<!-- ============================================ -->
-<!-- MANIFESTO                                     -->
-<!-- ============================================ -->
-<section class="section container" id="manifesto">
-  <div class="section-num"><strong>01</strong> · 06 — Manifesto</div>
+<!-- ============================================================ -->
+<!-- COMMENT ÇA MARCHE — 4 process cards numérotées               -->
+<!-- ============================================================ -->
+<section class="section container">
 
-  <div class="manifesto">
-    <div class="manifesto__visual" data-reveal>
-      <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=900&q=85&auto=format&fit=crop"
-           alt="Studio créatif MAISON 360" loading="lazy"
-           style="width:100%; height:100%; object-fit:cover; filter:saturate(0.85) contrast(1.05);" />
-      <div style="position:absolute;bottom:24px;left:24px;color:var(--ivoire);font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;z-index:2;mix-blend-mode:difference;">
-        MAISON 360 · 2026
-      </div>
-    </div>
-
-    <div class="manifesto__text">
-      <p class="eyebrow" data-reveal>Notre manifesto</p>
-      <h2 class="display text-display-lg" data-reveal-mask>
-        <span>Un studio.<br/>Trois disciplines.<br/><em>Une vision.</em></span>
+  <div class="process-head">
+    <div>
+      <p class="eyebrow" data-reveal>Simple comme bonjour</p>
+      <h2 class="display display--lg" style="margin-top:12px; max-width:16ch;" data-reveal>
+        Tournez vos vidéos <span class="mark">simplement<span class="corner-bl"></span><span class="corner-br"></span></span> avec MAISON 360
       </h2>
-      <p class="body-lg" data-reveal data-delay="200">
-        MAISON 360 réunit dans un même lieu trois métiers de l'image et du son. Une chapelle dédiée au podcast, un plateau photo aux lumières contrôlées, un espace stylisme pensé comme une rédaction de mode.
-      </p>
-      <p class="body-lg" data-reveal data-delay="300">
-        Nous travaillons avec celles et ceux qui placent la barre très haut — artistes, sportifs de haut niveau, entrepreneurs et créateurs de contenu — pour produire des œuvres qui méritent d'exister.
-      </p>
-
-      <dl class="manifesto__list" data-reveal data-delay="400">
-        <div>
-          <dt>Direction artistique</dt>
-          <dd>Sur mesure</dd>
-        </div>
-        <div>
-          <dt>Équipement</dt>
-          <dd>Broadcast</dd>
-        </div>
-        <div>
-          <dt>Confidentialité</dt>
-          <dd>Absolue</dd>
-        </div>
-      </dl>
     </div>
+    <a href="reservation.html" class="btn btn--dark" data-magnetic>Réserver mon tournage</a>
+  </div>
+
+  <div class="process-cards">
+
+    <article class="process-card" data-reveal>
+      <div class="process-card__visual">
+        <div class="process-card__num">1</div>
+        <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=600&q=80&auto=format&fit=crop" alt="Choisissez votre espace" loading="lazy" />
+      </div>
+      <div class="process-card__head">
+        <span class="process-card__title">Choisissez votre espace</span>
+        <svg class="process-card__icon" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      </div>
+      <p class="process-card__desc">Accédez à 3 disciplines — Podcast, Photo, Stylisme — avec 7 décors et 50 ambiances différentes pour créer le contenu idéal.</p>
+    </article>
+
+    <article class="process-card" data-reveal data-delay="100">
+      <div class="process-card__visual">
+        <div class="process-card__num">2</div>
+        <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=600&q=80&auto=format&fit=crop" alt="Réservez votre créneau" loading="lazy" />
+      </div>
+      <div class="process-card__head">
+        <span class="process-card__title">Réservez votre créneau</span>
+        <svg class="process-card__icon" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      </div>
+      <p class="process-card__desc">Sélectionnez la date, l'heure et la durée directement en ligne. En quelques clics, votre session est confirmée. Acompte 30% sécurisé via Stripe.</p>
+    </article>
+
+    <article class="process-card" data-reveal data-delay="200">
+      <div class="process-card__visual">
+        <div class="process-card__num">3</div>
+        <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=600&q=80&auto=format&fit=crop" alt="Venez créer" loading="lazy" />
+      </div>
+      <div class="process-card__head">
+        <span class="process-card__title">Venez créer, on s'occupe du reste</span>
+        <svg class="process-card__icon" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+      </div>
+      <p class="process-card__desc">Le jour J, tout est prêt : micros, caméras, lumière et installation technique. Vous n'avez plus qu'à vous concentrer sur votre création.</p>
+    </article>
+
+    <article class="process-card" data-reveal data-delay="300">
+      <div class="process-card__visual">
+        <div class="process-card__num">4</div>
+        <img src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=600&q=80&auto=format&fit=crop" alt="Repartez avec vos fichiers" loading="lazy" />
+      </div>
+      <div class="process-card__head">
+        <span class="process-card__title">Repartez avec vos fichiers</span>
+        <svg class="process-card__icon" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </div>
+      <p class="process-card__desc">À la fin de l'enregistrement, vous récupérez immédiatement vos fichiers audio et vidéo, prêts à être diffusés. Options montage et reels disponibles.</p>
+    </article>
+
   </div>
 </section>
 
-<!-- ============================================ -->
-<!-- LES 3 PÔLES                                   -->
-<!-- ============================================ -->
-<section class="section" style="padding-bottom: 0;">
-  <div class="container" style="margin-bottom: 80px;">
-    <div class="section-num"><strong>02</strong> · 06 — Disciplines</div>
-    <p class="eyebrow" data-reveal>Trois pôles</p>
-    <h2 class="display text-display-lg" style="max-width: 20ch; margin-top: 18px;" data-reveal-mask>
-      <span>Des espaces conçus pour <em>chaque langage</em>.</span>
+<!-- ============================================================ -->
+<!-- NOS ESPACES — 2 feature cards (fond clair)                   -->
+<!-- ============================================================ -->
+<section class="section section--soft">
+  <div class="container">
+    <p class="eyebrow" data-reveal>Trois pôles d'excellence</p>
+    <h2 class="display display--lg" style="margin-top:12px; margin-bottom:40px; max-width:22ch;" data-reveal>
+      Des espaces conçus pour <span class="mark">chaque langage<span class="corner-bl"></span><span class="corner-br"></span></span>
     </h2>
+
+    <div class="features">
+      <article class="feature-card" data-reveal>
+        <div class="feature-card__text">
+          <h3 class="feature-card__title">Montage &amp; livraison rapide</h3>
+          <p class="feature-card__desc">Montage complet, sous-titres animés, cuts dynamiques. Votre contenu livré en 24 à 72h selon votre formule — prêt à diffuser sur toutes les plateformes.</p>
+        </div>
+        <div class="feature-card__img">
+          <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=400&q=80&auto=format&fit=crop" alt="" loading="lazy" />
+        </div>
+      </article>
+
+      <article class="feature-card" data-reveal data-delay="100">
+        <div class="feature-card__text">
+          <h3 class="feature-card__title">Déléguez la création de contenu</h3>
+          <p class="feature-card__desc">Formats courts, miniatures, stratégie de diffusion. Notre équipe créative prend en charge toute la chaîne de valeur pour vous faire gagner du temps.</p>
+        </div>
+        <div class="feature-card__img">
+          <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=400&q=80&auto=format&fit=crop" alt="" loading="lazy" />
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- NOTRE SÉLECTION D'ESPACES — fond sombre, slider de cartes    -->
+<!-- ============================================================ -->
+<section class="section section--dark">
+  <div class="container" style="margin-bottom:40px;">
+    <div class="flex-between">
+      <h2 class="display display--lg display--dark">
+        Notre <span class="mark mark--dark">sélection<span class="corner-bl"></span><span class="corner-br"></span></span> d'espaces
+      </h2>
+      <div style="display:flex; gap:12px;">
+        <button class="btn--icon" id="spacesPrev" aria-label="Précédent"
+          onclick="scrollSpaces(-1)">←</button>
+        <button class="btn--icon" id="spacesNext" aria-label="Suivant"
+          onclick="scrollSpaces(1)">→</button>
+      </div>
+    </div>
   </div>
 
-  <div class="pillars">
-    <article class="pillar" data-hover>
-      <div class="pillar__bg">
-        <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=1200&q=85&auto=format&fit=crop"
-             alt="Studio Podcast" loading="lazy" />
+  <div class="spaces" id="spacesTrack" style="overflow-x:auto; scroll-snap-type:x mandatory; display:flex; gap:20px; padding:0 var(--gutter) var(--gutter); -ms-overflow-style:none; scrollbar-width:none;">
+    <article class="space-card" style="flex:0 0 clamp(280px,40vw,420px); scroll-snap-align:start;">
+      <img class="space-card__img" src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=800&q=85&auto=format&fit=crop" alt="Le Cabinet du Son" loading="lazy" />
+      <span class="space-card__cap">Jusqu'à 4 personnes</span>
+      <div class="space-card__content">
+        <h3 class="space-card__title">Le Cabinet du Son</h3>
+        <p class="space-card__desc">Atmosphère broadcast, cabine acoustique traitée.</p>
+        <a href="reservation.html" class="btn btn--primary" style="margin-top:18px; width:fit-content;">Réserver</a>
       </div>
-      <div class="pillar__num">01 — Podcast</div>
-      <h3 class="pillar__title">Le Cabinet du <em>son</em>.</h3>
-      <p class="pillar__desc">Une cabine acoustique traitée au cordeau, micros broadcast, table de mixage Rodecaster Duo. Quatre intervenants, captation vidéo 4K, télévision interactive.</p>
-      <ul class="pillar__list">
-        <li>Shure SM7B · ×4</li>
-        <li>Caméras Sony FX3 · ×3</li>
-        <li>Régie live · Atem Mini Extreme</li>
-        <li>Téléprompteur intégré</li>
-      </ul>
-      <a href="studio.html#podcast" class="pillar__cta">Découvrir l'espace</a>
     </article>
 
-    <article class="pillar" data-hover>
-      <div class="pillar__bg">
-        <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=1200&q=85&auto=format&fit=crop"
-             alt="Plateau Photo" loading="lazy" />
+    <article class="space-card" style="flex:0 0 clamp(280px,40vw,420px); scroll-snap-align:start;">
+      <img class="space-card__img" src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=800&q=85&auto=format&fit=crop" alt="Le Plateau Lumière" loading="lazy" />
+      <span class="space-card__cap">Jusqu'à 10 personnes</span>
+      <div class="space-card__content">
+        <h3 class="space-card__title">Le Plateau Lumière</h3>
+        <p class="space-card__desc">120 m², fond cyclorama infini, parc Profoto.</p>
+        <a href="reservation.html" class="btn btn--primary" style="margin-top:18px; width:fit-content;">Réserver</a>
       </div>
-      <div class="pillar__num">02 — Photo</div>
-      <h3 class="pillar__title">Le Plateau <em>lumière</em>.</h3>
-      <p class="pillar__desc">120 m² au sol, fond infini, parc lumière Profoto, cyclorama, machinerie cinéma. Pensé pour la mode, le portrait, l'éditorial et la vidéo brand.</p>
-      <ul class="pillar__list">
-        <li>Fond cyclorama 8×5 m</li>
-        <li>Profoto B10 Plus · ×6</li>
-        <li>Optiques Sigma Art · Sony GM</li>
-        <li>Loge & maquillage HD</li>
-      </ul>
-      <a href="studio.html#photo" class="pillar__cta">Découvrir l'espace</a>
     </article>
 
-    <article class="pillar" data-hover>
-      <div class="pillar__bg">
-        <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1200&q=85&auto=format&fit=crop"
-             alt="Atelier Stylisme" loading="lazy" />
+    <article class="space-card" style="flex:0 0 clamp(280px,40vw,420px); scroll-snap-align:start;">
+      <img class="space-card__img" src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800&q=85&auto=format&fit=crop" alt="L'Atelier Matières" loading="lazy" />
+      <span class="space-card__cap">Privatisation possible</span>
+      <div class="space-card__content">
+        <h3 class="space-card__title">L'Atelier Matières</h3>
+        <p class="space-card__desc">Portants, vapeur, cabines, mood boards mode.</p>
+        <a href="reservation.html" class="btn btn--primary" style="margin-top:18px; width:fit-content;">Réserver</a>
       </div>
-      <div class="pillar__num">03 — Stylisme</div>
-      <h3 class="pillar__title">L'Atelier <em>matières</em>.</h3>
-      <p class="pillar__desc">Un espace stylisme façon rédaction de mode. Portants, vapeur, miroirs trois faces, mood boards. Réservé aux directions artistiques exigeantes.</p>
-      <ul class="pillar__list">
-        <li>Portants modulables · 40 m</li>
-        <li>Cabines essayage · ×3</li>
-        <li>Vapeur Jiffy professionnel</li>
-        <li>Catering & lounge</li>
-      </ul>
-      <a href="studio.html#stylisme" class="pillar__cta">Découvrir l'espace</a>
     </article>
   </div>
 </section>
 
-<!-- ============================================ -->
-<!-- FEATURED WORK                                 -->
-<!-- ============================================ -->
-<section class="section container">
-  <div class="section-num"><strong>03</strong> · 06 — Productions</div>
+<!-- ============================================================ -->
+<!-- TARIFS — slider durée + options sidebar                       -->
+<!-- ============================================================ -->
+<section class="section container" id="tarifs">
+  <div class="halo" style="width:600px;height:600px;top:-60px;right:-200px;opacity:.35;"></div>
 
-  <div class="flex-between" style="margin-bottom: 40px;">
+  <div style="text-align:center; margin-bottom:40px;">
+    <p class="eyebrow" data-reveal>Tarification transparente</p>
+    <h2 class="display display--lg" style="margin-top:12px; margin-bottom:12px;" data-reveal>
+      Des tarifs qui <span class="mark">s'adaptent<span class="corner-bl"></span><span class="corner-br"></span></span> à vos besoins
+    </h2>
+    <p class="lede">Le studio est réservable à l'heure. Découvrez nos abonnements et économisez jusqu'à <strong>20%</strong>.</p>
+  </div>
+
+  <!-- Toggle unité / packs -->
+  <div style="display:flex; justify-content:center; margin-bottom:36px;">
+    <div class="pricing-toggle">
+      <button class="is-active" id="tabUnite">À l'unité</button>
+      <button id="tabPacks">Nos packs</button>
+    </div>
+  </div>
+
+  <!-- Panel À l'unité -->
+  <div id="panelUnite">
+    <div class="pricing-card">
+      <div class="pricing-card__inner">
+
+        <!-- Gauche : slider + features + prix -->
+        <div>
+          <div class="pricing-card__head">
+            <div class="pricing-pill" id="durationLabel">1h de tournage</div>
+            <h3>Choisissez votre durée</h3>
+            <p>Plus la durée de votre session augmente, plus le tarif horaire diminue.</p>
+          </div>
+
+          <div class="slider-wrap">
+            <div class="slider-track" id="sliderTrack"></div>
+            <input type="range" class="slider-input" id="durationSlider" min="1" max="8" value="1" />
+            <div class="slider-thumb" id="sliderThumb"></div>
+          </div>
+
+          <ul class="pricing-features" style="list-style:none;padding:0;margin:0 0 28px;">
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Opérateurs sur place</li>
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>3 caméras Sony 4K</li>
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>4 micros Shure SM7B</li>
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Table de mixage Rodecaster</li>
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Choix du décor & espace</li>
+            <li><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Fichiers sauvegardés 30 jours</li>
+          </ul>
+
+          <div class="pricing-price">
+            <strong id="priceDisplay">180</strong>
+            <span>€&nbsp;/&nbsp;heure</span>
+          </div>
+
+          <a href="reservation.html" class="btn btn--dark" style="width:100%; justify-content:center; margin-top:4px;">
+            Réserver mon tournage
+          </a>
+        </div>
+
+        <!-- Droite : options -->
+        <div class="pricing-side">
+          <h4>Options disponibles</h4>
+          <p>Les options seront sélectionnables à l'étape suivante</p>
+          <div class="option-line">
+            <span class="option-line__name">Montage complet</span>
+            <span class="option-line__price">+280€ /heure</span>
+          </div>
+          <div class="option-line">
+            <span class="option-line__name">Reels / Shorts</span>
+            <span class="option-line__price">+35€ /unité</span>
+          </div>
+          <div class="option-line">
+            <span class="option-line__name">Miniatures</span>
+            <span class="option-line__price">+55€ /unité</span>
+          </div>
+          <div class="option-line">
+            <span class="option-line__name">Pré-montage</span>
+            <span class="option-line__price">+35€ /heure</span>
+          </div>
+          <div class="option-line">
+            <span class="option-line__name">Téléprompteur</span>
+            <span class="option-line__price">+30€</span>
+          </div>
+          <div class="option-line">
+            <span class="option-line__name">Caméra supplémentaire</span>
+            <span class="option-line__price">+40€ /unité</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel Packs (masqué par défaut) -->
+  <div id="panelPacks" style="display:none;">
+    <div class="pricing-card">
+      <div class="pricing-card__inner">
+        <div>
+          <div class="pricing-card__head">
+            <h3>Abonnements & packs d'heures</h3>
+            <p>Économisez jusqu'à 20% sur vos sessions avec nos formules récurrentes.</p>
+          </div>
+          <div class="packs-grid">
+            <div class="pack-card is-active">
+              <div class="pack-card__h">Découverte</div>
+              <div class="pack-card__discount">–5%</div>
+              <div class="pack-card__price">170€ <span>/h · 5h/mois</span></div>
+            </div>
+            <div class="pack-card">
+              <div class="pack-card__h">Signature</div>
+              <div class="pack-card__discount">–15%</div>
+              <div class="pack-card__price">153€ <span>/h · 10h/mois</span></div>
+            </div>
+            <div class="pack-card">
+              <div class="pack-card__h">Maison</div>
+              <div class="pack-card__discount">–20%</div>
+              <div class="pack-card__price">Sur devis <span>illimité</span></div>
+            </div>
+          </div>
+          <a href="tarifs.html" class="btn btn--dark" style="width:100%; justify-content:center;">Voir le détail complet</a>
+        </div>
+        <div class="pricing-side">
+          <h4>Inclus dans tous les packs</h4>
+          <p>En plus des options standards</p>
+          <div class="option-line"><span class="option-line__name">Rushs J+24h</span><span class="option-line__price">inclus</span></div>
+          <div class="option-line"><span class="option-line__name">Conciergerie dédiée</span><span class="option-line__price">inclus</span></div>
+          <div class="option-line"><span class="option-line__name">Tarif options –20%</span><span class="option-line__price">inclus</span></div>
+          <div class="option-line"><span class="option-line__name">Stockage rushs 6 mois</span><span class="option-line__price">Signature+</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ============================================================ -->
+<!-- CTA BOOSTER                                                   -->
+<!-- ============================================================ -->
+<section class="section container" style="padding-top:0;">
+  <div class="cta-band">
+    <!-- Icônes flottantes -->
+    <div class="cta-band__icon cta-band__icon--1">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--violet-2)" stroke-width="2" width="36" height="36"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="var(--violet-2)"/></svg>
+    </div>
+    <div class="cta-band__icon cta-band__icon--2">
+      <svg viewBox="0 0 24 24" fill="var(--violet-2)" width="36" height="36"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
+    </div>
+    <div class="cta-band__icon cta-band__icon--3">
+      <svg viewBox="0 0 24 24" fill="#fff" width="36" height="36"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.1z"/></svg>
+    </div>
+    <div class="cta-band__icon cta-band__icon--4">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--violet-1)" stroke-width="2" width="36" height="36"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg>
+    </div>
+
+    <p class="eyebrow" style="justify-content:center; margin-bottom:16px;" data-reveal>Prêt à lancer votre projet ?</p>
+    <h2 class="display display--xl display--dark" style="max-width:20ch; margin:0 auto 16px;" data-reveal>
+      Vous souhaitez <span class="mark mark--dark">booster<span class="corner-bl"></span><span class="corner-br"></span></span> votre contenu ?
+    </h2>
+    <p style="color:var(--text-on-dark-2); margin-bottom:32px; max-width:52ch; margin-left:auto; margin-right:auto;" data-reveal data-delay="150">
+      Nous créons vos contenus, <strong>lançons vos campagnes</strong> de publication, et optimisons votre stratégie pour générer de l'audience qualifiée.
+    </p>
+    <a href="reservation.html" class="btn btn--primary" data-reveal data-delay="250">Oui, je veux !</a>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- STATS                                                         -->
+<!-- ============================================================ -->
+<section class="container" style="padding-bottom:var(--section);">
+  <div class="stats-strip">
+    <div data-reveal>
+      <div class="stats-strip__num">380 m²</div>
+      <div class="stats-strip__label">Surface totale</div>
+    </div>
+    <div data-reveal data-delay="100">
+      <div class="stats-strip__num">3</div>
+      <div class="stats-strip__label">Studios indépendants</div>
+    </div>
+    <div data-reveal data-delay="200">
+      <div class="stats-strip__num">24/7</div>
+      <div class="stats-strip__label">Accès & réservation</div>
+    </div>
+    <div data-reveal data-delay="300">
+      <div class="stats-strip__num">48h</div>
+      <div class="stats-strip__label">Rushs livrés sous</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- TÉMOIGNAGES — fond sombre                                     -->
+<!-- ============================================================ -->
+<section class="section section--dark" id="temoignages">
+  <div class="container">
+    <p class="eyebrow" style="margin-bottom:12px;" data-reveal>Ils créent chez MAISON 360</p>
+    <h2 class="display display--lg display--dark" style="margin-bottom:48px; max-width:24ch;" data-reveal>
+      Ils ont déjà <span class="mark mark--dark">enregistré<span class="corner-bl"></span><span class="corner-br"></span></span> leurs contenus chez nous.
+    </h2>
+
+    <div class="testimonials">
+
+      <article class="testimonial" data-reveal>
+        <p class="testimonial__quote">L'endroit le plus pro où j'ai jamais enregistré. Tout est anticipé, du son à la lumière. On vient pour créer, on repart avec un master.</p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80&auto=format&fit=crop" alt="Adrien M." loading="lazy" />
+          </div>
+          <div>
+            <p class="testimonial__name">Adrien M.</p>
+            <p class="testimonial__role">Athlète · Athlétisme</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="testimonial" data-reveal data-delay="100">
+        <p class="testimonial__quote">Le seul studio d'Île-de-France qui combine ce niveau d'équipement et cette direction artistique. Mes shootings campagne s'y déroulent désormais.</p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80&auto=format&fit=crop" alt="Camille R." loading="lazy" />
+          </div>
+          <div>
+            <p class="testimonial__name">Camille R.</p>
+            <p class="testimonial__role">Fondatrice · Marque de luxe</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="testimonial" data-reveal data-delay="200">
+        <p class="testimonial__quote">Mon agence ne travaille plus qu'avec MAISON 360 sur la région. L'équipe comprend l'enjeu d'une marque. Rare.</p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">
+            <img src="https://images.unsplash.com/photo-1539571696857-5a6c40fe8a7e?w=120&q=80&auto=format&fit=crop" alt="Sofiane B." loading="lazy" />
+          </div>
+          <div>
+            <p class="testimonial__name">Sofiane B.</p>
+            <p class="testimonial__role">Directeur · Agence créative</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="testimonial" data-reveal data-delay="300">
+        <p class="testimonial__quote">Une expérience qui rappelle les studios de Milan ou Londres. Avec en prime une rigueur française très appréciable.</p>
+        <div class="testimonial__author">
+          <div class="testimonial__avatar">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&q=80&auto=format&fit=crop" alt="Léa V." loading="lazy" />
+          </div>
+          <div>
+            <p class="testimonial__name">Léa V.</p>
+            <p class="testimonial__role">Créatrice de contenu · 1.4M abonnés</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- CTA inline -->
+    <div style="text-align:center; margin-top:48px;">
+      <a href="reservation.html" class="btn btn--outline" data-reveal>Réserver mon tournage</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- FAQ                                                           -->
+<!-- ============================================================ -->
+<section class="section" style="background:var(--bg-dark-2); color:var(--text-on-dark);">
+  <div class="container" style="display:flex; flex-direction:column; align-items:center; text-align:center; gap:48px;">
+
     <div>
-      <p class="eyebrow" data-reveal>Travaux récents</p>
-      <h2 class="display text-display-lg" style="margin-top: 18px; max-width: 18ch;" data-reveal-mask>
-        <span>Une <em>archive</em> en construction.</span>
+      <!-- Podmax-style decorative logos flottants -->
+      <p class="eyebrow" style="margin-bottom:16px; justify-content:center;">FAQ</p>
+      <h2 class="display display--lg display--dark">
+        Encore des <span class="mark mark--dark">questions&nbsp;?<span class="corner-bl"></span><span class="corner-br"></span></span>
       </h2>
     </div>
-    <a href="galerie.html" class="btn btn--outline" data-magnetic>Voir la galerie complète</a>
-  </div>
 
-  <div class="work-grid">
-    <article class="work-card work-card--lg" data-hover>
-      <img src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=1400&q=85&auto=format&fit=crop"
-           alt="Studio session podcast" loading="lazy" />
-      <div class="work-card__meta">
-        <h3 class="work-card__title">Studio Session — Léo K., champion olympique</h3>
-        <span class="work-card__cat">Podcast · 2026</span>
-      </div>
-    </article>
+    <div class="faq" style="width:100%; text-align:left;">
+      <details class="faq-item">
+        <summary>Quels équipements sont disponibles dans le studio ?</summary>
+        <div class="faq-item__answer">Micros Shure SM7B ×4, caméras Sony FX3 ×3, table de mixage Rodecaster Duo, parc lumière Profoto B10+ ×6, fond cyclorama 8×5 m, Atem Mini Extreme pour la régie live, téléprompteur intégré, loge & maquillage HD.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Faites-vous du montage ?</summary>
+        <div class="faq-item__answer">Oui, nous proposons des services de post-production : montage complet avec sous-titres et animations, reels/shorts optimisés pour les réseaux, miniatures personnalisées, pré-montage (rush avec changements de caméra). Ces options sont sélectionnables lors de la réservation.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Sous combien de temps suis-je livré ?</summary>
+        <div class="faq-item__answer">Les fichiers bruts sont disponibles immédiatement à la fin de la session. Pour le montage : 24h (formule Signature et Maison), 48h (formule Découverte), 72h (option standard). Livraison via lien de téléchargement sécurisé.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Ai-je besoin de ramener mes cartes SD ou disque dur ?</summary>
+        <div class="faq-item__answer">Non, tout est pris en charge par MAISON 360. Vos fichiers sont stockés de façon sécurisée sur nos serveurs (30 jours inclus, 6 mois pour les abonnés) et vous sont délivrés via un lien de téléchargement.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Y a-t-il un professionnel sur place pour nous assister ?</summary>
+        <div class="faq-item__answer">Oui, un régisseur ou opérateur de prise de vue est toujours présent lors de votre session. Pour les formules Signature et Maison, une équipe technique dédiée (DA, régie, post-production) est assignée à votre projet.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Combien de temps à l'avance faut-il réserver ?</summary>
+        <div class="faq-item__answer">Nous recommandons de réserver au moins 48h à l'avance pour garantir votre créneau. Les formules Signature et Maison bénéficient d'un accès prioritaire au planning. Un hold de 10 minutes est appliqué lors de votre sélection de créneau.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Comment vous contacter ?</summary>
+        <div class="faq-item__answer">Via le formulaire de contact sur notre site, par email à contact@maison360.fr, ou directement en réservant en ligne. Notre équipe vous répond sous 24h ouvrées. Pour les formules Maison (sur-mesure), nous organisons un appel de découverte.</div>
+      </details>
+    </div>
 
-    <article class="work-card work-card--md" data-hover>
-      <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900&q=85&auto=format&fit=crop"
-           alt="Campagne mode" loading="lazy" />
-      <div class="work-card__meta">
-        <h3 class="work-card__title">Campagne capsule — Atelier H.</h3>
-        <span class="work-card__cat">Photo · 2026</span>
-      </div>
-    </article>
-
-    <article class="work-card work-card--sq" data-hover>
-      <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=900&q=85&auto=format&fit=crop"
-           alt="Direction artistique stylisme" loading="lazy" />
-      <div class="work-card__meta">
-        <h3 class="work-card__title">Direction artistique — Maison V.</h3>
-        <span class="work-card__cat">Stylisme · 2026</span>
-      </div>
-    </article>
-
-    <article class="work-card work-card--sq" data-hover>
-      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=85&auto=format&fit=crop"
-           alt="Portrait Founder" loading="lazy" />
-      <div class="work-card__meta">
-        <h3 class="work-card__title">Portrait Founder — Y.</h3>
-        <span class="work-card__cat">Photo · 2026</span>
-      </div>
-    </article>
-
-    <article class="work-card work-card--wd" data-hover>
-      <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1800&q=85&auto=format&fit=crop"
-           alt="Brand film horlogerie" loading="lazy" />
-      <div class="work-card__meta">
-        <h3 class="work-card__title">Brand film — Marque française d'horlogerie</h3>
-        <span class="work-card__cat">Photo + Podcast · 2026</span>
-      </div>
-    </article>
   </div>
 </section>
 
-<!-- ============================================ -->
-<!-- STATS                                         -->
-<!-- ============================================ -->
-<section class="section--tight">
-  <div class="stats">
-    <div class="stat">
-      <span class="stat__num"><span data-counter="380" data-suffix="m²">0</span></span>
-      <span class="stat__label">Surface totale</span>
-    </div>
-    <div class="stat">
-      <span class="stat__num"><span data-counter="3" data-suffix="">0</span></span>
-      <span class="stat__label">Studios indépendants</span>
-    </div>
-    <div class="stat">
-      <span class="stat__num"><span data-counter="24" data-suffix="/7">0</span></span>
-      <span class="stat__label">Accès & réservation</span>
-    </div>
-    <div class="stat">
-      <span class="stat__num"><span data-counter="48" data-suffix="h">0</span></span>
-      <span class="stat__label">Rushs livrés sous</span>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================ -->
-<!-- FORMULES TEASER                               -->
-<!-- ============================================ -->
-<section class="section container">
-  <div class="section-num"><strong>04</strong> · 06 — Formules</div>
-
-  <div class="flex-between" style="margin-bottom: 40px;">
-    <div>
-      <p class="eyebrow" data-reveal>Tarifs & abonnements</p>
-      <h2 class="display text-display-lg" style="margin-top: 18px; max-width: 20ch;" data-reveal-mask>
-        <span>Trois formules. <em>Aucun compromis.</em></span>
-      </h2>
-    </div>
-    <a href="tarifs.html" class="btn btn--outline" data-magnetic>Voir le détail complet</a>
-  </div>
-
-  <div class="formulas">
-    <article class="formula" data-reveal>
-      <span class="formula__tier">Découverte</span>
-      <h3 class="formula__name">À la <em>séance</em></h3>
-      <div class="formula__price">
-        <strong>180</strong><span>€ / heure</span>
-      </div>
-      <ul class="formula__features">
-        <li>Réservation à l'heure (min. 2h)</li>
-        <li>Accès à un espace</li>
-        <li>Rushs J+72h inclus</li>
-        <li>Régisseur en cabine</li>
-        <li>Café & eau pétillante</li>
-      </ul>
-      <a href="reservation.html" class="btn btn--outline" style="width:100%;">Réserver une session</a>
-    </article>
-
-    <article class="formula formula--featured" data-reveal data-delay="100">
-      <span class="formula__tier">Signature</span>
-      <h3 class="formula__name">Abonnement <em>mensuel</em></h3>
-      <div class="formula__price">
-        <strong>1 290</strong><span>€ / mois</span>
-      </div>
-      <ul class="formula__features">
-        <li>10 heures incluses / mois</li>
-        <li>Accès aux 3 espaces</li>
-        <li>Rushs J+24h inclus</li>
-        <li>Tarif préférentiel options (-20%)</li>
-        <li>Conciergerie dédiée</li>
-        <li>Catering & lounge premium</li>
-      </ul>
-      <a href="reservation.html" class="btn" style="width:100%;">Souscrire</a>
-    </article>
-
-    <article class="formula" data-reveal data-delay="200">
-      <span class="formula__tier">Maison</span>
-      <h3 class="formula__name">Sur <em>mesure</em></h3>
-      <div class="formula__price">
-        <strong>Sur</strong><span>devis</span>
-      </div>
-      <ul class="formula__features">
-        <li>Résidence artistique annuelle</li>
-        <li>Accès illimité & priorité</li>
-        <li>Équipe dédiée (DA · Régie · Post)</li>
-        <li>Stockage rushs 6 mois</li>
-        <li>NDA & confidentialité totale</li>
-        <li>Privatisation possible</li>
-      </ul>
-      <a href="#contact" class="btn btn--outline" style="width:100%;">Nous contacter</a>
-    </article>
-  </div>
-</section>
-
-<!-- ============================================ -->
-<!-- TESTIMONIALS                                  -->
-<!-- ============================================ -->
-<section class="section container">
-  <div class="section-num"><strong>05</strong> · 06 — Témoignages</div>
-
-  <p class="eyebrow" data-reveal>Ils sont passés par MAISON 360</p>
-  <h2 class="display text-display-lg" style="margin-top: 18px; max-width: 22ch; margin-bottom: 56px;" data-reveal-mask>
-    <span>La parole à <em>celles et ceux</em> qui créent.</span>
-  </h2>
-
-  <div class="testimonials">
-    <article class="testimonial" data-reveal>
-      <p class="testimonial__quote">L'endroit le plus pro où j'ai jamais enregistré. Tout est anticipé, du son à la lumière, jusqu'au café. On vient pour créer, on repart avec un master.</p>
-      <div class="testimonial__author">
-        <div class="testimonial__avatar"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80&auto=format&fit=crop" alt="" loading="lazy" /></div>
-        <div>
-          <p class="testimonial__name">Adrien M.</p>
-          <p class="testimonial__role">Athlète · Athlétisme</p>
-        </div>
-      </div>
-    </article>
-
-    <article class="testimonial" data-reveal data-delay="100">
-      <p class="testimonial__quote">Le seul studio d'Île-de-France qui combine ce niveau d'équipement et cette direction artistique. Mes shootings campagne s'y produisent désormais.</p>
-      <div class="testimonial__author">
-        <div class="testimonial__avatar"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80&auto=format&fit=crop" alt="" loading="lazy" /></div>
-        <div>
-          <p class="testimonial__name">Camille R.</p>
-          <p class="testimonial__role">Fondatrice · Marque de luxe</p>
-        </div>
-      </div>
-    </article>
-
-    <article class="testimonial" data-reveal>
-      <p class="testimonial__quote">Mon agence ne travaille plus qu'avec MAISON 360 sur la région. L'équipe comprend l'enjeu d'une marque. Rare.</p>
-      <div class="testimonial__author">
-        <div class="testimonial__avatar"><img src="https://images.unsplash.com/photo-1539571696857-5a6c40fe8a7e?w=120&q=80&auto=format&fit=crop" alt="" loading="lazy" /></div>
-        <div>
-          <p class="testimonial__name">Sofiane B.</p>
-          <p class="testimonial__role">Directeur · Agence créative</p>
-        </div>
-      </div>
-    </article>
-
-    <article class="testimonial" data-reveal data-delay="100">
-      <p class="testimonial__quote">Une expérience qui rappelle les studios de Milan ou Londres. Avec en prime, une rigueur française très appréciable.</p>
-      <div class="testimonial__author">
-        <div class="testimonial__avatar"><img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&q=80&auto=format&fit=crop" alt="" loading="lazy" /></div>
-        <div>
-          <p class="testimonial__name">Léa V.</p>
-          <p class="testimonial__role">Créatrice de contenu · 1.4M abonnés</p>
-        </div>
-      </div>
-    </article>
-  </div>
-</section>
-
-<!-- ============================================ -->
-<!-- CTA FINAL                                     -->
-<!-- ============================================ -->
-<section class="cta-section">
-  <div class="cta-section__bg"></div>
-  <p class="eyebrow" style="justify-content:center;" data-reveal>Réservez maintenant</p>
-  <h2 class="display text-display-xl" data-reveal-mask>
-    <span>Votre prochaine<br/>œuvre <em>commence ici</em>.</span>
-  </h2>
-  <p class="body-lg" data-reveal data-delay="200">
-    Acompte de 30 % à la réservation. Solde prélevé automatiquement 48 heures avant la session. Aucune surprise, juste de la création.
-  </p>
-  <a href="reservation.html" class="btn" data-magnetic data-reveal data-delay="300">
-    Réserver une session
-  </a>
-</section>
-
-<!-- ============================================ -->
-<!-- FOOTER                                        -->
-<!-- ============================================ -->
+<!-- ============================================================ -->
+<!-- FOOTER                                                         -->
+<!-- ============================================================ -->
 <footer class="footer" id="contact">
-  <div class="footer__top">
-    <div class="footer__col">
-      <h3 class="footer__brand">MAISON <span>360</span></h3>
-      <p class="body" style="max-width: 32ch;">Studio créatif premium · Podcast, Photo, Stylisme. Conçu pour celles et ceux qui placent la barre très haut.</p>
-      <div style="margin-top: 32px; font-family:var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sable); line-height: 2;">
-        Villabé (91) · Île-de-France<br/>
-        Ouverture juillet 2026
+  <div class="footer__inner">
+
+    <!-- Colonne marque -->
+    <div>
+      <div class="footer__brand">
+        <span class="nav__brand-mark"></span>
+        MAISON <span style="color:var(--violet-1);">360</span>
       </div>
+      <p class="body" style="max-width:28ch; opacity:0.65;">Studio créatif premium — Podcast, Photo, Stylisme. Conçu pour celles et ceux qui placent la barre très haut.</p>
+      <div style="margin-top:24px; display:flex; gap:10px;">
+        <a href="#" class="btn--icon" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>
+        </a>
+        <a href="#" class="btn--icon" aria-label="Vimeo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M22 7.42C21.91 9.37 20.5 12.04 17.77 15.42 14.95 19 12.57 20.77 10.63 20.77c-1.24 0-2.29-1.15-3.15-3.45L5.8 11.23C5.16 8.93 4.47 7.78 3.74 7.78"/></svg>
+        </a>
+        <a href="#" class="btn--icon" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+      </div>
+      <p style="margin-top:16px; font-family:var(--font-mono); font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--violet-1); opacity:0.65;">Villabé (91) · Ouverture juillet 2026</p>
     </div>
 
-    <div class="footer__col">
-      <h4>Studio</h4>
+    <!-- Colonne Studio -->
+    <div>
+      <h4>Accueil</h4>
       <ul>
-        <li><a href="studio.html#podcast">Espace podcast</a></li>
-        <li><a href="studio.html#photo">Plateau photo</a></li>
-        <li><a href="studio.html#stylisme">Atelier stylisme</a></li>
+        <li><a href="studio.html">Le Studio</a></li>
+        <li><a href="tarifs.html">Tarifs</a></li>
         <li><a href="galerie.html">Galerie</a></li>
+        <li><a href="reservation.html">Réserver</a></li>
         <li><a href="#">Blog</a></li>
       </ul>
     </div>
 
-    <div class="footer__col">
-      <h4>Réserver</h4>
+    <!-- Colonne Légal -->
+    <div>
+      <h4>Légal</h4>
       <ul>
-        <li><a href="tarifs.html">Tarifs & formules</a></li>
-        <li><a href="reservation.html">Réservation</a></li>
-        <li><a href="#">Espace client</a></li>
-        <li><a href="#">FAQ</a></li>
-        <li><a href="admin.html" style="color:var(--or);">Back-office (admin)</a></li>
+        <li><a href="#">Mentions légales</a></li>
+        <li><a href="#">Conditions générales</a></li>
+        <li><a href="#">Politique de confidentialité</a></li>
+        <li><a href="#">Cookies</a></li>
       </ul>
     </div>
 
-    <div class="footer__col newsletter">
+    <!-- Newsletter -->
+    <div class="newsletter">
       <h4>Notre journal</h4>
-      <p class="body" style="margin-bottom: 24px;">Une lettre mensuelle, éditée par l'équipe. Coulisses, dernières productions et invitations privées.</p>
-      <form onsubmit="event.preventDefault(); this.querySelector('button').textContent = '✓ Inscrit'; this.querySelector('input').value='';">
+      <p class="body" style="margin-bottom:20px; opacity:0.65;">Une lettre mensuelle éditée par l'équipe : coulisses, productions et invitations privées.</p>
+      <form onsubmit="event.preventDefault(); this.querySelector('button').textContent='✓ Inscrit'; this.querySelector('input').value='';">
         <input type="email" placeholder="votre@email.com" required />
         <button type="submit">S'abonner</button>
       </form>
+      <p style="margin-top:16px; font-size:11px; opacity:0.45; font-family:var(--font-mono);">© 2026 MAISON 360 · Tous droits réservés</p>
     </div>
+
   </div>
 
   <div class="footer__bottom">
     <span>© 2026 MAISON 360 · Tous droits réservés</span>
-    <div style="display:flex; gap:32px;">
+    <div style="display:flex; gap:28px;">
       <a href="#">Mentions légales</a>
       <a href="#">CGV</a>
       <a href="#">Confidentialité</a>
-      <a href="#">Cookies</a>
     </div>
     <span>Instagram · Vimeo · LinkedIn</span>
   </div>
-
-  <div class="footer__massive" aria-hidden="true">
-    MAISON <em>360</em>
-  </div>
 </footer>
 
+<!-- ============================================================ -->
+<!-- SCRIPTS                                                        -->
+<!-- ============================================================ -->
 <script src="assets/js/main.js" defer></script>
+
+<script>
+/* --- Loader --- */
+window.addEventListener('load', function () {
+  setTimeout(function () {
+    var l = document.getElementById('loader');
+    if (l) l.classList.add('is-hidden');
+  }, 1800);
+});
+
+/* --- Nav scroll --- */
+var nav = document.querySelector('.nav');
+window.addEventListener('scroll', function () {
+  if (nav) nav.classList.toggle('is-scrolled', window.scrollY > 60);
+}, { passive: true });
+
+/* --- Mobile menu --- */
+var burger = document.querySelector('.nav__burger');
+var mobileMenu = document.getElementById('mobileMenu');
+if (burger && mobileMenu) {
+  burger.addEventListener('click', function () {
+    var open = mobileMenu.classList.toggle('is-open');
+    mobileMenu.setAttribute('aria-hidden', String(!open));
+  });
+}
+
+/* --- Reveal on scroll --- */
+var revealEls = document.querySelectorAll('[data-reveal]');
+var io = new IntersectionObserver(function (entries) {
+  entries.forEach(function (e) {
+    if (e.isIntersecting) {
+      var delay = e.target.dataset.delay || 0;
+      setTimeout(function () { e.target.classList.add('is-visible'); }, Number(delay));
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach(function (el) { io.observe(el); });
+
+/* --- Pricing slider --- */
+var slider = document.getElementById('durationSlider');
+var thumb  = document.getElementById('sliderThumb');
+var track  = document.getElementById('sliderTrack');
+var priceDisplay = document.getElementById('priceDisplay');
+var labelEl = document.getElementById('durationLabel');
+var prices = [180, 170, 165, 158, 152, 147, 143, 139];
+var labels = ['1h','2h','3h','4h','5h','6h','7h','8h'];
+
+function updateSlider() {
+  var val = parseInt(slider.value) - 1;
+  var pct = (val / 7) * 100;
+  thumb.style.left = pct + '%';
+  priceDisplay.textContent = prices[val];
+  labelEl.textContent = labels[val] + ' de tournage';
+  track.style.background =
+    'linear-gradient(to right, var(--violet-2) ' + pct + '%, var(--bg-dark) ' + pct + '%)';
+}
+if (slider) { slider.addEventListener('input', updateSlider); updateSlider(); }
+
+/* --- Pricing tabs --- */
+document.getElementById('tabUnite').addEventListener('click', function () {
+  this.classList.add('is-active');
+  document.getElementById('tabPacks').classList.remove('is-active');
+  document.getElementById('panelUnite').style.display = '';
+  document.getElementById('panelPacks').style.display = 'none';
+});
+document.getElementById('tabPacks').addEventListener('click', function () {
+  this.classList.add('is-active');
+  document.getElementById('tabUnite').classList.remove('is-active');
+  document.getElementById('panelPacks').style.display = '';
+  document.getElementById('panelUnite').style.display = 'none';
+});
+
+/* --- Spaces slider scroll --- */
+function scrollSpaces(dir) {
+  var track = document.getElementById('spacesTrack');
+  if (track) track.scrollBy({ left: dir * 440, behavior: 'smooth' });
+}
+</script>
+
 </body>
 </html>

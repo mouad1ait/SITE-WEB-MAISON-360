@@ -3,126 +3,491 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0A0908" />
+  <meta name="theme-color" content="#080604" />
   <title>Tarifs & Formules — MAISON 360 · Studio créatif premium</title>
-  <meta name="description" content="Découvrez les formules de MAISON 360 : à la séance, en abonnement Signature ou en résidence Maison. Acompte 30 %, paiement sécurisé Stripe." />
+  <meta name="description" content="Trois formules pour créer sans compromis. À la séance, abonnement Signature ou résidence Maison. Acompte 30%, paiement sécurisé Stripe." />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.42/dist/lenis.min.js" defer></script>
   <link rel="stylesheet" href="assets/css/styles.css" />
+
   <style>
+    /* ── Hero tarifs ── */
+    .tarifs-hero {
+      min-height: 52vh;
+      background: var(--bg-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 120px var(--gutter) 72px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .tarifs-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 100%, rgba(201,168,76,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 20%, rgba(212,175,55,0.08) 0%, transparent 60%);
+    }
+    .tarifs-hero > * { position: relative; z-index: 1; }
+    .tarifs-hero__kicker {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--violet-2);
+      margin-bottom: 24px;
+    }
+    .tarifs-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text-on-dark);
+      max-width: 16ch;
+      margin: 0 auto 24px;
+    }
+    .tarifs-hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--violet-1) 0%, var(--violet-3) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .tarifs-hero p {
+      font-size: clamp(1rem, 1.3vw, 1.1rem);
+      color: var(--text-on-dark-2);
+      max-width: 48ch;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+
+    /* ── Formules cards ── */
+    .formulas {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 960px) { .formulas { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; } }
+
+    .formula {
+      background: var(--bg-white);
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 36px 32px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: box-shadow .35s var(--ease-out), transform .35s;
+      position: relative;
+    }
+    .formula:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 30px 60px -20px rgba(201,168,76,0.22);
+    }
+    .formula--featured {
+      background: var(--bg-dark);
+      border-color: var(--violet-1);
+      box-shadow: 0 0 0 1px var(--violet-1);
+    }
+    .formula--featured:hover {
+      box-shadow: 0 0 0 1px var(--violet-1), 0 30px 60px -20px rgba(201,168,76,0.4);
+    }
+    .formula__badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--violet-1) 0%, var(--violet-2) 100%);
+      color: var(--bg-dark);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .formula__tier {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--violet-2);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .formula__name {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 28px;
+      color: var(--text-primary);
+    }
+    .formula--featured .formula__name { color: var(--text-on-dark); }
+    .formula__name em { font-style: normal; color: var(--violet-2); }
+    .formula__price {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 28px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .formula--featured .formula__price { border-bottom-color: rgba(255,255,255,0.1); }
+    .formula__price strong {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text-primary);
+      line-height: 1;
+    }
+    .formula--featured .formula__price strong { color: var(--violet-1); }
+    .formula__price span { font-size: 0.9rem; color: var(--text-muted); }
+    .formula--featured .formula__price span { color: var(--text-on-dark-2); }
+    .formula__features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      flex: 1;
+    }
+    .formula__features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.45;
+    }
+    .formula--featured .formula__features li { color: var(--text-on-dark-2); }
+    .formula__features li::before {
+      content: '✓';
+      color: var(--violet-2);
+      font-weight: 700;
+      font-size: 12px;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .formula .btn { width: 100%; justify-content: center; margin-top: auto; }
+    .formula--featured .btn--outline {
+      border-color: rgba(201,168,76,0.4);
+      color: var(--text-on-dark);
+    }
+    .formula--featured .btn--outline:hover {
+      background: var(--violet-1);
+      color: var(--bg-dark);
+      border-color: var(--violet-1);
+    }
+
+    /* ── Configurateur ── */
     .configurator {
-      background: var(--anthracite);
-      border: 1px solid var(--hairline);
-      padding: clamp(32px, 4vw, 64px);
-      margin: 60px var(--gutter);
+      background: var(--bg-dark);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: var(--radius-lg);
+      padding: clamp(32px, 4vw, 56px);
       display: grid;
       grid-template-columns: 1.4fr 1fr;
-      gap: 60px;
+      gap: 48px;
+      position: relative;
+      overflow: hidden;
     }
-    @media (max-width: 880px) { .configurator { grid-template-columns: 1fr; margin: 40px var(--gutter); } }
-    .conf-toggle { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
-    .conf-chip {
-      padding: 14px 22px;
-      border: 1px solid var(--hairline);
-      border-radius: 999px;
+    .configurator::before {
+      content: '';
+      position: absolute;
+      bottom: -100px; right: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(201,168,76,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    @media (max-width: 900px) { .configurator { grid-template-columns: 1fr; } }
+
+    .conf-block { margin-bottom: 32px; }
+    .conf-block:last-child { margin-bottom: 0; }
+    .conf-label {
       font-family: var(--font-mono);
-      font-size: var(--t-12);
-      letter-spacing: 0.16em;
+      font-size: 10px;
+      letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--sable);
-      cursor: pointer;
-      transition: all .3s;
+      color: var(--violet-2);
+      margin-bottom: 12px;
+      display: block;
     }
-    .conf-chip:hover { border-color: var(--or-soft); color: var(--ivoire); }
-    .conf-chip.is-active { background: var(--or); color: var(--onyx); border-color: var(--or); }
-    .conf-block { margin-top: 32px; }
-    .conf-block h4 { font-family: var(--font-mono); font-size: var(--t-12); letter-spacing: 0.18em; text-transform: uppercase; color: var(--or); margin: 0 0 16px; }
-    .conf-slider { width: 100%; }
-    .conf-summary {
-      background: var(--onyx);
-      border: 1px solid var(--or);
-      padding: 36px;
-    }
-    .conf-summary h3 { font-family: var(--font-mono); font-size: var(--t-12); letter-spacing: 0.2em; text-transform: uppercase; color: var(--or); margin: 0 0 24px; }
-    .conf-line { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--hairline); font-size: var(--t-14); color: var(--sable); }
-    .conf-line strong { color: var(--ivoire); font-weight: 500; }
-    .conf-total {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      padding: 24px 0 12px;
-      font-family: var(--font-display);
-      font-weight: 300;
-    }
-    .conf-total span:first-child { font-size: var(--t-16); color: var(--sable); }
-    .conf-total span:last-child { font-size: var(--t-49); color: var(--or); }
-    .conf-deposit {
+    .conf-toggle { display: flex; flex-wrap: wrap; gap: 8px; }
+    .conf-chip {
+      padding: 10px 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 999px;
       font-family: var(--font-mono);
       font-size: 11px;
       letter-spacing: 0.1em;
-      color: var(--sable);
-      margin: 0 0 24px;
-      line-height: 1.7;
+      text-transform: uppercase;
+      color: var(--text-on-dark-2);
+      cursor: pointer;
+      transition: all .25s var(--ease-out);
+      background: transparent;
     }
-    .conf-num-input {
-      display: flex;
+    .conf-chip:hover { border-color: var(--violet-1); color: var(--text-on-dark); }
+    .conf-chip.is-active {
+      background: linear-gradient(135deg, var(--violet-1) 0%, var(--violet-2) 100%);
+      color: var(--bg-dark);
+      border-color: transparent;
+      font-weight: 700;
+    }
+    .conf-num {
+      display: inline-flex;
       align-items: center;
-      gap: 12px;
-      border: 1px solid var(--hairline);
-      padding: 6px;
-      width: fit-content;
+      gap: 0;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      overflow: hidden;
     }
-    .conf-num-input button { width: 36px; height: 36px; color: var(--or); font-size: 20px; transition: background .2s; }
-    .conf-num-input button:hover { background: rgba(201,169,97,0.1); }
-    .conf-num-input input { width: 60px; text-align: center; background: transparent; border: 0; color: var(--ivoire); font-family: var(--font-mono); font-size: var(--t-16); outline: none; }
+    .conf-num button {
+      width: 40px; height: 40px;
+      color: var(--violet-1);
+      font-size: 18px;
+      transition: background .2s;
+      display: grid; place-items: center;
+    }
+    .conf-num button:hover { background: rgba(201,168,76,0.12); }
+    .conf-num input {
+      width: 56px; text-align: center;
+      background: transparent; border: 0;
+      color: var(--text-on-dark);
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 600;
+      outline: none;
+      padding: 0;
+    }
+
+    /* Résumé devis */
+    .conf-summary {
+      background: rgba(201,168,76,0.06);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: var(--radius);
+      padding: 32px;
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+    }
+    .conf-summary__title {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--violet-2);
+      margin-bottom: 24px;
+    }
+    .conf-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 13px;
+    }
+    .conf-line:last-child { border-bottom: 0; }
+    .conf-line__label { color: var(--text-on-dark-2); }
+    .conf-line__val { color: var(--text-on-dark); font-weight: 600; white-space: nowrap; }
+    .conf-total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 20px 0 6px;
+    }
+    .conf-total-label { font-size: 13px; color: var(--text-on-dark-2); }
+    .conf-total-amount {
+      font-family: var(--font-display);
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, var(--violet-1) 0%, var(--violet-3) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      line-height: 1;
+    }
+    .conf-deposit-note {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: var(--text-on-dark-2);
+      opacity: 0.6;
+      line-height: 1.6;
+      margin: 6px 0 24px;
+    }
+    .conf-deposit-note strong { color: var(--violet-1); opacity: 1; }
+
+    /* ── Tableau comparatif ── */
+    .tarif-table {
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      overflow: hidden;
+      margin-top: 40px;
+    }
+    .tarif-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      align-items: center;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .tarif-row:last-child { border-bottom: 0; }
+    .tarif-row--head {
+      background: var(--bg-dark);
+    }
+    .tarif-row--head span {
+      padding: 16px 20px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-on-dark-2);
+    }
+    .tarif-row--head span:first-child { color: var(--violet-2); }
+    .tarif-row:not(.tarif-row--head) { background: var(--bg-white); }
+    .tarif-row:not(.tarif-row--head):nth-child(even) { background: var(--bg-soft); }
+    .tarif-row__feature {
+      padding: 16px 20px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .tarif-row__cell {
+      padding: 16px 20px;
+      font-size: 13px;
+      color: var(--text-muted);
+      text-align: center;
+    }
+    .tarif-row__cell--featured {
+      color: var(--violet-2);
+      font-weight: 700;
+      background: rgba(201,168,76,0.06);
+    }
+    @media (max-width: 760px) {
+      .tarif-row { grid-template-columns: 1.5fr 1fr 1fr 1fr; }
+      .tarif-row__feature, .tarif-row__cell { padding: 12px 10px; font-size: 12px; }
+    }
+
+    /* ── Politique annulation ── */
+    .annulation-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 40px;
+    }
+    @media (max-width: 880px) { .annulation-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .annulation-grid { grid-template-columns: 1fr; } }
+    .annul-card {
+      background: var(--bg-dark);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      text-align: center;
+    }
+    .annul-card__icon {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: rgba(201,168,76,0.1);
+      display: grid; place-items: center;
+      margin: 0 auto 16px;
+      font-size: 22px;
+    }
+    .annul-card__time {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--violet-2);
+      margin-bottom: 8px;
+    }
+    .annul-card__rule {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-on-dark);
+      margin-bottom: 8px;
+    }
+    .annul-card__desc {
+      font-size: 12px;
+      color: var(--text-on-dark-2);
+      opacity: 0.65;
+      line-height: 1.55;
+    }
   </style>
 </head>
 <body>
 
 <div class="grain" aria-hidden="true"></div>
 
-<nav class="nav" aria-label="Navigation principale">
-  <a href="index.html" class="nav__brand">MAISON <span>360</span></a>
+<!-- ── NAVIGATION ── -->
+<nav class="nav" id="nav" aria-label="Navigation principale">
+  <a href="index.html" class="nav__brand">
+    <span class="nav__brand-mark"></span>
+    MAISON <span style="color:var(--violet-1);">360</span>
+  </a>
   <div class="nav__links">
     <a class="nav__link" href="studio.html">Le Studio</a>
-    <a class="nav__link" href="tarifs.html">Tarifs</a>
+    <a class="nav__link" href="tarifs.html" style="color:var(--violet-1);">Tarifs</a>
     <a class="nav__link" href="galerie.html">Galerie</a>
+    <a class="nav__link" href="blog.html">Blog</a>
     <a class="nav__link" href="index.html#contact">Contact</a>
   </div>
-  <a class="nav__cta" data-magnetic href="reservation.html">Réserver →</a>
-  <button class="nav__burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav__cta">
+    <a class="btn btn--outline" href="galerie.html">Voir la galerie</a>
+    <a class="btn btn--primary" href="reservation.html">Réserver →</a>
+  </div>
+  <button class="nav__burger" aria-label="Menu"><span></span></button>
 </nav>
 
-<div class="mobile-menu" aria-hidden="true">
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
   <ul class="mobile-menu__list">
-    <li><a href="studio.html"><span>01</span>Le Studio</a></li>
-    <li><a href="tarifs.html"><span>02</span>Tarifs</a></li>
-    <li><a href="galerie.html"><span>03</span>Galerie</a></li>
-    <li><a href="reservation.html"><span>04</span>Réserver</a></li>
+    <li><a href="studio.html">Le Studio</a></li>
+    <li><a href="tarifs.html">Tarifs</a></li>
+    <li><a href="galerie.html">Galerie</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
   </ul>
+  <a href="reservation.html" class="mobile-menu__cta">Réserver mon tournage →</a>
 </div>
 
-<!-- HERO -->
-<section class="tarif-hero">
-  <p class="eyebrow" style="justify-content:center;" data-reveal>Tarifs & formules</p>
-  <h1 class="display text-display-xl" style="margin: 24px auto; max-width: 18ch;" data-reveal-mask>
-    <span>Une <em>transparence</em><br/>totale.</span>
-  </h1>
-  <p class="lede" style="max-width: 50ch; margin: 0 auto;" data-reveal data-delay="200">
-    Trois formules, des options modulables, un acompte de 30 % à la réservation et plus rien à gérer ensuite. Le reste se passe en studio.
-  </p>
+<!-- ── HERO ── -->
+<section class="tarifs-hero">
+  <div class="tarifs-hero__kicker">Tarifs &amp; Formules</div>
+  <h1>Une <em>transparence</em> totale.</h1>
+  <p>Trois formules, des options modulables, un acompte de 30&nbsp;% à la réservation. Le reste se passe en studio.</p>
 </section>
 
-<!-- FORMULES DETAIL -->
-<section class="section container" style="padding-top: clamp(40px, 6vw, 80px);">
+<!-- ── 3 FORMULES ── -->
+<section class="section container">
+  <div style="text-align:center; margin-bottom:48px;">
+    <p class="eyebrow" data-reveal>Choisissez votre niveau</p>
+    <h2 class="display display--lg" style="margin-top:12px;" data-reveal>
+      Trois formules. <span class="mark">Aucun compromis.<span class="corner-bl"></span><span class="corner-br"></span></span>
+    </h2>
+  </div>
+
   <div class="formulas">
+
+    <!-- Découverte -->
     <article class="formula" data-reveal>
       <span class="formula__tier">Découverte</span>
       <h3 class="formula__name">À la <em>séance</em></h3>
       <div class="formula__price">
-        <strong>180</strong><span>€ / heure</span>
+        <strong>180</strong><span>€&nbsp;/&nbsp;heure</span>
       </div>
       <ul class="formula__features">
         <li>Réservation à l'heure (min. 2h)</li>
@@ -131,29 +496,33 @@
         <li>Rushs livrés sous J+72h</li>
         <li>Stockage 15 jours</li>
         <li>Catering basique inclus</li>
+        <li>Paiement Stripe sécurisé</li>
       </ul>
-      <a href="reservation.html" class="btn btn--outline" style="width:100%;">Réserver</a>
+      <a href="reservation.html" class="btn btn--dark">Réserver une session</a>
     </article>
 
+    <!-- Signature — Featured -->
     <article class="formula formula--featured" data-reveal data-delay="100">
-      <span class="formula__tier">Signature</span>
+      <div class="formula__badge">Le plus populaire</div>
+      <span class="formula__tier" style="color:var(--violet-2);">Signature</span>
       <h3 class="formula__name">Abonnement <em>mensuel</em></h3>
       <div class="formula__price">
-        <strong>1 290</strong><span>€ / mois</span>
+        <strong>1&nbsp;290</strong><span>€&nbsp;/&nbsp;mois</span>
       </div>
       <ul class="formula__features">
         <li>10 heures incluses chaque mois</li>
         <li>Accès illimité aux 3 espaces</li>
         <li>Rushs J+24h inclus</li>
         <li>Stockage 60 jours</li>
-        <li>-20 % sur toutes les options</li>
+        <li>–20&nbsp;% sur toutes les options</li>
         <li>Conciergerie dédiée</li>
+        <li>Reportable mois sur mois</li>
         <li>Engagement 3 mois</li>
-        <li>Reportable d'un mois sur l'autre</li>
       </ul>
-      <a href="reservation.html" class="btn" style="width:100%;">Souscrire</a>
+      <a href="reservation.html" class="btn btn--primary">Souscrire</a>
     </article>
 
+    <!-- Maison -->
     <article class="formula" data-reveal data-delay="200">
       <span class="formula__tier">Maison</span>
       <h3 class="formula__name">Résidence <em>annuelle</em></h3>
@@ -161,268 +530,253 @@
         <strong>Sur</strong><span>devis</span>
       </div>
       <ul class="formula__features">
-        <li>Accès illimité & prioritaire</li>
-        <li>Équipe dédiée (DA · Régie · Post-prod)</li>
+        <li>Accès illimité &amp; prioritaire</li>
+        <li>Équipe dédiée (DA · Régie · Post)</li>
         <li>Stockage rushs 180 jours</li>
-        <li>NDA & confidentialité totale</li>
-        <li>Privatisation possible (24/7)</li>
-        <li>Studio mobile inclus 4x/an</li>
+        <li>NDA &amp; confidentialité totale</li>
+        <li>Privatisation possible 24/7</li>
+        <li>Studio mobile inclus 4×/an</li>
+        <li>–35&nbsp;% sur toutes les options</li>
         <li>Engagement 12 mois</li>
       </ul>
-      <a href="index.html#contact" class="btn btn--outline" style="width:100%;">Nous contacter</a>
+      <a href="index.html#contact" class="btn btn--dark">Nous contacter</a>
     </article>
+
   </div>
 </section>
 
-<!-- CONFIGURATEUR -->
-<section style="padding-top: clamp(60px, 8vw, 120px);">
+<!-- ── CONFIGURATEUR ── -->
+<section class="section section--soft">
   <div class="container">
-    <div class="section-num"><strong>02</strong> · 04 — Configurateur</div>
     <p class="eyebrow" data-reveal>Estimez votre session</p>
-    <h2 class="display text-display-lg" style="margin-top: 24px; max-width: 18ch;" data-reveal-mask>
-      <span>Composez votre <em>devis</em> en temps réel.</span>
+    <h2 class="display display--lg" style="margin-top:12px; margin-bottom:40px; max-width:20ch;" data-reveal>
+      Composez votre <span class="mark">devis<span class="corner-bl"></span><span class="corner-br"></span></span> en temps réel.
     </h2>
-  </div>
 
-  <div class="configurator" id="configurator">
-    <div>
-      <div class="conf-block">
-        <h4>Discipline</h4>
-        <div class="conf-toggle" data-group="discipline">
-          <button class="conf-chip is-active" data-value="podcast" data-rate="180">Podcast — 180€/h</button>
-          <button class="conf-chip" data-value="photo" data-rate="240">Photo — 240€/h</button>
-          <button class="conf-chip" data-value="stylisme" data-rate="160">Stylisme — 160€/h</button>
+    <div class="configurator" id="configurator">
+
+      <!-- Gauche : options -->
+      <div>
+        <div class="conf-block">
+          <span class="conf-label">Discipline</span>
+          <div class="conf-toggle" data-group="discipline">
+            <button class="conf-chip is-active" data-value="podcast" data-rate="180">Podcast — 180€/h</button>
+            <button class="conf-chip" data-value="photo" data-rate="240">Photo — 240€/h</button>
+            <button class="conf-chip" data-value="stylisme" data-rate="160">Stylisme — 160€/h</button>
+          </div>
+        </div>
+
+        <div class="conf-block">
+          <span class="conf-label">Durée de la session</span>
+          <div class="conf-num">
+            <button data-action="dec">−</button>
+            <input type="number" id="hours" value="3" min="2" max="12" />
+            <button data-action="inc">+</button>
+          </div>
+          <span style="font-family:var(--font-mono);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-left:12px;">heures · min. 2h</span>
+        </div>
+
+        <div class="conf-block">
+          <span class="conf-label">Délai de livraison rushs</span>
+          <div class="conf-toggle" data-group="rushs">
+            <button class="conf-chip is-active" data-value="72" data-price="0">J+72h · inclus</button>
+            <button class="conf-chip" data-value="48" data-price="80">J+48h · +80€</button>
+            <button class="conf-chip" data-value="24" data-price="180">J+24h · +180€</button>
+          </div>
+        </div>
+
+        <div class="conf-block">
+          <span class="conf-label">Options (multi-sélection)</span>
+          <div class="conf-toggle" data-group="options" data-multi="true">
+            <button class="conf-chip" data-value="reels" data-price="220">Reels ×3 · +220€</button>
+            <button class="conf-chip" data-value="miniatures" data-price="140">Miniatures ×5 · +140€</button>
+            <button class="conf-chip" data-value="montage" data-price="350">Montage podcast · +350€</button>
+            <button class="conf-chip" data-value="operator" data-price="180">Opérateur · +180€/h</button>
+            <button class="conf-chip" data-value="prompter" data-price="60">Téléprompteur · +60€</button>
+            <button class="conf-chip" data-value="hmc" data-price="280">HMC · +280€</button>
+            <button class="conf-chip" data-value="catering" data-price="150">Catering premium · +150€</button>
+          </div>
         </div>
       </div>
 
-      <div class="conf-block">
-        <h4>Durée</h4>
-        <div class="conf-num-input">
-          <button data-action="dec">−</button>
-          <input type="number" id="hours" value="3" min="2" max="12" />
-          <button data-action="inc">+</button>
-          <span style="font-family:var(--font-mono); font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--sable);">heures (min. 2)</span>
+      <!-- Droite : résumé -->
+      <aside class="conf-summary">
+        <div class="conf-summary__title">Votre devis estimatif</div>
+        <div id="conf-lines"></div>
+        <div class="conf-total-row">
+          <span class="conf-total-label">Total estimé</span>
+          <span class="conf-total-amount" id="conf-total">0 €</span>
         </div>
-      </div>
+        <p class="conf-deposit-note">
+          <strong>Acompte 30&nbsp;% aujourd'hui&nbsp;: <span id="conf-deposit">0 €</span></strong><br/>
+          Solde prélevé automatiquement 48h avant la session.
+        </p>
+        <a href="reservation.html" class="btn btn--primary" style="width:100%; justify-content:center;">
+          Continuer la réservation →
+        </a>
+      </aside>
 
-      <div class="conf-block">
-        <h4>Rushs</h4>
-        <div class="conf-toggle" data-group="rushs">
-          <button class="conf-chip is-active" data-value="72" data-price="0">J+72h · inclus</button>
-          <button class="conf-chip" data-value="48" data-price="80">J+48h · +80€</button>
-          <button class="conf-chip" data-value="24" data-price="180">J+24h · +180€</button>
-        </div>
-      </div>
-
-      <div class="conf-block">
-        <h4>Options</h4>
-        <div class="conf-toggle" data-group="options" data-multi="true">
-          <button class="conf-chip" data-value="reels" data-price="220">Reels ×3 · +220€</button>
-          <button class="conf-chip" data-value="miniatures" data-price="140">Miniatures ×5 · +140€</button>
-          <button class="conf-chip" data-value="montage" data-price="350">Montage podcast · +350€</button>
-          <button class="conf-chip" data-value="operator" data-price="180">Opérateur · +180€/h</button>
-          <button class="conf-chip" data-value="prompter" data-price="60">Téléprompteur · +60€/h</button>
-          <button class="conf-chip" data-value="hmc" data-price="280">HMC · +280€</button>
-          <button class="conf-chip" data-value="catering" data-price="150">Catering premium · +150€</button>
-        </div>
-      </div>
     </div>
-
-    <aside class="conf-summary">
-      <h3>Votre devis</h3>
-      <div id="conf-lines"></div>
-      <div class="conf-total">
-        <span>Total</span>
-        <span id="conf-total">0 €</span>
-      </div>
-      <p class="conf-deposit">
-        <span style="color:var(--or);">Acompte 30 % aujourd'hui :</span> <strong id="conf-deposit" style="color:var(--ivoire);">0 €</strong><br/>
-        Solde prélevé automatiquement 48h avant la session.
-      </p>
-      <a href="reservation.html" class="btn" style="width:100%;" data-magnetic>Continuer la réservation →</a>
-    </aside>
   </div>
 </section>
 
-<!-- COMPARATIF -->
-<section class="section">
-  <div class="container">
-    <div class="section-num"><strong>03</strong> · 04 — Comparatif</div>
-    <p class="eyebrow" data-reveal>Comparatif détaillé</p>
-    <h2 class="display text-display-lg" style="margin-top: 24px; max-width: 18ch;" data-reveal-mask>
-      <span>Tout, en un coup d'œil.</span>
-    </h2>
-  </div>
+<!-- ── COMPARATIF ── -->
+<section class="section container">
+  <p class="eyebrow" data-reveal>Comparatif détaillé</p>
+  <h2 class="display display--lg" style="margin-top:12px; margin-bottom:8px; max-width:18ch;" data-reveal>
+    Tout, en un coup d'œil.
+  </h2>
 
   <div class="tarif-table">
     <div class="tarif-row tarif-row--head">
       <span>Caractéristique</span>
-      <span class="tarif-row__cell">Découverte</span>
-      <span class="tarif-row__cell">Signature</span>
-      <span class="tarif-row__cell">Maison</span>
+      <span style="text-align:center;">Découverte</span>
+      <span style="text-align:center; color:var(--violet-1);">Signature</span>
+      <span style="text-align:center;">Maison</span>
     </div>
-    <div class="tarif-row">
-      <span class="tarif-row__feature">Heures incluses</span>
-      <span class="tarif-row__cell" data-tier="Découverte">À la carte</span>
-      <span class="tarif-row__cell tarif-row__cell--featured" data-tier="Signature">10 h / mois</span>
-      <span class="tarif-row__cell" data-tier="Maison">Illimité</span>
-    </div>
-    <div class="tarif-row">
-      <span class="tarif-row__feature">Accès espaces</span>
-      <span class="tarif-row__cell">1 espace / session</span>
-      <span class="tarif-row__cell tarif-row__cell--featured">3 espaces</span>
-      <span class="tarif-row__cell">3 espaces · priorité</span>
-    </div>
-    <div class="tarif-row">
-      <span class="tarif-row__feature">Délai de livraison rushs</span>
-      <span class="tarif-row__cell">J+72h</span>
-      <span class="tarif-row__cell tarif-row__cell--featured">J+24h</span>
-      <span class="tarif-row__cell">J+12h</span>
-    </div>
-    <div class="tarif-row">
-      <span class="tarif-row__feature">Conservation rushs</span>
-      <span class="tarif-row__cell">15 jours</span>
-      <span class="tarif-row__cell tarif-row__cell--featured">60 jours</span>
-      <span class="tarif-row__cell">180 jours</span>
-    </div>
-    <div class="tarif-row">
-      <span class="tarif-row__feature">Remise sur options</span>
-      <span class="tarif-row__cell">—</span>
-      <span class="tarif-row__cell tarif-row__cell--featured">-20 %</span>
-      <span class="tarif-row__cell">-35 %</span>
-    </div>
-    <div class="tarif-row">
-      <span class="tarif-row__feature">Conciergerie</span>
-      <span class="tarif-row__cell">—</span>
-      <span class="tarif-row__cell tarif-row__cell--featured">✓</span>
-      <span class="tarif-row__cell">Dédiée 7j/7</span>
-    </div>
-    <div class="tarif-row">
-      <span class="tarif-row__feature">Privatisation</span>
-      <span class="tarif-row__cell">—</span>
-      <span class="tarif-row__cell">—</span>
-      <span class="tarif-row__cell tarif-row__cell--featured">Sur demande</span>
-    </div>
-    <div class="tarif-row">
-      <span class="tarif-row__feature">NDA & confidentialité</span>
-      <span class="tarif-row__cell">Standard</span>
-      <span class="tarif-row__cell tarif-row__cell--featured">Standard</span>
-      <span class="tarif-row__cell">Juridique sur mesure</span>
-    </div>
-    <div class="tarif-row">
-      <span class="tarif-row__feature">Engagement minimum</span>
-      <span class="tarif-row__cell">Aucun</span>
-      <span class="tarif-row__cell tarif-row__cell--featured">3 mois</span>
-      <span class="tarif-row__cell">12 mois</span>
+    <div class="tarif-row"><span class="tarif-row__feature">Heures incluses</span><span class="tarif-row__cell">À la carte</span><span class="tarif-row__cell tarif-row__cell--featured">10h / mois</span><span class="tarif-row__cell">Illimité</span></div>
+    <div class="tarif-row"><span class="tarif-row__feature">Accès espaces</span><span class="tarif-row__cell">1 espace</span><span class="tarif-row__cell tarif-row__cell--featured">3 espaces</span><span class="tarif-row__cell">3 espaces · priorité</span></div>
+    <div class="tarif-row"><span class="tarif-row__feature">Délai rushs</span><span class="tarif-row__cell">J+72h</span><span class="tarif-row__cell tarif-row__cell--featured">J+24h</span><span class="tarif-row__cell">J+12h</span></div>
+    <div class="tarif-row"><span class="tarif-row__feature">Conservation rushs</span><span class="tarif-row__cell">15 jours</span><span class="tarif-row__cell tarif-row__cell--featured">60 jours</span><span class="tarif-row__cell">180 jours</span></div>
+    <div class="tarif-row"><span class="tarif-row__feature">Remise options</span><span class="tarif-row__cell">—</span><span class="tarif-row__cell tarif-row__cell--featured">–20&nbsp;%</span><span class="tarif-row__cell">–35&nbsp;%</span></div>
+    <div class="tarif-row"><span class="tarif-row__feature">Conciergerie</span><span class="tarif-row__cell">—</span><span class="tarif-row__cell tarif-row__cell--featured">✓</span><span class="tarif-row__cell">Dédiée 7j/7</span></div>
+    <div class="tarif-row"><span class="tarif-row__feature">Privatisation</span><span class="tarif-row__cell">—</span><span class="tarif-row__cell">—</span><span class="tarif-row__cell tarif-row__cell--featured">Sur demande</span></div>
+    <div class="tarif-row"><span class="tarif-row__feature">NDA</span><span class="tarif-row__cell">Standard</span><span class="tarif-row__cell tarif-row__cell--featured">Standard</span><span class="tarif-row__cell">Juridique sur-mesure</span></div>
+    <div class="tarif-row"><span class="tarif-row__feature">Engagement</span><span class="tarif-row__cell">Aucun</span><span class="tarif-row__cell tarif-row__cell--featured">3 mois</span><span class="tarif-row__cell">12 mois</span></div>
+  </div>
+</section>
+
+<!-- ── POLITIQUE D'ANNULATION ── -->
+<section class="section section--dark">
+  <div class="container">
+    <p class="eyebrow" style="margin-bottom:12px;" data-reveal>Politique d'annulation</p>
+    <h2 class="display display--lg display--dark" style="margin-bottom:40px;" data-reveal>
+      Flexible, <span class="mark mark--dark">transparent<span class="corner-bl"></span><span class="corner-br"></span></span> et juste.
+    </h2>
+    <div class="annulation-grid">
+      <div class="annul-card" data-reveal>
+        <div class="annul-card__icon">🟢</div>
+        <div class="annul-card__time">+ 72h avant</div>
+        <div class="annul-card__rule">Remboursement total</div>
+        <div class="annul-card__desc">Remboursement automatique sur votre moyen de paiement initial.</div>
+      </div>
+      <div class="annul-card" data-reveal data-delay="100">
+        <div class="annul-card__icon">🟡</div>
+        <div class="annul-card__time">48h – 72h avant</div>
+        <div class="annul-card__rule">Acompte conservé</div>
+        <div class="annul-card__desc">Les 30% d'acompte sont conservés. Le solde n'est pas prélevé.</div>
+      </div>
+      <div class="annul-card" data-reveal data-delay="200">
+        <div class="annul-card__icon">🔴</div>
+        <div class="annul-card__time">– 48h avant</div>
+        <div class="annul-card__rule">Totalité prélevée</div>
+        <div class="annul-card__desc">Report possible sous 90 jours sans frais supplémentaires.</div>
+      </div>
+      <div class="annul-card" data-reveal data-delay="300">
+        <div class="annul-card__icon">⚫</div>
+        <div class="annul-card__time">No-show</div>
+        <div class="annul-card__rule">Caution 150€</div>
+        <div class="annul-card__desc">Exonérés pour les abonnés Signature et Maison.</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FAQ -->
-<section class="section">
+<!-- ── FAQ ── -->
+<section class="section" style="background:var(--bg-dark-2);">
   <div class="container">
-    <div class="section-num"><strong>04</strong> · 04 — Questions</div>
-    <p class="eyebrow" style="justify-content:center;" data-reveal>Foire aux questions</p>
-    <h2 class="display text-display-lg text-center" style="margin: 24px auto 80px; max-width: 18ch;" data-reveal-mask>
-      <span>On vous <em>répond</em>.</span>
-    </h2>
-
+    <div style="text-align:center; margin-bottom:48px;">
+      <p class="eyebrow" data-reveal>FAQ</p>
+      <h2 class="display display--lg display--dark" style="margin-top:12px;" data-reveal>
+        Encore des <span class="mark mark--dark">questions&nbsp;?<span class="corner-bl"></span><span class="corner-br"></span></span>
+      </h2>
+    </div>
     <div class="faq">
       <details class="faq-item" open>
         <summary>Comment fonctionne la politique d'annulation ?</summary>
-        <div class="faq-item__answer">
-          <p><strong style="color:var(--or);">Plus de 72h avant la session :</strong> remboursement total automatique sur votre moyen de paiement initial.</p>
-          <p><strong style="color:var(--or);">Entre 48h et 72h :</strong> l'acompte de 30 % est conservé, le solde n'est pas prélevé.</p>
-          <p><strong style="color:var(--or);">Moins de 48h :</strong> la totalité de la session est prélevée. Vous gardez la possibilité de reporter à tout moment sous 90 jours, sans frais.</p>
-          <p><strong style="color:var(--or);">No-show :</strong> une caution de 150 € peut être prélevée. Les abonnés Signature et Maison en sont exonérés.</p>
-        </div>
+        <div class="faq-item__answer">Plus de 72h : remboursement total. Entre 48h et 72h : acompte conservé. Moins de 48h : totalité prélevée (report possible sous 90 jours). No-show : caution 150€ (exonérée en Signature et Maison).</div>
       </details>
       <details class="faq-item">
         <summary>Quand suis-je débité du solde ?</summary>
-        <div class="faq-item__answer">
-          À la réservation, vous réglez 30 % d'acompte par Stripe. Le solde est prélevé automatiquement sur le même moyen de paiement <strong>48 heures avant le début de la session</strong>. Un email de confirmation accompagne le débit. Si le prélèvement échoue, nous vous proposons une réessaye sous 24h avant annulation.
-        </div>
+        <div class="faq-item__answer">À la réservation, vous réglez 30% d'acompte via Stripe. Le solde est prélevé automatiquement 48h avant le début de la session. Un email de confirmation accompagne chaque débit.</div>
       </details>
       <details class="faq-item">
         <summary>Combien de temps les rushs sont-ils accessibles ?</summary>
-        <div class="faq-item__answer">
-          La durée de conservation dépend de votre formule : <strong>15 jours</strong> en Découverte, <strong>60 jours</strong> en Signature, <strong>180 jours</strong> en Maison. Trois jours avant l'expiration, un email automatique vous prévient. Vous pouvez télécharger les fichiers depuis votre espace client via des liens sécurisés à durée limitée.
-        </div>
+        <div class="faq-item__answer">15 jours en Découverte, 60 jours en Signature, 180 jours en Maison. Un email d'alerte est envoyé 3 jours avant l'expiration. Téléchargement via liens sécurisés depuis votre espace client.</div>
       </details>
       <details class="faq-item">
         <summary>Puis-je venir avec mon propre matériel ?</summary>
-        <div class="faq-item__answer">
-          Évidemment. Notre régie est compatible avec la plupart des micros, caméras et boîtiers du marché. Pour les ressources spécifiques (objectif Leica, micro vintage, équipement RED…), nous vous demandons simplement de nous le signaler à la réservation pour préparer les adaptateurs nécessaires.
-        </div>
-      </details>
-      <details class="faq-item">
-        <summary>Le studio est-il accessible 24h/24 ?</summary>
-        <div class="faq-item__answer">
-          La réservation en ligne est ouverte 24h/24, 7j/7. Le studio est accessible physiquement de 7h à 23h en formule Découverte et Signature. Les abonnés Maison disposent d'un accès 24h/24 via badge sécurisé.
-        </div>
-      </details>
-      <details class="faq-item">
-        <summary>Qui est sur place pendant ma session ?</summary>
-        <div class="faq-item__answer">
-          Un régisseur MAISON 360 vous accueille et reste disponible en régie pendant toute la durée de votre session pour vous accompagner techniquement. Sur demande, nous pouvons mettre à disposition un opérateur dédié (lumière, caméra, prise de son) en option.
-        </div>
+        <div class="faq-item__answer">Oui. Notre régie est compatible avec la plupart des équipements du marché. Pour les ressources spécifiques (objectif Leica, micro vintage, RED...), signalez-le à la réservation pour que nous préparions les adaptateurs.</div>
       </details>
       <details class="faq-item">
         <summary>Puis-je facturer en société ?</summary>
-        <div class="faq-item__answer">
-          Bien sûr. Lors de la réservation, indiquez les coordonnées de votre entreprise (raison sociale, SIRET, adresse de facturation, n° de TVA intracommunautaire). La facture PDF conforme est automatiquement émise et disponible dans votre espace client. Les factures abonnement Signature et Maison sont mensuelles.
-        </div>
+        <div class="faq-item__answer">Bien sûr. Indiquez vos coordonnées entreprise lors de la réservation. La facture PDF conforme est émise automatiquement dans votre espace client. Les abonnements génèrent une facture mensuelle.</div>
       </details>
       <details class="faq-item">
         <summary>Comment fonctionne la confidentialité ?</summary>
-        <div class="faq-item__answer">
-          Toutes les équipes MAISON 360 signent un NDA standard à l'embauche. Pour les projets sensibles (lancement de marque, projet artistique en pré-production, talents médiatiques), nous proposons un NDA juridique sur mesure avant la session. Les rushs sont stockés sur Cloudflare R2 chiffré, en France, et purgés automatiquement selon votre formule.
-        </div>
+        <div class="faq-item__answer">Toutes les équipes signent un NDA à l'embauche. Pour les projets sensibles, un NDA juridique sur-mesure est disponible avant la session. Rushs stockés sur Cloudflare R2 chiffré, en France, purgés selon votre formule.</div>
       </details>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-section">
-  <div class="cta-section__bg"></div>
-  <h2 class="display text-display-xl" data-reveal-mask>
-    <span>Prêt·e à <em>réserver</em> ?</span>
-  </h2>
-  <p class="body-lg" data-reveal data-delay="200">
-    Quatre étapes, quatre-vingt-dix secondes. Acompte sécurisé, calendrier en temps réel.
-  </p>
-  <a href="reservation.html" class="btn" data-magnetic data-reveal data-delay="300">Démarrer la réservation</a>
+<!-- ── CTA FINAL ── -->
+<section class="section container" style="padding-top:0; padding-bottom:var(--section);">
+  <div class="cta-band">
+    <div class="cta-band__icon cta-band__icon--1">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--violet-2)" stroke-width="2" width="36" height="36"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/></svg>
+    </div>
+    <div class="cta-band__icon cta-band__icon--2">
+      <svg viewBox="0 0 24 24" fill="var(--violet-2)" width="36" height="36"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
+    </div>
+    <div class="cta-band__icon cta-band__icon--3" style="opacity:.5;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--violet-1)" stroke-width="2" width="36" height="36"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    </div>
+    <div class="cta-band__icon cta-band__icon--4" style="opacity:.5;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="var(--violet-1)" stroke-width="2" width="36" height="36"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+    </div>
+    <p class="eyebrow" style="justify-content:center; margin-bottom:16px;">Prêt·e à réserver ?</p>
+    <h2 class="display display--xl display--dark" style="max-width:20ch; margin:0 auto 16px;" data-reveal>
+      Votre prochaine <span class="mark mark--dark">création<span class="corner-bl"></span><span class="corner-br"></span></span> commence ici.
+    </h2>
+    <p style="color:var(--text-on-dark-2); margin-bottom:32px; max-width:50ch; margin-left:auto; margin-right:auto;">
+      Quatre étapes, quatre-vingt-dix secondes. Acompte sécurisé, calendrier en temps réel.
+    </p>
+    <a href="reservation.html" class="btn btn--primary">Démarrer la réservation</a>
+  </div>
 </section>
 
-<footer class="footer">
-  <div class="footer__top">
-    <div class="footer__col">
-      <h3 class="footer__brand">MAISON <span>360</span></h3>
-      <p class="body" style="max-width: 32ch;">Studio créatif premium · Podcast, Photo, Stylisme.</p>
-      <div style="margin-top: 32px; font-family:var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sable); line-height: 2;">
-        Villabé (91)<br/>Juillet 2026
+<!-- ── FOOTER ── -->
+<footer class="footer" id="contact">
+  <div class="footer__inner">
+    <div>
+      <div class="footer__brand">
+        <span class="nav__brand-mark"></span>
+        MAISON <span style="color:var(--violet-1);">360</span>
       </div>
+      <p class="body" style="max-width:28ch; opacity:0.65;">Studio créatif premium — Podcast, Photo, Stylisme.</p>
+      <p style="margin-top:16px; font-family:var(--font-mono); font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--violet-1); opacity:0.65;">Villabé (91) · Juillet 2026</p>
     </div>
-    <div class="footer__col">
+    <div>
       <h4>Studio</h4>
       <ul>
-        <li><a href="studio.html#podcast">Espace podcast</a></li>
-        <li><a href="studio.html#photo">Plateau photo</a></li>
-        <li><a href="studio.html#stylisme">Atelier stylisme</a></li>
+        <li><a href="studio.html">Le Studio</a></li>
+        <li><a href="galerie.html">Galerie</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="reservation.html">Réserver</a></li>
       </ul>
     </div>
-    <div class="footer__col">
-      <h4>Réserver</h4>
+    <div>
+      <h4>Légal</h4>
       <ul>
-        <li><a href="tarifs.html">Tarifs</a></li>
-        <li><a href="reservation.html">Réservation</a></li>
-        <li><a href="#">Espace client</a></li>
+        <li><a href="#">Mentions légales</a></li>
+        <li><a href="#">CGV</a></li>
+        <li><a href="#">Confidentialité</a></li>
       </ul>
     </div>
-    <div class="footer__col newsletter">
+    <div class="newsletter">
       <h4>Notre journal</h4>
-      <p class="body" style="margin-bottom: 24px;">Coulisses & invitations privées.</p>
+      <p class="body" style="margin-bottom:20px; opacity:0.65;">Coulisses, productions et invitations privées.</p>
       <form onsubmit="event.preventDefault();this.querySelector('button').textContent='✓ Inscrit';">
         <input type="email" placeholder="votre@email.com" required />
         <button type="submit">S'abonner</button>
@@ -430,91 +784,62 @@
     </div>
   </div>
   <div class="footer__bottom">
-    <span>© 2026 MAISON 360</span>
-    <div style="display:flex; gap:32px;">
-      <a href="#">Mentions légales</a>
-      <a href="#">CGV</a>
-      <a href="#">Confidentialité</a>
-    </div>
+    <span>© 2026 MAISON 360 · Tous droits réservés</span>
+    <div style="display:flex; gap:28px;"><a href="#">Mentions légales</a><a href="#">CGV</a><a href="#">Confidentialité</a></div>
     <span>Instagram · Vimeo · LinkedIn</span>
   </div>
 </footer>
 
 <script src="assets/js/main.js" defer></script>
 <script>
-// Configurateur tarif
-(() => {
-  const conf = document.getElementById('configurator');
-  if (!conf) return;
-  const state = {
-    discipline: { value: 'podcast', rate: 180, label: 'Podcast' },
-    hours: 3,
-    rushs: { value: '72', price: 0, label: 'Rushs J+72h' },
-    options: {},
-  };
-  const labels = { podcast: 'Podcast', photo: 'Photo', stylisme: 'Stylisme' };
-
-  conf.querySelectorAll('[data-group]').forEach(group => {
-    const isMulti = group.dataset.multi === 'true';
-    const key = group.dataset.group;
-    group.querySelectorAll('.conf-chip').forEach(chip => {
-      chip.addEventListener('click', () => {
+/* Nav */
+var nav = document.getElementById('nav');
+window.addEventListener('scroll', function () { if(nav) nav.classList.toggle('is-scrolled', window.scrollY > 60); }, { passive:true });
+document.querySelector('.nav__burger').addEventListener('click', function() {
+  var m = document.getElementById('mobileMenu'); m.classList.toggle('is-open'); m.setAttribute('aria-hidden', String(!m.classList.contains('is-open')));
+});
+/* Reveal */
+new IntersectionObserver(function(e) { e.forEach(function(el) { if(el.isIntersecting) { setTimeout(function(){ el.target.classList.add('is-visible'); }, Number(el.target.dataset.delay||0)); } }); }, {threshold:.15}).observe
+  && document.querySelectorAll('[data-reveal]').forEach(function(el) {
+    new IntersectionObserver(function(e) { if(e[0].isIntersecting) { setTimeout(function(){ el.classList.add('is-visible'); }, Number(el.dataset.delay||0)); } }, {threshold:.15}).observe(el);
+  });
+/* Configurateur */
+(function() {
+  var conf = document.getElementById('configurator'); if(!conf) return;
+  var state = { discipline:{value:'podcast',rate:180,label:'Podcast'}, hours:3, rushs:{value:'72',price:0,label:'Rushs J+72h'}, options:{} };
+  conf.querySelectorAll('[data-group]').forEach(function(grp) {
+    var isMulti = grp.dataset.multi === 'true', key = grp.dataset.group;
+    grp.querySelectorAll('.conf-chip').forEach(function(chip) {
+      chip.addEventListener('click', function() {
         if (!isMulti) {
-          group.querySelectorAll('.conf-chip').forEach(c => c.classList.remove('is-active'));
+          grp.querySelectorAll('.conf-chip').forEach(function(c){ c.classList.remove('is-active'); });
           chip.classList.add('is-active');
-          if (key === 'discipline') {
-            state.discipline = { value: chip.dataset.value, rate: parseInt(chip.dataset.rate, 10), label: labels[chip.dataset.value] };
-          }
-          if (key === 'rushs') {
-            state.rushs = { value: chip.dataset.value, price: parseInt(chip.dataset.price, 10), label: `Rushs J+${chip.dataset.value}h` };
-          }
+          if (key==='discipline') state.discipline = {value:chip.dataset.value, rate:parseInt(chip.dataset.rate), label:chip.textContent.split('—')[0].trim()};
+          if (key==='rushs') state.rushs = {value:chip.dataset.value, price:parseInt(chip.dataset.price), label:'Rushs J+'+chip.dataset.value+'h'};
         } else {
           chip.classList.toggle('is-active');
-          const v = chip.dataset.value;
-          const price = parseInt(chip.dataset.price, 10);
-          if (chip.classList.contains('is-active')) state.options[v] = { label: chip.textContent.split('·')[0].trim(), price };
+          var v=chip.dataset.value, price=parseInt(chip.dataset.price);
+          if (chip.classList.contains('is-active')) state.options[v]={label:chip.textContent.split('·')[0].trim(), price:price};
           else delete state.options[v];
         }
         render();
       });
     });
   });
-
-  // Hours input
-  const hoursInput = document.getElementById('hours');
-  conf.querySelectorAll('[data-action]').forEach(btn => {
-    btn.addEventListener('click', () => {
-      let v = parseInt(hoursInput.value, 10);
-      if (btn.dataset.action === 'inc' && v < 12) v += 1;
-      if (btn.dataset.action === 'dec' && v > 2) v -= 1;
-      hoursInput.value = v;
-      state.hours = v;
-      render();
-    });
+  var hi = document.getElementById('hours');
+  conf.querySelectorAll('[data-action]').forEach(function(btn) {
+    btn.addEventListener('click', function() { var v=parseInt(hi.value); if(btn.dataset.action==='inc'&&v<12)v++; if(btn.dataset.action==='dec'&&v>2)v--; hi.value=v; state.hours=v; render(); });
   });
-  hoursInput.addEventListener('change', () => {
-    let v = parseInt(hoursInput.value, 10);
-    if (isNaN(v) || v < 2) v = 2;
-    if (v > 12) v = 12;
-    hoursInput.value = v;
-    state.hours = v;
-    render();
-  });
-
+  hi.addEventListener('change', function() { var v=parseInt(hi.value); if(isNaN(v)||v<2)v=2; if(v>12)v=12; hi.value=v; state.hours=v; render(); });
   function render() {
-    const lines = [];
-    const sessionCost = state.discipline.rate * state.hours;
-    lines.push({ k: `${state.discipline.label} — ${state.hours}h × ${state.discipline.rate}€`, v: sessionCost });
-    if (state.rushs.price > 0) lines.push({ k: state.rushs.label, v: state.rushs.price });
-    Object.values(state.options).forEach(o => lines.push({ k: o.label, v: o.price }));
-    const total = lines.reduce((s, l) => s + l.v, 0);
-    const deposit = Math.round(total * 0.3);
-
-    document.getElementById('conf-lines').innerHTML = lines.map(l => `
-      <div class="conf-line"><span>${l.k}</span><strong>${l.v} €</strong></div>
-    `).join('');
-    document.getElementById('conf-total').textContent = total.toLocaleString('fr-FR') + ' €';
-    document.getElementById('conf-deposit').textContent = deposit.toLocaleString('fr-FR') + ' €';
+    var lines=[], session=state.discipline.rate*state.hours;
+    lines.push({k:state.discipline.label+' — '+state.hours+'h × '+state.discipline.rate+'€', v:session});
+    if(state.rushs.price>0) lines.push({k:state.rushs.label, v:state.rushs.price});
+    Object.values(state.options).forEach(function(o){ lines.push({k:o.label, v:o.price}); });
+    var total=lines.reduce(function(s,l){return s+l.v;},0), deposit=Math.round(total*0.3);
+    document.getElementById('conf-lines').innerHTML=lines.map(function(l){ return '<div class="conf-line"><span class="conf-line__label">'+l.k+'</span><span class="conf-line__val">'+l.v+' €</span></div>'; }).join('');
+    document.getElementById('conf-total').textContent=total.toLocaleString('fr-FR')+' €';
+    document.getElementById('conf-deposit').textContent=deposit.toLocaleString('fr-FR')+' €';
   }
   render();
 })();

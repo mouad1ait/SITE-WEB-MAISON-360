@@ -3,257 +3,968 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#0A0908" />
+  <meta name="theme-color" content="#080604" />
   <title>Le Studio — MAISON 360 · Podcast · Photo · Stylisme · Villabé</title>
-  <meta name="description" content="Découvrez les espaces de MAISON 360 : une cabine podcast traitée acoustiquement, un plateau photo de 120 m² et un atelier stylisme aux finitions soignées." />
+  <meta name="description" content="380 m², trois univers de création. Cabine podcast broadcast, plateau photo 120 m², atelier stylisme — à Villabé (91). Ouverture juillet 2026." />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Inter+Tight:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.0.42/dist/lenis.min.js" defer></script>
   <link rel="stylesheet" href="assets/css/styles.css" />
+
+  <style>
+    /* ─────────────────────────────────────────────
+       HERO
+    ───────────────────────────────────────────── */
+    .studio-hero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: var(--bg-dark);
+    }
+    .studio-hero__bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .studio-hero__bg img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.38) saturate(0.7);
+    }
+    .studio-hero__bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 70% at 50% 100%, rgba(201,168,76,0.18) 0%, transparent 65%),
+        linear-gradient(to top, rgba(8,6,4,0.85) 0%, transparent 60%);
+    }
+    .studio-hero__inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 0 var(--gutter);
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .studio-hero__kicker {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--violet-1);
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+    .studio-hero__kicker::before,
+    .studio-hero__kicker::after {
+      content: '';
+      display: inline-block;
+      width: 40px;
+      height: 1px;
+      background: var(--violet-1);
+      opacity: 0.5;
+    }
+    .studio-hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 7rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: var(--text-on-dark);
+      margin: 0 0 32px;
+    }
+    .studio-hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--violet-1) 0%, var(--violet-3) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .studio-hero__sub {
+      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      line-height: 1.7;
+      color: var(--text-on-dark-2);
+      opacity: 0.8;
+      max-width: 52ch;
+      margin: 0 auto 48px;
+    }
+    .studio-hero__pills {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .studio-hero__pill {
+      padding: 10px 22px;
+      border: 1px solid rgba(201,168,76,0.35);
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-on-dark-2);
+      text-decoration: none;
+      transition: all .3s;
+      background: rgba(201,168,76,0.05);
+    }
+    .studio-hero__pill:hover {
+      background: var(--violet-1);
+      border-color: var(--violet-1);
+      color: #fff;
+    }
+    .studio-hero__scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    .studio-hero__scroll span {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(245,237,216,0.4);
+    }
+    .studio-hero__scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, rgba(201,168,76,0.6) 0%, transparent 100%);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.1); }
+    }
+
+    /* ─────────────────────────────────────────────
+       ESPACES NAV (sticky)
+    ───────────────────────────────────────────── */
+    .spaces-nav {
+      position: sticky;
+      top: 72px;
+      z-index: 50;
+      background: rgba(8,6,4,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(201,168,76,0.12);
+    }
+    .spaces-nav__inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .spaces-nav__link {
+      padding: 18px 32px;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(245,237,216,0.45);
+      text-decoration: none;
+      border-bottom: 2px solid transparent;
+      transition: all .25s;
+      white-space: nowrap;
+    }
+    .spaces-nav__link:hover { color: var(--violet-1); }
+    .spaces-nav__link.is-active { color: var(--violet-1); border-bottom-color: var(--violet-1); }
+    .spaces-nav__num {
+      font-size: 8px;
+      opacity: 0.5;
+      margin-right: 8px;
+    }
+    @media (max-width: 640px) {
+      .spaces-nav__inner { gap: 0; overflow-x: auto; }
+      .spaces-nav__link { padding: 16px 20px; }
+    }
+
+    /* ─────────────────────────────────────────────
+       ESPACE SECTION
+    ───────────────────────────────────────────── */
+    .espace {
+      padding: 120px 0;
+    }
+    .espace--dark {
+      background: var(--bg-dark);
+    }
+    .espace--soft {
+      background: var(--bg-soft);
+    }
+    .espace__container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--gutter);
+    }
+
+    /* Full-width image banner */
+    .espace__banner {
+      position: relative;
+      height: clamp(340px, 55vw, 600px);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 80px;
+    }
+    .espace__banner img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .8s var(--ease-out);
+    }
+    .espace:hover .espace__banner img { transform: scale(1.025); }
+    .espace__banner__overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to right, rgba(8,6,4,0.6) 0%, transparent 55%),
+        linear-gradient(to top, rgba(8,6,4,0.5) 0%, transparent 40%);
+    }
+    .espace__banner__label {
+      position: absolute;
+      bottom: 32px;
+      left: 40px;
+      right: 40px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      z-index: 2;
+    }
+    .espace__banner__name {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-on-dark);
+      line-height: 1.1;
+    }
+    .espace__banner__name em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--violet-1) 0%, var(--violet-3) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .espace__banner__tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-on-dark-2);
+      opacity: 0.7;
+      text-align: right;
+      line-height: 1.8;
+    }
+    @media (max-width: 640px) {
+      .espace__banner__label { flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+
+    /* Body layout */
+    .espace__body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    @media (max-width: 900px) { .espace__body { grid-template-columns: 1fr; gap: 48px; } }
+
+    .espace__intro {}
+    .espace__num {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .espace--dark .espace__num { color: var(--violet-1); }
+    .espace--soft .espace__num { color: var(--violet-1); }
+    .espace__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin: 0 0 24px;
+    }
+    .espace--dark .espace__title { color: var(--text-on-dark); }
+    .espace--soft .espace__title { color: var(--text-primary); }
+    .espace__title em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--violet-1) 0%, var(--violet-2) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .espace__desc {
+      font-size: 1rem;
+      line-height: 1.75;
+      margin: 0 0 36px;
+    }
+    .espace--dark .espace__desc { color: var(--text-on-dark-2); opacity: 0.8; }
+    .espace--soft .espace__desc { color: var(--text-secondary); }
+
+    .espace__ctas {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* Specs grid */
+    .espace__specs {}
+    .espace__specs-title {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--violet-1);
+      margin-bottom: 20px;
+      opacity: 0.8;
+    }
+    .espace__spec-list {
+      list-style: none;
+      padding: 0; margin: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .espace__spec-item {
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid;
+      align-items: baseline;
+    }
+    .espace--dark .espace__spec-item { border-bottom-color: rgba(255,255,255,0.07); }
+    .espace--soft .espace__spec-item { border-bottom-color: rgba(16,14,8,0.08); }
+    .espace__spec-key {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .espace--dark .espace__spec-key { color: rgba(245,237,216,0.4); }
+    .espace--soft .espace__spec-key { color: var(--text-muted); }
+    .espace__spec-val {
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    .espace--dark .espace__spec-val { color: var(--text-on-dark); }
+    .espace--soft .espace__spec-val { color: var(--text-primary); }
+
+    /* ─────────────────────────────────────────────
+       HIGHLIGHT BADGE (number circle)
+    ───────────────────────────────────────────── */
+    .espace__index {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+    }
+    .espace__index-num {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.35);
+      display: grid;
+      place-items: center;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--violet-1);
+      flex-shrink: 0;
+    }
+    .espace__index-label {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--violet-1);
+    }
+
+    /* ─────────────────────────────────────────────
+       AMENITIES
+    ───────────────────────────────────────────── */
+    .amenities-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-top: 56px;
+    }
+    @media (max-width: 900px) { .amenities-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px) { .amenities-grid { grid-template-columns: 1fr; } }
+    .amenity-card {
+      background: var(--bg-dark-2);
+      padding: 40px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      transition: background .3s;
+    }
+    .amenity-card:hover { background: var(--bg-dark-3); }
+    .amenity-card__icon {
+      font-size: 28px;
+      line-height: 1;
+    }
+    .amenity-card__title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-on-dark);
+      margin: 0;
+    }
+    .amenity-card__desc {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-on-dark-2);
+      opacity: 0.65;
+    }
+    .amenity-card__tag {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--violet-1);
+      margin-top: auto;
+    }
+
+    /* ─────────────────────────────────────────────
+       STATS ROW
+    ───────────────────────────────────────────── */
+    .studio-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--border-light);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    @media (max-width: 640px) { .studio-stats { grid-template-columns: repeat(2, 1fr); } }
+    .studio-stat {
+      background: var(--bg-white);
+      padding: 36px 28px;
+      text-align: center;
+    }
+    .studio-stat__num {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, var(--violet-1) 0%, var(--violet-2) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 6px;
+      line-height: 1;
+    }
+    .studio-stat__label {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* ─────────────────────────────────────────────
+       CTA VISITE
+    ───────────────────────────────────────────── */
+    .visite-cta {
+      background: var(--bg-dark);
+      position: relative;
+      overflow: hidden;
+      padding: 120px var(--gutter);
+      text-align: center;
+    }
+    .visite-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 50% 100%, rgba(201,168,76,0.2) 0%, transparent 65%),
+        radial-gradient(ellipse 30% 40% at 80% 20%, rgba(212,175,55,0.06) 0%, transparent 55%);
+    }
+    .visite-cta__inner {
+      position: relative;
+      z-index: 1;
+      max-width: 620px;
+      margin: 0 auto;
+    }
+    .visite-cta__kicker {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--violet-1);
+      margin-bottom: 28px;
+    }
+    .visite-cta h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.035em;
+      color: var(--text-on-dark);
+      margin: 0 0 24px;
+    }
+    .visite-cta h2 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--violet-1) 0%, var(--violet-3) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .visite-cta p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text-on-dark-2);
+      opacity: 0.75;
+      margin: 0 0 40px;
+    }
+    .visite-cta__btns {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+  </style>
 </head>
 <body>
 
 <div class="grain" aria-hidden="true"></div>
 
-<nav class="nav" aria-label="Navigation principale">
-  <a href="index.html" class="nav__brand">MAISON <span>360</span></a>
+<!-- ── NAVIGATION ── -->
+<nav class="nav" id="nav" aria-label="Navigation principale">
+  <a href="index.html" class="nav__brand">
+    <span class="nav__brand-mark"></span>
+    MAISON <span style="color:var(--violet-1);">360</span>
+  </a>
   <div class="nav__links">
-    <a class="nav__link" href="studio.html">Le Studio</a>
+    <a class="nav__link" href="studio.html" style="color:var(--violet-1);">Le Studio</a>
     <a class="nav__link" href="tarifs.html">Tarifs</a>
     <a class="nav__link" href="galerie.html">Galerie</a>
+    <a class="nav__link" href="blog.html">Blog</a>
     <a class="nav__link" href="index.html#contact">Contact</a>
   </div>
-  <a class="nav__cta" data-magnetic href="reservation.html">Réserver →</a>
-  <button class="nav__burger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav__cta">
+    <a class="btn btn--outline" href="tarifs.html">Voir les tarifs</a>
+    <a class="btn btn--primary" href="reservation.html">Réserver →</a>
+  </div>
+  <button class="nav__burger" aria-label="Menu"><span></span></button>
 </nav>
 
-<div class="mobile-menu" aria-hidden="true">
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
   <ul class="mobile-menu__list">
-    <li><a href="studio.html"><span>01</span>Le Studio</a></li>
-    <li><a href="tarifs.html"><span>02</span>Tarifs</a></li>
-    <li><a href="galerie.html"><span>03</span>Galerie</a></li>
-    <li><a href="reservation.html"><span>04</span>Réserver</a></li>
-    <li><a href="index.html#contact"><span>05</span>Contact</a></li>
+    <li><a href="studio.html">Le Studio</a></li>
+    <li><a href="tarifs.html">Tarifs</a></li>
+    <li><a href="galerie.html">Galerie</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="index.html#contact">Contact</a></li>
   </ul>
+  <div class="mobile-menu__cta">
+    <a class="btn btn--primary" href="reservation.html">Réserver →</a>
+  </div>
 </div>
 
-<!-- HERO STUDIO -->
-<header class="studio-hero">
+<!-- ── HERO ── -->
+<header class="studio-hero" aria-label="MAISON 360 — Le Studio">
   <div class="studio-hero__bg">
-    <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=1920&q=85&auto=format&fit=crop"
-         alt="Le studio MAISON 360" loading="eager"
-         style="filter: saturate(0.85) contrast(1.05) brightness(0.7);" />
+    <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=1920&q=90&auto=format&fit=crop" alt="Studio MAISON 360" loading="eager" />
   </div>
-
-  <div>
-    <p class="eyebrow" data-reveal>Le Studio</p>
-    <h1 class="display text-display-xl" style="margin-top: 24px; max-width: 14ch;" data-reveal-mask>
-      <span>380 m². Trois <em>univers</em>.</span>
-    </h1>
-    <p class="lede" style="margin-top: 24px; max-width: 52ch;" data-reveal data-delay="200">
-      Pensé comme une maison de production indépendante, MAISON 360 réunit sous un même toit tous les outils d'une création contemporaine d'exception.
-    </p>
+  <div class="studio-hero__inner" data-reveal>
+    <p class="studio-hero__kicker">Villabé · Essonne · Juillet 2026</p>
+    <h1>380 m².<br /><em>Trois univers.</em></h1>
+    <p class="studio-hero__sub">Un studio de création indépendant où l'acoustique broadcast, la lumière éditoriale et la direction artistique coexistent sous un même toit d'exception.</p>
+    <div class="studio-hero__pills">
+      <a href="#podcast" class="studio-hero__pill">🎙 Podcast</a>
+      <a href="#photo" class="studio-hero__pill">📷 Photo</a>
+      <a href="#stylisme" class="studio-hero__pill">✦ Stylisme</a>
+    </div>
+  </div>
+  <div class="studio-hero__scroll" aria-hidden="true">
+    <span>Découvrir</span>
+    <div class="studio-hero__scroll-line"></div>
   </div>
 </header>
 
-<!-- MARQUEE -->
+<!-- ── MARQUEE ── -->
 <section class="marquee" aria-hidden="true">
   <div class="marquee__track">
     <span class="marquee__item">Acoustique <em>broadcast</em></span>
     <span class="marquee__item">Lumière <em>Profoto</em></span>
     <span class="marquee__item">Cyclorama <em>40 m²</em></span>
-    <span class="marquee__item">Loge <em>HD</em></span>
+    <span class="marquee__item">Sony <em>FX3 · 4K</em></span>
+    <span class="marquee__item">Rushs <em>J+24 h</em></span>
+    <span class="marquee__item">Parking <em>privatif</em></span>
+    <span class="marquee__item">Loge <em>HMC</em></span>
+    <span class="marquee__item">NDA <em>sur demande</em></span>
   </div>
   <div class="marquee__track" aria-hidden="true">
     <span class="marquee__item">Acoustique <em>broadcast</em></span>
     <span class="marquee__item">Lumière <em>Profoto</em></span>
     <span class="marquee__item">Cyclorama <em>40 m²</em></span>
-    <span class="marquee__item">Loge <em>HD</em></span>
+    <span class="marquee__item">Sony <em>FX3 · 4K</em></span>
+    <span class="marquee__item">Rushs <em>J+24 h</em></span>
+    <span class="marquee__item">Parking <em>privatif</em></span>
+    <span class="marquee__item">Loge <em>HMC</em></span>
+    <span class="marquee__item">NDA <em>sur demande</em></span>
   </div>
 </section>
 
-<!-- PODCAST -->
-<section class="section container" id="podcast">
-  <div class="section-num"><strong>01</strong> · 03 — Podcast</div>
-
-  <div class="space-feature">
-    <div class="space-feature__visual" data-reveal>
-      <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=1000&q=85&auto=format&fit=crop"
-           alt="Cabine podcast MAISON 360" loading="lazy"
-           style="width:100%;height:100%;object-fit:cover;filter:saturate(0.85) contrast(1.05);" />
-      <div style="position:absolute;bottom:24px;left:24px;right:24px;color:var(--ivoire);font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;z-index:2;display:flex;justify-content:space-between;">
-        <span>Cabine Podcast</span><span>35 m²</span>
-      </div>
-    </div>
-
-    <div>
-      <p class="space-feature__num">01 / Podcast</p>
-      <h2 class="space-feature__title" data-reveal-mask>
-        <span>Le Cabinet du <em>son</em>.</span>
-      </h2>
-      <p class="body-lg" data-reveal>
-        Une cabine de 35 m² traitée acoustiquement par les ingénieurs de l'Institut National de l'Audiovisuel. Quatre intervenants, micros broadcast, captation 4K multi-angles, prompteur intégré, régie live.
-      </p>
-
-      <ul class="space-feature__list" data-reveal data-delay="200">
-        <li><span>Surface</span><span>35 m²</span></li>
-        <li><span>Capacité</span><span>4 intervenants · 6 max</span></li>
-        <li><span>Micros</span><span>Shure SM7B · ×4 — RØDE NTG5 d'ambiance</span></li>
-        <li><span>Caméras</span><span>Sony FX3 · ×3 — Optiques 24mm / 50mm</span></li>
-        <li><span>Régie</span><span>RØDECaster Duo · Atem Mini Extreme</span></li>
-        <li><span>Lumière</span><span>Aputure 600D · 300D · LED panel</span></li>
-        <li><span>Acoustique</span><span>Mousses Auralex · diffuseurs Hex</span></li>
-        <li><span>Livrables</span><span>Audio mastérisé · Vidéo 4K · Rushs J+24h</span></li>
-      </ul>
-
-      <div style="display: flex; gap: 16px; margin-top: 40px; flex-wrap: wrap;">
-        <a href="reservation.html?discipline=podcast" class="btn" data-magnetic>Réserver le podcast</a>
-        <a href="tarifs.html#podcast" class="btn btn--outline" data-magnetic>Voir les tarifs</a>
-      </div>
-    </div>
+<!-- ── NAV ESPACES (sticky) ── -->
+<nav class="spaces-nav" aria-label="Navigation des espaces">
+  <div class="spaces-nav__inner">
+    <a href="#podcast" class="spaces-nav__link is-active" data-space-link="podcast">
+      <span class="spaces-nav__num">01</span> Podcast
+    </a>
+    <a href="#photo" class="spaces-nav__link" data-space-link="photo">
+      <span class="spaces-nav__num">02</span> Photo
+    </a>
+    <a href="#stylisme" class="spaces-nav__link" data-space-link="stylisme">
+      <span class="spaces-nav__num">03</span> Stylisme
+    </a>
+    <a href="#maison" class="spaces-nav__link" data-space-link="maison">
+      <span class="spaces-nav__num">04</span> La Maison
+    </a>
   </div>
-</section>
+</nav>
 
-<!-- PHOTO -->
-<section class="section container" id="photo" style="padding-top: 0;">
-  <div class="section-num"><strong>02</strong> · 03 — Photo</div>
+<!-- ════════════════════════════════════════════
+     01 · PODCAST
+═══════════════════════════════════════════════ -->
+<section class="espace espace--dark" id="podcast">
+  <div class="espace__container">
 
-  <div class="space-feature">
-    <div class="space-feature__visual" data-reveal>
-      <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=1000&q=85&auto=format&fit=crop"
-           alt="Plateau Photo MAISON 360" loading="lazy"
-           style="width:100%;height:100%;object-fit:cover;filter:saturate(0.85) contrast(1.05);" />
-      <div style="position:absolute;bottom:24px;left:24px;right:24px;color:var(--ivoire);font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;z-index:2;display:flex;justify-content:space-between;">
-        <span>Plateau Photo</span><span>120 m² · H 4.5m</span>
+    <div class="espace__banner" data-reveal>
+      <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=1600&q=90&auto=format&fit=crop" alt="Cabine Podcast MAISON 360" loading="lazy" />
+      <div class="espace__banner__overlay"></div>
+      <div class="espace__banner__label">
+        <div class="espace__banner__name">Le Cabinet<br />du <em>son.</em></div>
+        <div class="espace__banner__tag">Cabine Podcast<br />35 m² · 4K Multi-angles</div>
       </div>
     </div>
 
-    <div>
-      <p class="space-feature__num">02 / Photo</p>
-      <h2 class="space-feature__title" data-reveal-mask>
-        <span>Le Plateau <em>lumière</em>.</span>
-      </h2>
-      <p class="body-lg" data-reveal>
-        120 m² au sol, 4,5 m sous plafond, fond cyclorama infini, parc lumière broadcast. Conçu pour la mode, le portrait, la nature morte, l'éditorial et la vidéo de marque haut de gamme.
-      </p>
-
-      <ul class="space-feature__list" data-reveal data-delay="200">
-        <li><span>Surface</span><span>120 m² · Hauteur 4,5 m</span></li>
-        <li><span>Cyclorama</span><span>8 × 5 m · blanc / noir / vert</span></li>
-        <li><span>Lumière</span><span>Profoto B10 Plus · ×6 — D2 · ×4</span></li>
-        <li><span>Modeleurs</span><span>Beauty dish · octaboxes · grids · drapeaux</span></li>
-        <li><span>Optiques</span><span>Sony GM (16-200mm) · Sigma Art · Tilt-shift</span></li>
-        <li><span>Boîtiers</span><span>Sony A7R V · Hasselblad H6D · Phase One IQ4</span></li>
-        <li><span>Machinerie</span><span>Travelling 6m · jib · sliders · steadicam</span></li>
-        <li><span>Annexes</span><span>Loge maquillage HD · douche · cuisine · lounge</span></li>
-      </ul>
-
-      <div style="display: flex; gap: 16px; margin-top: 40px; flex-wrap: wrap;">
-        <a href="reservation.html?discipline=photo" class="btn" data-magnetic>Réserver le plateau</a>
-        <a href="tarifs.html#photo" class="btn btn--outline" data-magnetic>Voir les tarifs</a>
+    <div class="espace__body">
+      <div class="espace__intro" data-reveal>
+        <div class="espace__index">
+          <div class="espace__index-num">01</div>
+          <span class="espace__index-label">Podcast · Audio · Vidéo</span>
+        </div>
+        <h2 class="espace__title">Une cabine conçue<br />pour le son <em>parfait.</em></h2>
+        <p class="espace__desc">35 m² traités acoustiquement par des ingénieurs spécialisés. Quatre micros broadcast, captation 4K multi-angles, prompteur intégré, régie live en temps réel. Tout est là pour que vous n'ayez qu'à parler.</p>
+        <div class="espace__ctas">
+          <a href="reservation.html?discipline=podcast" class="btn btn--primary">Réserver le podcast →</a>
+          <a href="tarifs.html#podcast" class="btn btn--outline" style="color:var(--text-on-dark); border-color:rgba(245,237,216,0.25);">Voir les tarifs</a>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<!-- STYLISME -->
-<section class="section container" id="stylisme" style="padding-top: 0;">
-  <div class="section-num"><strong>03</strong> · 03 — Stylisme</div>
-
-  <div class="space-feature">
-    <div class="space-feature__visual" data-reveal>
-      <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1000&q=85&auto=format&fit=crop"
-           alt="Atelier Stylisme MAISON 360" loading="lazy"
-           style="width:100%;height:100%;object-fit:cover;filter:saturate(0.85) contrast(1.05);" />
-      <div style="position:absolute;bottom:24px;left:24px;right:24px;color:var(--ivoire);font-family:var(--font-mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;z-index:2;display:flex;justify-content:space-between;">
-        <span>Atelier Stylisme</span><span>60 m²</span>
-      </div>
-    </div>
-
-    <div>
-      <p class="space-feature__num">03 / Stylisme</p>
-      <h2 class="space-feature__title" data-reveal-mask>
-        <span>L'Atelier <em>matières</em>.</span>
-      </h2>
-      <p class="body-lg" data-reveal>
-        Un espace de 60 m² pensé comme la rédaction d'un magazine de mode. Portants modulables, cabines d'essayage privatives, mood boards muraux, lumière naturelle filtrée.
-      </p>
-
-      <ul class="space-feature__list" data-reveal data-delay="200">
-        <li><span>Surface</span><span>60 m² · lumière naturelle Nord</span></li>
-        <li><span>Portants</span><span>40 mètres linéaires modulables</span></li>
-        <li><span>Cabines</span><span>×3 privatives · miroirs trois faces</span></li>
-        <li><span>Préparation</span><span>Vapeur Jiffy pro · table de découpe</span></li>
-        <li><span>Mannequinage</span><span>Bustes ajustables · ×8</span></li>
-        <li><span>Maquillage</span><span>Loge HMC dédiée · lumière 5500K</span></li>
-        <li><span>Mood boards</span><span>40 m² mur magnétique</span></li>
-        <li><span>Lounge</span><span>Catering & espace détente attenant</span></li>
-      </ul>
-
-      <div style="display: flex; gap: 16px; margin-top: 40px; flex-wrap: wrap;">
-        <a href="reservation.html?discipline=stylisme" class="btn" data-magnetic>Réserver l'atelier</a>
-        <a href="tarifs.html#stylisme" class="btn btn--outline" data-magnetic>Voir les tarifs</a>
+      <div class="espace__specs" data-reveal data-delay="100">
+        <p class="espace__specs-title">Fiche technique</p>
+        <ul class="espace__spec-list">
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Surface</span>
+            <span class="espace__spec-val">35 m² · cabine insonorisée</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Capacité</span>
+            <span class="espace__spec-val">4 intervenants · 6 max avec audience</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Micros</span>
+            <span class="espace__spec-val">Shure SM7B ×4 · RØDE NTG5 d'ambiance</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Caméras</span>
+            <span class="espace__spec-val">Sony FX3 ×3 · optiques 24 / 50 / 85 mm</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Régie</span>
+            <span class="espace__spec-val">RØDECaster Duo · Atem Mini Extreme</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Lumière</span>
+            <span class="espace__spec-val">Aputure 600D · 300D · LED panels dimmables</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Acoustique</span>
+            <span class="espace__spec-val">Mousses Auralex · diffuseurs Hex · RT60 &lt; 0,2 s</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Livrables</span>
+            <span class="espace__spec-val">Audio mastérisé · Vidéo 4K · Rushs J+24 h</span>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- AMENITIES -->
-<section class="section container">
-  <div class="section-num"><strong>04</strong> · 04 — Maison</div>
+<!-- ════════════════════════════════════════════
+     02 · PHOTO
+═══════════════════════════════════════════════ -->
+<section class="espace espace--soft" id="photo">
+  <div class="espace__container">
 
-  <p class="eyebrow" data-reveal>Au-delà des espaces</p>
-  <h2 class="display text-display-lg" style="margin-top: 24px; max-width: 18ch; margin-bottom: 64px;" data-reveal-mask>
-    <span>L'<em>écrin</em> autour de la création.</span>
-  </h2>
+    <div class="espace__banner" data-reveal>
+      <img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=1600&q=90&auto=format&fit=crop" alt="Plateau Photo MAISON 360" loading="lazy" />
+      <div class="espace__banner__overlay"></div>
+      <div class="espace__banner__label">
+        <div class="espace__banner__name">Le Plateau<br />de la <em>lumière.</em></div>
+        <div class="espace__banner__tag">Studio Photo · Vidéo<br />120 m² · H 4,5 m</div>
+      </div>
+    </div>
 
-  <div class="stats">
-    <div class="stat">
-      <span class="stat__num" style="font-size: clamp(2rem, 4vw, 3.5rem);">Catering</span>
-      <span class="stat__label">Service traiteur premium · sur demande</span>
-    </div>
-    <div class="stat">
-      <span class="stat__num" style="font-size: clamp(2rem, 4vw, 3.5rem);">Concierge</span>
-      <span class="stat__label">Coordination logistique de A à Z</span>
-    </div>
-    <div class="stat">
-      <span class="stat__num" style="font-size: clamp(2rem, 4vw, 3.5rem);">Parking</span>
-      <span class="stat__label">Privatif 20 places · station de recharge</span>
-    </div>
-    <div class="stat">
-      <span class="stat__num" style="font-size: clamp(2rem, 4vw, 3.5rem);">NDA</span>
-      <span class="stat__label">Confidentialité juridique · sur demande</span>
+    <div class="espace__body">
+      <div class="espace__intro" data-reveal>
+        <div class="espace__index">
+          <div class="espace__index-num" style="border-color:rgba(201,168,76,0.35); color:var(--violet-1);">02</div>
+          <span class="espace__index-label" style="color:var(--violet-1);">Photo · Éditorial · Vidéo</span>
+        </div>
+        <h2 class="espace__title">120 m² de lumière<br /><em>totalement libre.</em></h2>
+        <p class="espace__desc">4,5 mètres sous plafond, fond cyclorama infini, parc lumière broadcast Profoto. Conçu pour la mode, le portrait, la nature morte, l'éditorial et la vidéo de marque haut de gamme. La lumière s'adapte à votre vision.</p>
+        <div class="espace__ctas">
+          <a href="reservation.html?discipline=photo" class="btn btn--primary">Réserver le plateau →</a>
+          <a href="tarifs.html#photo" class="btn btn--outline">Voir les tarifs</a>
+        </div>
+      </div>
+
+      <div class="espace__specs" data-reveal data-delay="100">
+        <p class="espace__specs-title">Fiche technique</p>
+        <ul class="espace__spec-list">
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Surface</span>
+            <span class="espace__spec-val">120 m² · hauteur sous plafond 4,5 m</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Cyclorama</span>
+            <span class="espace__spec-val">8 × 5 m · blanc / noir / vert écran</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Lumière</span>
+            <span class="espace__spec-val">Profoto B10 Plus ×6 · D2 ×4 · LED RGB</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Modeleurs</span>
+            <span class="espace__spec-val">Beauty dish · octaboxes · grids · drapeaux</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Boîtiers</span>
+            <span class="espace__spec-val">Sony A7R V · Hasselblad H6D · Phase One IQ4</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Optiques</span>
+            <span class="espace__spec-val">Sony GM 16–200 mm · Sigma Art · Tilt-shift</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Machinerie</span>
+            <span class="espace__spec-val">Travelling 6 m · jib · sliders · steadicam</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Annexes</span>
+            <span class="espace__spec-val">Loge maquillage HD · douche · cuisine · lounge</span>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-section">
-  <div class="cta-section__bg"></div>
-  <p class="eyebrow" style="justify-content:center;" data-reveal>Visite privée</p>
-  <h2 class="display text-display-xl" data-reveal-mask>
-    <span>Venez <em>découvrir</em><br/>la maison.</span>
-  </h2>
-  <p class="body-lg" data-reveal data-delay="200">
-    Sur rendez-vous uniquement, nous organisons des visites privées du studio à partir de mai 2026.
-  </p>
-  <a href="reservation.html" class="btn" data-magnetic data-reveal data-delay="300">
-    Réserver une visite
-  </a>
+<!-- ════════════════════════════════════════════
+     03 · STYLISME
+═══════════════════════════════════════════════ -->
+<section class="espace espace--dark" id="stylisme">
+  <div class="espace__container">
+
+    <div class="espace__banner" data-reveal>
+      <img src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1600&q=90&auto=format&fit=crop" alt="Atelier Stylisme MAISON 360" loading="lazy" />
+      <div class="espace__banner__overlay"></div>
+      <div class="espace__banner__label">
+        <div class="espace__banner__name">L'Atelier<br />des <em>matières.</em></div>
+        <div class="espace__banner__tag">Stylisme · Direction artistique<br />60 m² · Lumière naturelle</div>
+      </div>
+    </div>
+
+    <div class="espace__body">
+      <div class="espace__intro" data-reveal>
+        <div class="espace__index">
+          <div class="espace__index-num">03</div>
+          <span class="espace__index-label">Stylisme · Mode · Campagne</span>
+        </div>
+        <h2 class="espace__title">Un espace pensé<br />comme un <em>magazine.</em></h2>
+        <p class="espace__desc">60 m² conçus comme la rédaction d'un magazine de mode haut de gamme. Portants modulables sur 40 mètres linéaires, cabines d'essayage privatives, mood boards muraux et lumière naturelle filtrée orientée Nord.</p>
+        <div class="espace__ctas">
+          <a href="reservation.html?discipline=stylisme" class="btn btn--primary">Réserver l'atelier →</a>
+          <a href="tarifs.html#stylisme" class="btn btn--outline" style="color:var(--text-on-dark); border-color:rgba(245,237,216,0.25);">Voir les tarifs</a>
+        </div>
+      </div>
+
+      <div class="espace__specs" data-reveal data-delay="100">
+        <p class="espace__specs-title">Fiche technique</p>
+        <ul class="espace__spec-list">
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Surface</span>
+            <span class="espace__spec-val">60 m² · lumière naturelle orientée Nord</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Portants</span>
+            <span class="espace__spec-val">40 mètres linéaires modulables</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Cabines</span>
+            <span class="espace__spec-val">×3 privatives · miroirs trois faces</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Préparation</span>
+            <span class="espace__spec-val">Vapeur Jiffy Pro · table de découpe</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Mannequinage</span>
+            <span class="espace__spec-val">Bustes ajustables ×8 · portants sur roulettes</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Maquillage</span>
+            <span class="espace__spec-val">Loge HMC dédiée · lumière 5 500 K</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Mood boards</span>
+            <span class="espace__spec-val">40 m² de surface magnétique murale</span>
+          </li>
+          <li class="espace__spec-item">
+            <span class="espace__spec-key">Lounge</span>
+            <span class="espace__spec-val">Catering &amp; espace détente attenant</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- ════════════════════════════════════════════
+     04 · LA MAISON (amenities + stats)
+═══════════════════════════════════════════════ -->
+<section class="section" id="maison" style="background: var(--bg-soft);">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:64px;" data-reveal>
+      <p style="font-family:var(--font-mono); font-size:10px; letter-spacing:0.28em; text-transform:uppercase; color:var(--violet-1); margin-bottom:16px;"><span style="opacity:.5; margin-right:8px;">04 ·</span> La Maison</p>
+      <h2 style="font-family:var(--font-display); font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:800; letter-spacing:-0.03em; color:var(--text-primary); margin:0 auto 16px; max-width:22ch;">L'écrin autour<br />de la <em style='font-style:normal; background:linear-gradient(135deg,var(--violet-1) 0%,var(--violet-2) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;'>création.</em></h2>
+      <p style="font-size:1rem; color:var(--text-muted); max-width:50ch; margin:0 auto; line-height:1.65;">Au-delà des équipements, MAISON 360 est pensé comme une résidence créative. Chaque détail — du catering à la confidentialité — est pensé pour que vous soyez entièrement libres de créer.</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="studio-stats" data-reveal>
+      <div class="studio-stat">
+        <div class="studio-stat__num">380 m²</div>
+        <div class="studio-stat__label">de surface de création totale</div>
+      </div>
+      <div class="studio-stat">
+        <div class="studio-stat__num">3</div>
+        <div class="studio-stat__label">univers en un seul lieu</div>
+      </div>
+      <div class="studio-stat">
+        <div class="studio-stat__num">J+24 h</div>
+        <div class="studio-stat__label">délai de livraison des rushs</div>
+      </div>
+      <div class="studio-stat">
+        <div class="studio-stat__num">4K</div>
+        <div class="studio-stat__label">captation vidéo multi-angles</div>
+      </div>
+    </div>
+
+    <!-- Amenities -->
+    <div class="amenities-grid" data-reveal data-delay="80">
+      <div class="amenity-card">
+        <div class="amenity-card__icon">🍽</div>
+        <h3 class="amenity-card__title">Catering premium</h3>
+        <p class="amenity-card__desc">Service traiteur sur demande, boissons chaudes à disposition toute la journée, espace cuisine équipé.</p>
+        <span class="amenity-card__tag">Sur demande</span>
+      </div>
+      <div class="amenity-card">
+        <div class="amenity-card__icon">🔑</div>
+        <h3 class="amenity-card__title">Conciergerie</h3>
+        <p class="amenity-card__desc">Coordination logistique de A à Z. Réception des équipes, gestion des colis, briefing technique avant session.</p>
+        <span class="amenity-card__tag">Inclus</span>
+      </div>
+      <div class="amenity-card">
+        <div class="amenity-card__icon">🚗</div>
+        <h3 class="amenity-card__title">Parking privatif</h3>
+        <p class="amenity-card__desc">20 places dédiées, station de recharge pour véhicules électriques, accès sécurisé badge.</p>
+        <span class="amenity-card__tag">Inclus</span>
+      </div>
+      <div class="amenity-card">
+        <div class="amenity-card__icon">🔒</div>
+        <h3 class="amenity-card__title">Confidentialité NDA</h3>
+        <p class="amenity-card__desc">Accord de confidentialité juridique signé avant chaque session. Votre contenu reste votre contenu.</p>
+        <span class="amenity-card__tag">Sur demande</span>
+      </div>
+      <div class="amenity-card">
+        <div class="amenity-card__icon">💡</div>
+        <h3 class="amenity-card__title">Direction technique</h3>
+        <p class="amenity-card__desc">Un opérateur technique disponible sur demande pour cadrage, régie live et gestion du son en temps réel.</p>
+        <span class="amenity-card__tag">En option</span>
+      </div>
+      <div class="amenity-card">
+        <div class="amenity-card__icon">✂️</div>
+        <h3 class="amenity-card__title">HMC sur place</h3>
+        <p class="amenity-card__desc">Coiffeur, maquilleur et costumier disponibles à la réservation pour vos productions les plus exigeantes.</p>
+        <span class="amenity-card__tag">En option</span>
+      </div>
+      <div class="amenity-card">
+        <div class="amenity-card__icon">📦</div>
+        <h3 class="amenity-card__title">Stockage sécurisé</h3>
+        <p class="amenity-card__desc">Espace de stockage pour vos équipements et accessoires entre les sessions. Accès 24h/24 sur badge.</p>
+        <span class="amenity-card__tag">Abonnés Signature</span>
+      </div>
+      <div class="amenity-card">
+        <div class="amenity-card__icon">🌿</div>
+        <h3 class="amenity-card__title">Lounge &amp; détente</h3>
+        <p class="amenity-card__desc">Espace de décompression entre les prises, wi-fi haut débit, mobilier design et plantes naturelles.</p>
+        <span class="amenity-card__tag">Inclus</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── CTA VISITE ── -->
+<section class="visite-cta">
+  <div class="visite-cta__inner" data-reveal>
+    <p class="visite-cta__kicker">Visite privée</p>
+    <h2>Venez<br /><em>découvrir</em><br />la maison.</h2>
+    <p>Sur rendez-vous uniquement, nous organisons des visites privées du studio à partir de mai 2026. Rencontrez l'équipe, testez les espaces, posez vos questions.</p>
+    <div class="visite-cta__btns">
+      <a href="reservation.html" class="btn btn--primary">Réserver une visite →</a>
+      <a href="tarifs.html" class="btn btn--outline" style="color:var(--text-on-dark); border-color:rgba(245,237,216,0.25);">Voir les formules</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
 <footer class="footer" id="contact">
-  <div class="footer__top">
-    <div class="footer__col">
-      <h3 class="footer__brand">MAISON <span>360</span></h3>
-      <p class="body" style="max-width: 32ch;">Studio créatif premium · Podcast, Photo, Stylisme.</p>
-      <div style="margin-top: 32px; font-family:var(--font-mono); font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--sable); line-height: 2;">
-        Villabé (91) · Île-de-France<br/>
-        Ouverture juillet 2026
+  <div class="footer__inner">
+    <div>
+      <div class="footer__brand">
+        <span class="nav__brand-mark"></span>
+        MAISON <span style="color:var(--violet-1);">360</span>
       </div>
+      <p class="body" style="max-width:28ch; opacity:0.65;">Studio créatif premium — Podcast, Photo, Stylisme.</p>
+      <p style="margin-top:16px; font-family:var(--font-mono); font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--violet-1); opacity:0.65;">Villabé (91) · Juillet 2026</p>
     </div>
-    <div class="footer__col">
+    <div>
       <h4>Studio</h4>
       <ul>
         <li><a href="studio.html#podcast">Espace podcast</a></li>
@@ -262,17 +973,17 @@
         <li><a href="galerie.html">Galerie</a></li>
       </ul>
     </div>
-    <div class="footer__col">
-      <h4>Réserver</h4>
+    <div>
+      <h4>Légal</h4>
       <ul>
-        <li><a href="tarifs.html">Tarifs & formules</a></li>
-        <li><a href="reservation.html">Réservation</a></li>
-        <li><a href="#">Espace client</a></li>
+        <li><a href="#">Mentions légales</a></li>
+        <li><a href="#">CGV</a></li>
+        <li><a href="#">Confidentialité</a></li>
       </ul>
     </div>
-    <div class="footer__col newsletter">
+    <div class="newsletter">
       <h4>Notre journal</h4>
-      <p class="body" style="margin-bottom: 24px;">Coulisses & invitations privées.</p>
+      <p class="body" style="margin-bottom:20px; opacity:0.65;">Coulisses, productions et invitations privées.</p>
       <form onsubmit="event.preventDefault();this.querySelector('button').textContent='✓ Inscrit';">
         <input type="email" placeholder="votre@email.com" required />
         <button type="submit">S'abonner</button>
@@ -280,16 +991,53 @@
     </div>
   </div>
   <div class="footer__bottom">
-    <span>© 2026 MAISON 360</span>
-    <div style="display:flex; gap:32px;">
-      <a href="#">Mentions légales</a>
-      <a href="#">CGV</a>
-      <a href="#">Confidentialité</a>
-    </div>
+    <span>© 2026 MAISON 360 · Tous droits réservés</span>
+    <div style="display:flex; gap:28px;"><a href="#">Mentions légales</a><a href="#">CGV</a><a href="#">Confidentialité</a></div>
     <span>Instagram · Vimeo · LinkedIn</span>
   </div>
 </footer>
 
 <script src="assets/js/main.js" defer></script>
+<script>
+/* Nav scroll */
+var nav = document.getElementById('nav');
+window.addEventListener('scroll', function () {
+  if (nav) nav.classList.toggle('is-scrolled', window.scrollY > 60);
+}, { passive: true });
+
+/* Mobile menu */
+document.querySelector('.nav__burger').addEventListener('click', function () {
+  var m = document.getElementById('mobileMenu');
+  m.classList.toggle('is-open');
+  m.setAttribute('aria-hidden', String(!m.classList.contains('is-open')));
+});
+
+/* Reveal on scroll */
+document.querySelectorAll('[data-reveal]').forEach(function (el) {
+  new IntersectionObserver(function (entries) {
+    if (entries[0].isIntersecting) {
+      setTimeout(function () { el.classList.add('is-visible'); }, Number(el.dataset.delay || 0));
+    }
+  }, { threshold: 0.08 }).observe(el);
+});
+
+/* Sticky spaces-nav active state */
+var sections = ['podcast','photo','stylisme','maison'];
+var spaceLinks = document.querySelectorAll('[data-space-link]');
+
+function updateActiveLink() {
+  var scrollY = window.scrollY + 180;
+  var current = 'podcast';
+  sections.forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el && el.offsetTop <= scrollY) current = id;
+  });
+  spaceLinks.forEach(function (link) {
+    link.classList.toggle('is-active', link.dataset.spaceLink === current);
+  });
+}
+window.addEventListener('scroll', updateActiveLink, { passive: true });
+updateActiveLink();
+</script>
 </body>
 </html>
